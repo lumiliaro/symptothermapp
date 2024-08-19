@@ -49,12 +49,21 @@ const injectedRtkApi = api
         }),
         invalidatesTags: ["TrackDay"],
       }),
-      getTrackDaysByMonth: build.query<
-        GetTrackDaysByMonthApiResponse,
-        GetTrackDaysByMonthApiArg
+      getTrackDaysStatisticByMonthAndYear: build.query<
+        GetTrackDaysStatisticByMonthAndYearApiResponse,
+        GetTrackDaysStatisticByMonthAndYearApiArg
       >({
         query: (queryArg) => ({
-          url: `/api/track-days/month/${queryArg.month}`,
+          url: `/api/track-days/statistic/${queryArg.month}/${queryArg.year}`,
+        }),
+        providesTags: ["TrackDay"],
+      }),
+      getTrackDaysByMonthAndYear: build.query<
+        GetTrackDaysByMonthAndYearApiResponse,
+        GetTrackDaysByMonthAndYearApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/track-days/month/${queryArg.month}/${queryArg.year}`,
         }),
         providesTags: ["TrackDay"],
       }),
@@ -134,9 +143,17 @@ export type StoreTrackDayApiResponse = /** status 200 OK */ object;
 export type StoreTrackDayApiArg = {
   trackDayDto: TrackDayDto;
 };
-export type GetTrackDaysByMonthApiResponse = /** status 200 OK */ TrackDay[];
-export type GetTrackDaysByMonthApiArg = {
+export type GetTrackDaysStatisticByMonthAndYearApiResponse =
+  /** status 200 OK */ TrackDayLineChartStatisticDto[];
+export type GetTrackDaysStatisticByMonthAndYearApiArg = {
   month: number;
+  year: number;
+};
+export type GetTrackDaysByMonthAndYearApiResponse =
+  /** status 200 OK */ TrackDay[];
+export type GetTrackDaysByMonthAndYearApiArg = {
+  month: number;
+  year: number;
 };
 export type GetTrackDayByDateApiResponse = /** status 200 OK */ TrackDay;
 export type GetTrackDayByDateApiArg = {
@@ -191,6 +208,10 @@ export type Pageable = {
   page?: number;
   size?: number;
   sort?: string[];
+};
+export type TrackDayLineChartStatisticDto = {
+  date?: string;
+  temperature?: number;
 };
 export type OptionDto = {
   label: string;
@@ -248,7 +269,8 @@ export const {
   useDeleteTrackDayMutation,
   useGetTrackDaysQuery,
   useStoreTrackDayMutation,
-  useGetTrackDaysByMonthQuery,
+  useGetTrackDaysStatisticByMonthAndYearQuery,
+  useGetTrackDaysByMonthAndYearQuery,
   useGetTrackDayByDateQuery,
   useGetDisturbanceOptionsQuery,
   useGetCervixTextureOptionsQuery,

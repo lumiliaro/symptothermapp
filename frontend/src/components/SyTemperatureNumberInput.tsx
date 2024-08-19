@@ -7,6 +7,9 @@ export default function SyTemperatureNumberInput(props: NumberInputProps) {
     return (
         <NumberInput
             {...field}
+            onChange={(value) => {
+                field.onChange(value ? value : "");
+            }}
             size="md"
             label="Temperatur"
             withAsterisk
@@ -17,6 +20,7 @@ export default function SyTemperatureNumberInput(props: NumberInputProps) {
             decimalSeparator=","
             decimalScale={2}
             step={0.01}
+            value={field.value || ""}
             {...props}
         />
     );

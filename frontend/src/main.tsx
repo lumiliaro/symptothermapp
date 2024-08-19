@@ -1,3 +1,4 @@
+import "@mantine/charts/styles.css";
 import { createTheme, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { DatesProvider } from "@mantine/dates";

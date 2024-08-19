@@ -1,6 +1,7 @@
 package de.lumiliaro.symptothermapp.controller;
 
 import de.lumiliaro.symptothermapp.dto.TrackDayDto;
+import de.lumiliaro.symptothermapp.dto.TrackDayLineChartStatisticDto;
 import de.lumiliaro.symptothermapp.model.TrackDay;
 import de.lumiliaro.symptothermapp.service.TrackDayService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -45,14 +46,19 @@ public class TrackDayController {
         return day.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/month/{month}")
-    private List<TrackDay> getTrackDaysByMonth(@Valid @PathVariable int month) {
-        return service.findAllByMonth(month);
+    @GetMapping("/month/{month}/{year}")
+    private List<TrackDay> getTrackDaysByMonthAndYear(@Valid @PathVariable int month, @Valid @PathVariable int year) {
+        return service.findAllByMonth(month, year);
     }
 
     @GetMapping("/date/{trackDay}")
     private TrackDay getTrackDayByDate(@PathVariable("trackDay") @DateTimeFormat(pattern = "yyyy-MM-dd") Date trackDay) {
         return service.repository.findByTrackDay(trackDay);
+    }
+
+    @GetMapping("/statistic/{month}/{year}")
+    public List<TrackDayLineChartStatisticDto> getTrackDaysStatisticByMonthAndYear(@Valid @PathVariable int month, @Valid @PathVariable int year) {
+        return service.getTrackDaysForMonthStatistic(month, year);
     }
 
     @PostMapping

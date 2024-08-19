@@ -7,6 +7,7 @@ import SyCervixOpeningStateSelect from "../../../components/SyCervixOpeningState
 import SyCervixTextureSelect from "../../../components/SyCervixTextureSelect";
 import SyDisturbanceMultiSelect from "../../../components/SyDisturbanceMultiSelect";
 import SyFormButtons from "../../../components/SyFormButtons";
+import SyLineChart from "../../../components/SyLineChart";
 import SySexCheckboxes from "../../../components/SySexCheckboxes";
 import SyTemperatureNumberInput from "../../../components/SyTemperatureNumberInput";
 import SyTemperatureSlider from "../../../components/SyTemperatureSlider";
@@ -24,6 +25,8 @@ export default function TrackDayView(props: {
     };
     return (
         <SimpleGrid cols={1}>
+            <SyLineChart />
+
             <SyTemperatureNumberInput disabled={!props.selectedTrackDay} />
             <SyTemperatureSlider disabled={!props.selectedTrackDay} />
             <SyBleedingSelect disabled={!props.selectedTrackDay} />

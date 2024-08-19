@@ -18,7 +18,11 @@ public interface TrackDayRepository extends CrudRepository<TrackDay, Long>, Pagi
 
     TrackDay findByTrackDay(Date trackDay);
 
+    /*
     @Query("SELECT t FROM TrackDay t WHERE MONTH(t.trackDay) = :month")
     List<TrackDay> findAllByMonth(@Param("month") int month);
-
+    */
+    
+    @Query("SELECT t FROM TrackDay t WHERE t.trackDay BETWEEN :startDate AND :endDate")
+    List<TrackDay> findAllByMonth(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }
