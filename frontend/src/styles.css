@@ -1,0 +1,10 @@
+.syTrackdayDatePickerDay {
+    &[data-selected] {
+        background-color: var(--mantine-color-blue-1);
+        color: black;
+    }
+    &[data-selected]:hover {
+        background-color: var(--mantine-color-blue-2);
+        color: black;
+    }
+}

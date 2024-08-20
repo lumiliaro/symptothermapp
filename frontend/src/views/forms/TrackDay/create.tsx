@@ -1,13 +1,18 @@
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import useFormNotification from "../../../hooks/useFormNotification";
 import {
     TrackDayDto,
     useStoreTrackDayMutation,
 } from "../../../store/api/generatedApi";
+import { RootState } from "../../../store/store";
 import TrackDayView from "./view";
 
-export default function TrackDayCreate(props: { selectedTrackDay?: string }) {
+export default function TrackDayCreate() {
+    const selectedTrackDate = useSelector(
+        (state: RootState) => state.trackDayDate.selectedDateString
+    );
     const [store] = useStoreTrackDayMutation();
     const {
         openLoadingNotification,
@@ -17,7 +22,7 @@ export default function TrackDayCreate(props: { selectedTrackDay?: string }) {
 
     const form = useForm<TrackDayDto>({
         defaultValues: {
-            trackDay: props.selectedTrackDay,
+            trackDay: selectedTrackDate,
             temperature: 36.2,
         },
         mode: "onChange",
@@ -47,18 +52,15 @@ export default function TrackDayCreate(props: { selectedTrackDay?: string }) {
     };
 
     useEffect(() => {
-        if (props.selectedTrackDay) {
-            form.setValue("trackDay", props.selectedTrackDay);
+        if (selectedTrackDate) {
+            form.setValue("trackDay", selectedTrackDate);
         }
-    }, [props.selectedTrackDay, form]);
+    }, [selectedTrackDate, form]);
 
     return (
         <FormProvider {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} onReset={onReset}>
-                <TrackDayView
-                    selectedTrackDay={props.selectedTrackDay}
-                    formType="create"
-                />
+                <TrackDayView formType="create" />
             </form>
         </FormProvider>
     );

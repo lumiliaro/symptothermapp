@@ -8,4 +8,5 @@ import lombok.Data;
 public class TrackDayLineChartStatisticDto {
     private String date;
     private Float temperature;
+    private String cervicalMucus;
 }

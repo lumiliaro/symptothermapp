@@ -50,10 +50,7 @@ export default function TrackDayEdit(props: { data: TrackDay }) {
     return (
         <FormProvider {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-                <TrackDayView
-                    selectedTrackDay={props.data.trackDay}
-                    formType="edit"
-                />
+                <TrackDayView formType="edit" />
             </form>
         </FormProvider>
     );

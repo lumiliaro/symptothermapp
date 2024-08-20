@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    volumes:
+      - db-data:/app/db
+    # Sicherstellen, dass der Backend-Container korrekt gestartet wird
+    # und eine Mindestlaufzeit hat, bevor das Frontend startet
+    # healthcheck:
+    #   test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+    #   interval: 10s
+    #   retries: 5
+    #   start_period: 30s
+    #   timeout: 10s
+    networks:
+      - shared-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:80"
+    # depends_on:
+    #   backend:
+    #     condition: service_healthy
+    networks:
+      - shared-network
+
+volumes:
+  db-data:
+
+networks:
+  shared-network:
+    driver: bridge

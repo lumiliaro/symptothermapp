@@ -1,11 +1,11 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "./api/generatedApi";
-import TrackDaySlice, { trackDaySliceName } from "./TrackDay.Slice";
+import TrackDayDateSlice, { trackDayDateSliceName } from "./TrackDayDate.Slice";
 
 const reducer = combineReducers({
     [api.reducerPath]: api.reducer,
-    [trackDaySliceName]: TrackDaySlice,
+    [trackDayDateSliceName]: TrackDayDateSlice,
 });
 
 export const store = configureStore({

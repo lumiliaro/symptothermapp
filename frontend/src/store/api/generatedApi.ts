@@ -212,6 +212,7 @@ export type Pageable = {
 export type TrackDayLineChartStatisticDto = {
   date?: string;
   temperature?: number;
+  cervicalMucus?: string;
 };
 export type OptionDto = {
   label: string;

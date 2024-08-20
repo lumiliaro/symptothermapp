@@ -57,7 +57,7 @@ public class TrackDayController {
     }
 
     @GetMapping("/statistic/{month}/{year}")
-    public List<TrackDayLineChartStatisticDto> getTrackDaysStatisticByMonthAndYear(@Valid @PathVariable int month, @Valid @PathVariable int year) {
+    public List<TrackDayLineChartStatisticDto> getTrackDaysStatisticByMonthAndYear(@PathVariable int month, @PathVariable int year) {
         return service.getTrackDaysForMonthStatistic(month, year);
     }
 

@@ -1,3 +1,7 @@
 import { api } from "./generatedApi";
 
-export const { useLazyGetTrackDayByDateQuery } = api;
+export const {
+    useLazyGetTrackDayByDateQuery,
+    useLazyGetTrackDaysByMonthAndYearQuery,
+    useLazyGetTrackDaysStatisticByMonthAndYearQuery,
+} = api;

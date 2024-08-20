@@ -19,7 +19,7 @@ public class TrackDayService {
 
     public List<TrackDay> findAllByMonth(int month, int year) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.MONTH, month - 1);
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -71,7 +71,7 @@ public class TrackDayService {
 
     public List<TrackDayLineChartStatisticDto> getTrackDaysForMonthStatistic(int month, int year) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.MONTH, month - 1);
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -86,21 +86,24 @@ public class TrackDayService {
         List<TrackDayLineChartStatisticDto> response = new ArrayList<>();
 
         SimpleDateFormat dateFormatterTrackDay = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat dateFormatterResponse = new SimpleDateFormat("dd.MM.");
+        SimpleDateFormat dateFormatterResponse = new SimpleDateFormat("dd");
 
         for (int day = 1; day <= maxDay; day++) {
             calendar.set(Calendar.DAY_OF_MONTH, day);
             Date currentDate = calendar.getTime();
 
-            Optional<TrackDay> trackDayOpt = trackDays.stream()
-                    .filter(trackDay -> dateFormatterTrackDay.format(trackDay.getTrackDay()).equals(dateFormatterTrackDay.format(currentDate)))
-                    .findFirst();
+            Optional<TrackDay> trackDayOpt = trackDays.stream().filter(
+                    trackDay -> dateFormatterTrackDay.format(trackDay.getTrackDay()).equals(dateFormatterTrackDay.format(currentDate))).findFirst();
 
             if (trackDayOpt.isPresent()) {
                 TrackDay trackDay = trackDayOpt.get();
-                response.add(new TrackDayLineChartStatisticDto(dateFormatterResponse.format(trackDay.getTrackDay()), trackDay.getTemperature()));
+                response.add(new TrackDayLineChartStatisticDto(dateFormatterResponse.format(
+                        trackDay.getTrackDay()) + (trackDay.getCervicalMucus() != null ? " " + trackDay.getCervicalMucus().getValue() : ""),
+                        trackDay.getTemperature(),
+                        trackDay.getCervicalMucus() != null ? trackDay.getCervicalMucus().getValue() : null)
+                );
             } else {
-                response.add(new TrackDayLineChartStatisticDto(dateFormatterResponse.format(currentDate), null));
+                response.add(new TrackDayLineChartStatisticDto(dateFormatterResponse.format(currentDate), null, null));
             }
         }
 

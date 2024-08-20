@@ -1,53 +1,50 @@
 import { Indicator } from "@mantine/core";
 import { DatePicker, DatePickerProps } from "@mantine/dates";
 import dayjs from "dayjs";
-import { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setSelectedTrackDay } from "../store/TrackDay.Slice";
-import { useGetTrackDaysByMonthAndYearQuery } from "../store/api/generatedApi";
+import { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLazyGetTrackDaysByMonthAndYearQuery } from "../store/api/lazyApi";
+import { RootState } from "../store/store";
+import { setSelectedTrackDate } from "../store/TrackDayDate.Slice";
+import { convertBackendDateStringToDate } from "../utils/Converter.utils";
+import { DATE_FORMAT_BACKEND } from "../utils/DateFormats.utils";
 
 export default function SyTrackDayDatePicker() {
     const dispatch = useDispatch();
-    const [trackDay, setTrackDay] = useState<Date | null>(null);
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-    const [month, setMonth] = useState<number>(dayjs().month());
-    const [year, setYear] = useState<number>(dayjs().year());
-
-    const { data: trackDays } = useGetTrackDaysByMonthAndYearQuery({
-        month,
-        year,
-    });
+    const trackDayDate = useSelector((state: RootState) => state.trackDayDate);
+    const [getTrackDaysByMonthAndYear, { data: trackDays }] =
+        useLazyGetTrackDaysByMonthAndYearQuery();
 
     useEffect(() => {
-        let currentDate = dayjs();
-
-        if (selectedDate) {
-            currentDate = dayjs(selectedDate);
+        // Get all track days for selected month and year
+        if (
+            trackDayDate?.selectedMonth !== undefined &&
+            trackDayDate?.selectedYear !== undefined
+        ) {
+            getTrackDaysByMonthAndYear({
+                month: trackDayDate?.selectedMonth,
+                year: trackDayDate?.selectedYear,
+            });
         }
-        setMonth(currentDate.month());
-        setYear(currentDate.year());
-    }, [selectedDate]);
+    }, [trackDayDate, getTrackDaysByMonthAndYear]);
 
-    useEffect(() => {
-        dispatch(
-            setSelectedTrackDay(
-                trackDay ? dayjs(trackDay).format("YYYY-MM-DD") : undefined
-            )
-        );
-    }, [trackDay, dispatch]);
+    const selectedDateHandler = (date: Date | null) => {
+        const dateString = date
+            ? dayjs(date).format(DATE_FORMAT_BACKEND)
+            : null;
+        dispatch(setSelectedTrackDate(dateString));
+    };
 
     const getDayProps: DatePickerProps["getDayProps"] = useCallback(
         (date: Date) => {
             const dayExists = trackDays?.find(
-                (day) => day.trackDay === dayjs(date).format("YYYY-MM-DD")
+                (day) =>
+                    day.trackDay === dayjs(date).format(DATE_FORMAT_BACKEND)
             );
             if (dayExists) {
                 return {
                     style: {
-                        // backgroundColor: "var(--mantine-color-red-filled)",
-                        // color: "var(--mantine-color-white)",
-                        borderBottom:
-                            "3px solid var(--mantine-color-indigo-filled)",
+                        borderBottom: "3px solid var(--mantine-color-indigo-6)",
                     },
                 };
             }
@@ -57,32 +54,41 @@ export default function SyTrackDayDatePicker() {
         [trackDays]
     );
 
-    const dayRenderer: DatePickerProps["renderDay"] = (date) => {
-        const dayExistsWithBleeding = trackDays?.find(
-            (day) =>
-                day.trackDay === dayjs(date).format("YYYY-MM-DD") &&
-                !!day.bleeding
-        );
-        if (dayExistsWithBleeding) {
-            const day = date.getDate();
-            return (
-                <Indicator size={8} color="red" offset={-5}>
-                    <div>{day}</div>
-                </Indicator>
+    const dayRenderer: DatePickerProps["renderDay"] = useCallback(
+        (date: Date) => {
+            const dayExistsWithBleeding = trackDays?.find(
+                (day) =>
+                    day.trackDay === dayjs(date).format(DATE_FORMAT_BACKEND) &&
+                    !!day.bleeding
             );
-        }
-    };
+
+            if (dayExistsWithBleeding) {
+                const day = date.getDate();
+                return (
+                    <Indicator size={8} color="red" offset={-5}>
+                        <div>{day}</div>
+                    </Indicator>
+                );
+            }
+        },
+        [trackDays]
+    );
 
     return (
         <DatePicker
             allowDeselect
             firstDayOfWeek={1}
             size="xl"
-            value={trackDay}
-            onChange={setTrackDay}
-            onMonthSelect={setSelectedDate}
-            onNextMonth={setSelectedDate}
-            onPreviousMonth={setSelectedDate}
+            value={convertBackendDateStringToDate(
+                trackDayDate.selectedDateString
+            )}
+            onChange={selectedDateHandler}
+            onMonthSelect={selectedDateHandler}
+            onNextMonth={selectedDateHandler}
+            onPreviousMonth={selectedDateHandler}
+            onYearSelect={selectedDateHandler}
+            onNextYear={selectedDateHandler}
+            onPreviousYear={selectedDateHandler}
             getDayProps={getDayProps}
             hideOutsideDates
             maxDate={new Date()}
