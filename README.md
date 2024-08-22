@@ -1,3 +1,3 @@
 # Build images & push to docker hub
 
-docker compose build --no-cache --push
+docker build -t symptothermapp:latest . --no-cache --push

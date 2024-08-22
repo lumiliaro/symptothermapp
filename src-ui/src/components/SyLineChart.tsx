@@ -52,7 +52,7 @@ export default function SyLineChart() {
                 tickLine="xy"
                 gridAxis="xy"
                 connectNulls={false}
-                yAxisProps={{ domain: [33, 42] }}
+                yAxisProps={{ domain: ["auto", "auto"] }}
                 valueFormatter={(temperature) => `${temperature.toFixed(2)} °C`}
                 tooltipAnimationDuration={200}
                 referenceLines={[

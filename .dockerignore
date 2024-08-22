@@ -1,33 +1,4 @@
-# Maven or Gradle build directory
-target
-build
-
-# IDE-specific files
-.idea/
-*.iml
-*.ipr
-*.iws
-
-# Maven or Gradle cache
-.m2
-.gradle
-
-# OS-specific files
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-
-# Git
 .git
-.gitignore
-
-# Environment files
-.env
-.env.*.local
-
-# Temporary files
-*.tmp
-*.swp
-*.swo
+./dist
+.idea/
+**/.vscode
