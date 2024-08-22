@@ -6,20 +6,16 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: backend
+    image: 12ukas/symptothermapp-backend:latest
     ports:
-      - "8080:8080"
+      - "8088:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:3232}
+      # - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+      # - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      # - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
     volumes:
       - db-data:/app/db
-    # Sicherstellen, dass der Backend-Container korrekt gestartet wird
-    # und eine Mindestlaufzeit hat, bevor das Frontend startet
-    # healthcheck:
-    #   test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
-    #   interval: 10s
-    #   retries: 5
-    #   start_period: 30s
-    #   timeout: 10s
     networks:
       - shared-network
 
@@ -27,12 +23,14 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        - NODE_ENV=development
     container_name: frontend
+    image: 12ukas/symptothermapp-frontend:latest
     ports:
-      - "3000:80"
-    # depends_on:
-    #   backend:
-    #     condition: service_healthy
+      - "3232:80"
+    environment:
+      - NODE_ENV=development
     networks:
       - shared-network
 

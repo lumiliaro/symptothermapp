@@ -1,4 +1,5 @@
 import { LineChart } from "@mantine/charts";
+import { ScrollAreaAutosize } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLazyGetTrackDaysStatisticByMonthAndYearQuery } from "../store/api/lazyApi";
@@ -39,26 +40,31 @@ export default function SyLineChart() {
     }, [statisticData, setAverageTemperature]);
 
     return (
-        <LineChart
-            h={"45vh"}
-            data={statisticData || []}
-            mt={15}
-            dataKey="date"
-            series={[{ name: "temperature", color: "indigo.6" }]}
-            curveType="linear"
-            tickLine="xy"
-            gridAxis="xy"
-            connectNulls={false}
-            yAxisProps={{ domain: [33, 42] }}
-            valueFormatter={(temperature) => `${temperature.toFixed(2)} °C`}
-            tooltipAnimationDuration={200}
-            referenceLines={[
-                {
-                    y: averageTemperature,
-                    label: `Durchschnitt ${averageTemperature?.toFixed(2)} °C`,
-                    color: "red.6",
-                },
-            ]}
-        />
+        <ScrollAreaAutosize>
+            <LineChart
+                h={"45vh"}
+                w="90rem"
+                data={statisticData || []}
+                p="lg"
+                dataKey="date"
+                series={[{ name: "temperature", color: "indigo.6" }]}
+                curveType="linear"
+                tickLine="xy"
+                gridAxis="xy"
+                connectNulls={false}
+                yAxisProps={{ domain: [33, 42] }}
+                valueFormatter={(temperature) => `${temperature.toFixed(2)} °C`}
+                tooltipAnimationDuration={200}
+                referenceLines={[
+                    {
+                        y: averageTemperature,
+                        label: `Durchschnitt ${averageTemperature?.toFixed(
+                            2
+                        )} °C`,
+                        color: "red.6",
+                    },
+                ]}
+            />
+        </ScrollAreaAutosize>
     );
 }
