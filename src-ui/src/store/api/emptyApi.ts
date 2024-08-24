@@ -9,4 +9,5 @@ export const emptySplitApi = createApi({
         baseUrl: envVariables.VITE_BACKEND_URL,
     }),
     endpoints: () => ({}),
+    refetchOnReconnect: true,
 });
