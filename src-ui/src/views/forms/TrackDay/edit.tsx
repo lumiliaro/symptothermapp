@@ -77,8 +77,8 @@ export default function TrackDayEdit(props: { data: TrackDay }) {
 
     return (
         <FormProvider {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-                <TrackDayView formType="edit" onDelete={onDelete} />
+            <form onSubmit={void form.handleSubmit(onSubmit)}>
+                <TrackDayView formType="edit" onDelete={void onDelete} />
             </form>
         </FormProvider>
     );

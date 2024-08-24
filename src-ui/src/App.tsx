@@ -14,7 +14,11 @@ export default function App() {
 
     useEffect(() => {
         if (trackDayDate?.selectedDateString) {
-            findTrackDayByDate({ trackDay: trackDayDate?.selectedDateString });
+            const fetchData = async (selectedDateString: string) => {
+                await findTrackDayByDate({ trackDay: selectedDateString });
+            };
+
+            void fetchData(trackDayDate?.selectedDateString);
         }
     }, [trackDayDate?.selectedDateString, findTrackDayByDate]);
 

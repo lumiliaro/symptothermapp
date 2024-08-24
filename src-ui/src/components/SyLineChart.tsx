@@ -13,10 +13,17 @@ export default function SyLineChart() {
 
     useEffect(() => {
         if (trackDayDate?.selectedMonth && trackDayDate?.selectedYear) {
-            getStatisticData({
-                month: trackDayDate?.selectedMonth,
-                year: trackDayDate?.selectedYear,
-            });
+            const fetchData = async (month: number, year: number) => {
+                await getStatisticData({
+                    month,
+                    year,
+                });
+            };
+
+            void fetchData(
+                trackDayDate?.selectedMonth,
+                trackDayDate?.selectedYear
+            );
         }
     }, [trackDayDate, getStatisticData]);
 

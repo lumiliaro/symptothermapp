@@ -61,7 +61,7 @@ export default function TrackDayCreate() {
 
     return (
         <FormProvider {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} onReset={onReset}>
+            <form onSubmit={void form.handleSubmit(onSubmit)} onReset={onReset}>
                 <TrackDayView formType="create" />
             </form>
         </FormProvider>

@@ -21,10 +21,17 @@ export default function SyTrackDayDatePicker() {
             trackDayDate?.selectedMonth !== undefined &&
             trackDayDate?.selectedYear !== undefined
         ) {
-            getTrackDaysByMonthAndYear({
-                month: trackDayDate?.selectedMonth,
-                year: trackDayDate?.selectedYear,
-            });
+            const fetchData = async (month: number, year: number) => {
+                await getTrackDaysByMonthAndYear({
+                    month,
+                    year,
+                });
+            };
+
+            void fetchData(
+                trackDayDate?.selectedMonth,
+                trackDayDate?.selectedYear
+            );
         }
     }, [trackDayDate, getTrackDaysByMonthAndYear]);
 
