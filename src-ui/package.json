@@ -4,8 +4,9 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "npm run gen-api && vite",
+        "dev": "npm run gen-api && tsc && vite",
         "build": "tsc -b && vite build",
+        "deploy": "npm run gen-api && tsc && cd ../ && docker build -t 12ukas/symptothermapp:latest . --push",
         "lint": "eslint .",
         "preview": "vite preview",
         "gen-api": "npx @rtk-query/codegen-openapi openapi-config.ts"
@@ -15,6 +16,7 @@
         "@mantine/core": "^7.12.1",
         "@mantine/dates": "^7.12.1",
         "@mantine/hooks": "^7.12.1",
+        "@mantine/modals": "^7.12.1",
         "@mantine/notifications": "^7.12.1",
         "@reduxjs/toolkit": "^2.2.7",
         "dayjs": "^1.11.12",

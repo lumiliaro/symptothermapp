@@ -15,7 +15,9 @@ export default function SyTemperatureSlider(props: SliderProps) {
             styles={{ markLabel: { display: "none" } }}
             size="xl"
             labelAlwaysOn
+            value={field.value || undefined}
             {...props}
+            disabled={!field.value}
         />
     );
 }

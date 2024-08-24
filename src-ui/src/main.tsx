@@ -3,6 +3,7 @@ import { createTheme, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { DatesProvider } from "@mantine/dates";
 import "@mantine/dates/styles.css";
+import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
 import dayjs from "dayjs";
@@ -17,7 +18,6 @@ import "./styles.css";
 
 dayjs.extend(customParseFormat);
 const theme = createTheme({
-    /** Put your mantine theme override here */
     components: {
         DatePicker: {
             classNames: {
@@ -29,13 +29,15 @@ const theme = createTheme({
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <Provider store={store}>
-            <MantineProvider theme={theme}>
+        <MantineProvider theme={theme}>
+            <ModalsProvider>
                 <DatesProvider settings={{ locale: "de" }}>
-                    <Notifications />
-                    <App />
+                    <Provider store={store}>
+                        <Notifications />
+                        <App />
+                    </Provider>
                 </DatesProvider>
-            </MantineProvider>
-        </Provider>
+            </ModalsProvider>
+        </MantineProvider>
     </StrictMode>
 );

@@ -7,6 +7,7 @@ import {
     useStoreTrackDayMutation,
 } from "../../../store/api/generatedApi";
 import { RootState } from "../../../store/store";
+import handleFormErrors from "../../../utils/FormErrorHandler.utils";
 import TrackDayView from "./view";
 
 export default function TrackDayCreate() {
@@ -40,10 +41,11 @@ export default function TrackDayCreate() {
                     message: "Daten wurden erstellt!",
                 });
             })
-            .catch(() => {
+            .catch((error) => {
                 updateNotificationToFailure(id, {
                     message: "Daten konnten nicht erstellt werden!",
                 });
+                handleFormErrors(form, error);
             });
     };
 

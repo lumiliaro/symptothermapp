@@ -8,7 +8,7 @@ import {
 export type SyComboboxProps = UseControllerProps<FieldValues> & SelectProps;
 
 export default function SySelect(props: SyComboboxProps) {
-    const { field } = useController(props);
+    const { field, fieldState } = useController(props);
 
     if (!props.data) {
         return <></>;
@@ -22,6 +22,7 @@ export default function SySelect(props: SyComboboxProps) {
             placeholder="Bitte auswählen"
             size="md"
             color="blue"
+            error={fieldState.error?.message}
         />
     );
 }

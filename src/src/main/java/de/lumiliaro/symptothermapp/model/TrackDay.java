@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
 
 import java.util.Date;
 import java.util.List;
@@ -22,9 +21,7 @@ public class TrackDay {
     private Long id;
 
     @Column(name = "temperature")
-    @NotNull(message = "Die Temperatur muss gesetzt sein.")
-    @Range(min = 33, max = 42)
-    private float temperature;
+    private Float temperature;
 
     @Column(name = "track_day", unique = true)
     @NotNull(message = "Das Datum muss gesetzt sein.")

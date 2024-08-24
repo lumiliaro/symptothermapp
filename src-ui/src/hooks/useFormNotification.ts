@@ -1,7 +1,6 @@
 import { NotificationData, notifications } from "@mantine/notifications";
 
 export default function useFormNotification() {
-    // const [notificationId, setNotificationId] = useState<string>("");
     const openLoadingNotification = (notification: NotificationData) => {
         return notifications.show({
             title: "Laden...",
@@ -16,7 +15,6 @@ export default function useFormNotification() {
         id: string,
         notification: NotificationData
     ) => {
-        console.log("success", id);
         if (id) {
             notifications.update({
                 id,

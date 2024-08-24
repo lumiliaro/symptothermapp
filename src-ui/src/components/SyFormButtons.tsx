@@ -17,6 +17,7 @@ export default function SyFormButtons(props: {
             >
                 Abbrechen
             </Button>
+
             <Button type="submit" size="lg" disabled={props.isSubmitDisabled}>
                 {props.formType === "create" ? "Erstellen" : "Speichern"}
             </Button>

@@ -5,16 +5,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
 
 import java.util.Date;
 import java.util.List;
 
 @Data
 public class TrackDayDto {
-    @NotNull(message = "Die Temperatur muss gesetzt sein.")
-    @Range(min = 33, max = 42)
-    private float temperature;
+    private Float temperature;
 
     @NotNull(message = "Das Datum muss gesetzt sein.")
     @PastOrPresent(message = "Das Datum muss in der Vergangenheit oder Gegenwart liegen.")

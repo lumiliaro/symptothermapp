@@ -8,7 +8,7 @@ import {
 export type SyTextareaProps = UseControllerProps<FieldValues> & TextareaProps;
 
 export default function SyTextarea(props: SyTextareaProps) {
-    const { field } = useController(props);
+    const { field, fieldState } = useController(props);
 
     return (
         <Textarea
@@ -20,6 +20,7 @@ export default function SyTextarea(props: SyTextareaProps) {
             autosize
             maxLength={1000}
             {...props}
+            error={fieldState.error?.message}
         />
     );
 }

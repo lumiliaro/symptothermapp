@@ -1,4 +1,56 @@
-.git
-./dist
-.idea/
+# Log
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# IDE-specific files
+**/./dist
+**/.idea/
 **/.vscode
+**/*.iml
+**/*.ipr
+**/*.iws
+
+# Git
+.git
+.gitignore
+**/*.md
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+##################### Frontend
+# Node modules
+./src-ui/node_modules
+
+# Build output
+./src-ui/dist
+
+# NPM cache
+./src-ui/.npm
+
+# Vite cache
+./src-ui/.vite
+
+# Environment files
+./src-ui/.env
+./src-ui/.env.local
+./src-ui/.env.*.local
+
+# Temporary files
+./src-ui/*.tmp
+./src-ui/*.swp
+./src-ui/*.swo
+
+##################### Backend
+# Maven or Gradle build directory
+./src/target
+./src/build
+
+# Maven or Gradle cache
+./src/.m2
+./src/.gradle

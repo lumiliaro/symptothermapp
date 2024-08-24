@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@mantine/modals": "^7.12.1"
+  }
+}

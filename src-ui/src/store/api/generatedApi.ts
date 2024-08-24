@@ -177,7 +177,7 @@ export type GetBleedingOptionsApiResponse = /** status 200 OK */ OptionDto[];
 export type GetBleedingOptionsApiArg = void;
 export type TrackDay = {
   id?: number;
-  temperature: number;
+  temperature?: number;
   trackDay: string;
   bleeding?: BleedingEnum;
   cervicalMucus?: CervicalMucusEnum;
@@ -191,7 +191,7 @@ export type TrackDay = {
   notes?: string;
 };
 export type TrackDayDto = {
-  temperature: number;
+  temperature?: number;
   trackDay: string;
   bleeding?: BleedingEnum;
   cervicalMucus?: CervicalMucusEnum;
@@ -210,7 +210,7 @@ export type Pageable = {
   sort?: string[];
 };
 export type TrackDayLineChartStatisticDto = {
-  date?: string;
+  date: string;
   temperature?: number;
   cervicalMucus?: string;
 };

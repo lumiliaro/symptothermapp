@@ -8,7 +8,7 @@ import { RootState } from "./store/store";
 import TrackDayCreate from "./views/forms/TrackDay/create";
 import TrackDayEdit from "./views/forms/TrackDay/edit";
 
-function App() {
+export default function App() {
     const trackDayDate = useSelector((state: RootState) => state.trackDayDate);
     const [findTrackDayByDate, trackDay] = useLazyGetTrackDayByDateQuery();
 
@@ -46,5 +46,3 @@ function App() {
         </Container>
     );
 }
-
-export default App;
