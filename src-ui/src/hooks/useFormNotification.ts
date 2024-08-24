@@ -23,11 +23,6 @@ export default function useFormNotification() {
                 autoClose: 2000,
                 color: "teal",
                 title: "Erfolgreich",
-                // icon: (
-                //     <IconCheck
-                //         style={{ width: rem(18), height: rem(18) }}
-                //     />
-                // ),
             });
         }
     };
@@ -41,14 +36,9 @@ export default function useFormNotification() {
                 id,
                 loading: false,
                 ...notification,
-                autoClose: 2000,
+                autoClose: 4000,
                 color: "red",
                 title: "Fehlgeschlagen",
-                // icon: (
-                //     <IconCheck
-                //         style={{ width: rem(18), height: rem(18) }}
-                //     />
-                // ),
             });
         }
     };
