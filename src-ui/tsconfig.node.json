@@ -10,7 +10,7 @@
         "allowImportingTsExtensions": true,
         "isolatedModules": true,
         "moduleDetection": "force",
-        "noEmit": false,
+        "noEmit": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
 
@@ -18,8 +18,7 @@
         "strict": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "noFallthroughCasesInSwitch": true,
-        "composite": true
+        "noFallthroughCasesInSwitch": true
     },
-    "include": ["vite.config.ts"]
+    "include": ["vite.config.ts", "openapi-config.ts"]
 }

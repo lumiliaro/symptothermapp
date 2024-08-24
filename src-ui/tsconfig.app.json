@@ -11,7 +11,7 @@
         "allowImportingTsExtensions": true,
         "isolatedModules": true,
         "moduleDetection": "force",
-        "noEmit": false,
+        "noEmit": true,
         "jsx": "react-jsx",
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
@@ -20,8 +20,7 @@
         "strict": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "noFallthroughCasesInSwitch": true,
-        "composite": true
+        "noFallthroughCasesInSwitch": true
     },
     "include": ["src"]
 }
