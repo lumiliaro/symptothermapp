@@ -4,6 +4,7 @@ import {
     useController,
     UseControllerProps,
 } from "react-hook-form";
+import SyInputSkeleton from "./SyInputSkeleton";
 
 export type SyComboboxProps = UseControllerProps<FieldValues> & SelectProps;
 
@@ -11,7 +12,7 @@ export default function SySelect(props: SyComboboxProps) {
     const { field, fieldState } = useController(props);
 
     if (!props.data) {
-        return <></>;
+        return <SyInputSkeleton />;
     }
 
     return (

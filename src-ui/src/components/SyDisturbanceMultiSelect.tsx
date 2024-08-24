@@ -1,6 +1,7 @@
 import { MultiSelect, MultiSelectProps } from "@mantine/core";
 import { useController } from "react-hook-form";
 import { useGetDisturbanceOptionsQuery } from "../store/api/generatedApi";
+import SyInputSkeleton from "./SyInputSkeleton";
 
 export default function SyDisturbanceMultiSelect(props: MultiSelectProps) {
     const { field, fieldState } = useController({
@@ -9,7 +10,7 @@ export default function SyDisturbanceMultiSelect(props: MultiSelectProps) {
     const { data } = useGetDisturbanceOptionsQuery();
 
     if (!data) {
-        return <></>;
+        return <SyInputSkeleton />;
     }
 
     return (

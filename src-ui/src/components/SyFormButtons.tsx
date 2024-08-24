@@ -5,8 +5,6 @@ export default function SyFormButtons(props: {
     isSubmitDisabled?: boolean;
     formType: "create" | "edit";
 }) {
-    // const { formState } = useFormContext();
-
     return (
         <Group justify="space-between">
             <Button
