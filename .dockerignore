@@ -40,6 +40,7 @@ Thumbs.db
 ./src-ui/.env
 ./src-ui/.env.local
 ./src-ui/.env.*.local
+**/.env.example
 
 # Temporary files
 ./src-ui/*.tmp
