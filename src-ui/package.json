@@ -4,9 +4,9 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "npm run gen-api && tsc && vite",
+        "dev": "npm run gen-api && tsc -b && vite",
         "build": "tsc -b && vite build",
-        "deploy": "npm run gen-api && tsc && cd ../ && docker build -t 12ukas/symptothermapp:latest . --push",
+        "deploy": "npm run gen-api && tsc -b && cd ../ && docker build -t 12ukas/symptothermapp:latest . --push",
         "lint": "eslint .",
         "preview": "vite preview",
         "gen-api": "npx @rtk-query/codegen-openapi openapi-config.ts"
