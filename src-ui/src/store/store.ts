@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "./api/generatedApi";
+import { queryErrorLogger } from "./middlewares/queryErrorLogger";
 import TrackDayDateSlice, { trackDayDateSliceName } from "./TrackDayDate.Slice";
 
 const reducer = combineReducers({
@@ -11,7 +12,7 @@ const reducer = combineReducers({
 export const store = configureStore({
     reducer,
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat([api.middleware]),
+        getDefaultMiddleware().concat([api.middleware, queryErrorLogger]),
 });
 
 setupListeners(store.dispatch);
