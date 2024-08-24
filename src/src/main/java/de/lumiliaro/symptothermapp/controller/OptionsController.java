@@ -2,6 +2,7 @@ package de.lumiliaro.symptothermapp.controller;
 
 import de.lumiliaro.symptothermapp.dto.OptionDto;
 import de.lumiliaro.symptothermapp.enums.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/options")
+@Tag(name = "options", description = "Operations related for Select options")
 public class OptionsController {
 
     @GetMapping("/bleeding")

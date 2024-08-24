@@ -1,5 +1,5 @@
 import { emptySplitApi as api } from "./emptyApi";
-export const addTagTypes = ["TrackDay", "options-controller"] as const;
+export const addTagTypes = ["TrackDay", "options"] as const;
 const injectedRtkApi = api
   .enhanceEndpoints({
     addTagTypes,
@@ -81,42 +81,42 @@ const injectedRtkApi = api
         GetDisturbanceOptionsApiArg
       >({
         query: () => ({ url: `/api/options/disturbance` }),
-        providesTags: ["options-controller"],
+        providesTags: ["options"],
       }),
       getCervixTextureOptions: build.query<
         GetCervixTextureOptionsApiResponse,
         GetCervixTextureOptionsApiArg
       >({
         query: () => ({ url: `/api/options/cervix/texture` }),
-        providesTags: ["options-controller"],
+        providesTags: ["options"],
       }),
       getCervixOpeningStateOptions: build.query<
         GetCervixOpeningStateOptionsApiResponse,
         GetCervixOpeningStateOptionsApiArg
       >({
         query: () => ({ url: `/api/options/cervix/opening-state` }),
-        providesTags: ["options-controller"],
+        providesTags: ["options"],
       }),
       getCervixHeightPositionOptions: build.query<
         GetCervixHeightPositionOptionsApiResponse,
         GetCervixHeightPositionOptionsApiArg
       >({
         query: () => ({ url: `/api/options/cervix/height-position` }),
-        providesTags: ["options-controller"],
+        providesTags: ["options"],
       }),
       getCervicalMucusOptions: build.query<
         GetCervicalMucusOptionsApiResponse,
         GetCervicalMucusOptionsApiArg
       >({
         query: () => ({ url: `/api/options/cervical-mucus` }),
-        providesTags: ["options-controller"],
+        providesTags: ["options"],
       }),
       getBleedingOptions: build.query<
         GetBleedingOptionsApiResponse,
         GetBleedingOptionsApiArg
       >({
         query: () => ({ url: `/api/options/bleeding` }),
-        providesTags: ["options-controller"],
+        providesTags: ["options"],
       }),
     }),
     overrideExisting: false,
