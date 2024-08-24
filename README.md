@@ -18,10 +18,11 @@ SymptothermApp is a web application that helps women monitor their fertility usi
 -   Monitor fertility using the symptothermal method
 -   Web-based interface for easy data entry and management
 -   Backend for secure data processing and storage
+-   **Frontend is in German**
 
 ## Technologies
 
--   **Frontend**: TypeScript, Vue.js (or whichever framework you use)
+-   **Frontend**: TypeScript, React, Redux Toolkit
 -   **Backend**: Java, Spring Boot
 -   **Database**: HSQLDB (embedded)
 -   **Containerization**: Docker
