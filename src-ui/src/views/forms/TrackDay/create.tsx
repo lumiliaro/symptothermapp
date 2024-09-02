@@ -23,7 +23,7 @@ export default function TrackDayCreate() {
 
     const form = useForm<TrackDayDto>({
         defaultValues: {
-            trackDay: selectedTrackDate,
+            day: selectedTrackDate,
             temperature: 36.2,
         },
         mode: "onChange",

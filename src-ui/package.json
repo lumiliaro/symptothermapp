@@ -20,6 +20,7 @@
         "@mantine/notifications": "^7.12.1",
         "@reduxjs/toolkit": "^2.2.7",
         "dayjs": "^1.11.12",
+        "frontend": "file:",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "react-hook-form": "^7.52.2",
