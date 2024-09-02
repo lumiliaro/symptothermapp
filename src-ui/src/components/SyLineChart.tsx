@@ -49,7 +49,7 @@ export default function SyLineChart() {
     return (
         <ScrollAreaAutosize>
             <LineChart
-                h={"45vh"}
+                h="45vh"
                 w="90rem"
                 data={statisticData || []}
                 p="lg"

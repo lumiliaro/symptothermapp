@@ -51,7 +51,7 @@ export default function TrackDayView(props: {
                 <SySexCheckboxes disabled={!selectedTrackDate} />
                 <SyDisturbanceMultiSelect disabled={!selectedTrackDate} />
                 {disturbances?.find(
-                    (disturbance) => disturbance === DisturbanceEnum.Sonstiges
+                    (disturbance) => disturbance === DisturbanceEnum.Other
                 ) && (
                     <SyTextarea
                         label="Sonstige Störungen"

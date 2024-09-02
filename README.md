@@ -1,6 +1,7 @@
 # SymptothermApp
 
-SymptothermApp is a web application that helps women monitor their fertility using the symptothermal method. The application consists of a frontend and backend, both of which can be run in a Docker container.
+SymptothermApp is a web application that helps women monitor their fertility using the symptothermal method.
+The application consists of a frontend and backend, both of which can be run in a Docker container.
 
 ## Contents
 
@@ -8,7 +9,6 @@ SymptothermApp is a web application that helps women monitor their fertility usi
 -   [Technologies](#technologies)
 -   [Requirements](#requirements)
 -   [Installation](#installation)
--   [Environment Variables](#environment-variables)
 -   [Usage](#usage)
 -   [Docker Setup](#docker-setup)
 -   [License](#license)
@@ -45,32 +45,17 @@ SymptothermApp is a web application that helps women monitor their fertility usi
 
     ```bash
     docker build -t symptothermapp .
-    docker run -p 80:80 -p 8080:8080 symptothermapp
+    docker run -p 8080:8080 symptothermapp
     ```
 
 3. **Access the application:**
 
-    - Frontend: [http://localhost:80](http://localhost:80)
+    - Frontend: [http://localhost:8080](http://localhost:8080)
     - Backend: [http://localhost:8080](http://localhost:8080)
-
-## Environment Variables
-
-To properly configure the Docker container, the following environment variables should be set:
-
--   `VITE_BACKEND_URL`: URL for the backend server (default: `http://localhost:8080`)
--   `FRONTEND_URL`: URL for the web interface (default: `http://localhost:80`)
-
-These variables can either be set directly in the Dockerfile or passed when starting the container.
-
-Example:
-
-```bash
-docker run -e VITE_BACKEND_URL=http://your-backend-url:8080 -e FRONTEND_URL=http://your-frontend-url:80 -p 80:80 -p 8080:8080 symptothermapp
-```
 
 ## Usage
 
-Once the container is running, the application can be accessed through a web browser. Sign in or register to begin monitoring your fertility.
+Once the container is running, the application can be accessed through a web browser. Begin monitoring your fertility.
 
 ## Docker Setup
 
@@ -78,16 +63,14 @@ Once the container is running, the application can be accessed through a web bro
 
 The Docker setup uses a multi-stage build to minimize the size of the final image:
 
-Frontend Build: Builds the frontend application using Node.js.
 Backend Build: Builds the backend application using Gradle.
-Production Image: Combines the frontend and backend into a final image and runs both using Supervisor.
+Production Image: Combines the frontend and backend into a final image and runs both using Tomcat.
 
 ### Ports
 
-The container exposes two ports:
+The container exposes one port:
 
--   8080: The backend
--   80: The frontend
+-   8080: backend, frontend
 
 ### Volumes
 

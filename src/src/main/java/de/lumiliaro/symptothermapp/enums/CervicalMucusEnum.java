@@ -7,21 +7,21 @@ import lombok.Getter;
 
 /**
  * Zervixschleim Enum
- * TROCKEN  -> t
- * NORMAL   -> O
- * FEUCHT   -> f
- * CREMIG   -> s
- * SPINNBAR -> S
+ * DRY (trocken)        -> t
+ * NORMAL (normal)      -> Ø
+ * MOIST (feucht)       -> f
+ * CREAMY (cremig)      -> s
+ * SPINNABLE (spinnbar) -> S+
  */
 @Getter
 @AllArgsConstructor
 @Schema(description = "Cervical Mucus Enum", enumAsRef = true)
 public enum CervicalMucusEnum {
-    TROCKEN("t"),
+    DRY("t"),
     NORMAL("Ø"),
-    FEUCHT("f"),
-    CREMIG("s"),
-    SPINNBAR("S+");
+    MOIST("f"),
+    CREAMY("s"),
+    SPINNABLE("S+");
 
     private final String value;
 }

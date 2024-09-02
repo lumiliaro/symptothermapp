@@ -1,0 +1,50 @@
+[
+  {
+    "id": 99,
+    "temperature": 35,
+    "trackDay": "2024-08-22",
+    "bleeding": null,
+    "cervicalMucus": "s",
+    "cervixOpeningState": null,
+    "cervixHeightPosition": null,
+    "cervixTexture": "HARD",
+    "hadSex": true,
+    "withContraceptives": false,
+    "disturbances": "",
+    "otherDisturbanceNotes": null,
+    "notes": null
+  },
+  {
+    "id": 100,
+    "temperature": null,
+    "trackDay": "2024-08-24",
+    "bleeding": null,
+    "cervicalMucus": null,
+    "cervixOpeningState": null,
+    "cervixHeightPosition": null,
+    "cervixTexture": null,
+    "hadSex": true,
+    "withContraceptives": true,
+    "disturbances": [
+      "UNGEWOHNT_SPAETES_ZUBETTGEHEN",
+      "KURZE_ODER_GESTOERTE_NACHTRUHE"
+    ],
+    "otherDisturbanceNotes": null,
+    "notes": "test123"
+  },
+  {
+    "id": 101,
+    "temperature": 35,
+    "trackDay": "2024-08-25",
+    "bleeding": "STARK",
+    "cervicalMucus": "Ø",
+    "cervixOpeningState": "OPEN",
+    "cervixHeightPosition": "HIGH",
+    "cervixTexture": "SOFT",
+    "hadSex": false,
+    "withContraceptives": false,
+    "disturbances": "",
+    "otherDisturbanceNotes": null,
+    "notes": "test123"
+  }
+]

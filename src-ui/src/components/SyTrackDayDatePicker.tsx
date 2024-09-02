@@ -45,8 +45,7 @@ export default function SyTrackDayDatePicker() {
     const getDayProps: DatePickerProps["getDayProps"] = useCallback(
         (date: Date) => {
             const dayExists = trackDays?.find(
-                (day) =>
-                    day.trackDay === dayjs(date).format(DATE_FORMAT_BACKEND)
+                (track) => track.day === dayjs(date).format(DATE_FORMAT_BACKEND)
             );
             if (dayExists) {
                 return {
@@ -64,9 +63,9 @@ export default function SyTrackDayDatePicker() {
     const dayRenderer: DatePickerProps["renderDay"] = useCallback(
         (date: Date) => {
             const dayExistsWithBleeding = trackDays?.find(
-                (day) =>
-                    day.trackDay === dayjs(date).format(DATE_FORMAT_BACKEND) &&
-                    !!day.bleeding
+                (track) =>
+                    track.day === dayjs(date).format(DATE_FORMAT_BACKEND) &&
+                    !!track.bleeding
             );
 
             if (dayExistsWithBleeding) {

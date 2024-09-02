@@ -16,6 +16,6 @@ import lombok.Getter;
 public enum CervixTextureEnum {
     HARD("hart"),
     SOFT("weich");
-    
+
     private final String value;
 }

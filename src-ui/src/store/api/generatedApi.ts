@@ -126,7 +126,7 @@ export type GetTrackDayApiResponse = /** status 200 OK */ TrackDay;
 export type GetTrackDayApiArg = {
   id: number;
 };
-export type UpdateTrackDayApiResponse = /** status 200 OK */ object;
+export type UpdateTrackDayApiResponse = unknown;
 export type UpdateTrackDayApiArg = {
   id: number;
   trackDayDto: TrackDayDto;
@@ -135,11 +135,11 @@ export type DeleteTrackDayApiResponse = unknown;
 export type DeleteTrackDayApiArg = {
   id: number;
 };
-export type GetTrackDaysApiResponse = /** status 200 OK */ TrackDay[];
+export type GetTrackDaysApiResponse = /** status 200 OK */ PageTrackDay;
 export type GetTrackDaysApiArg = {
   pageable: Pageable;
 };
-export type StoreTrackDayApiResponse = /** status 200 OK */ object;
+export type StoreTrackDayApiResponse = unknown;
 export type StoreTrackDayApiArg = {
   trackDayDto: TrackDayDto;
 };
@@ -177,8 +177,8 @@ export type GetBleedingOptionsApiResponse = /** status 200 OK */ OptionDto[];
 export type GetBleedingOptionsApiArg = void;
 export type TrackDay = {
   id?: number;
+  day: string;
   temperature?: number;
-  trackDay: string;
   bleeding?: BleedingEnum;
   cervicalMucus?: CervicalMucusEnum;
   cervixOpeningState?: CervixOpeningStateEnum;
@@ -192,7 +192,7 @@ export type TrackDay = {
 };
 export type TrackDayDto = {
   temperature?: number;
-  trackDay: string;
+  day: string;
   bleeding?: BleedingEnum;
   cervicalMucus?: CervicalMucusEnum;
   cervixOpeningState?: CervixOpeningStateEnum;
@@ -203,6 +203,34 @@ export type TrackDayDto = {
   disturbances?: DisturbanceEnum[];
   otherDisturbanceNotes?: string;
   notes?: string;
+};
+export type SortObject = {
+  direction?: string;
+  nullHandling?: string;
+  ascending?: boolean;
+  property?: string;
+  ignoreCase?: boolean;
+};
+export type PageableObject = {
+  offset?: number;
+  sort?: SortObject[];
+  paged?: boolean;
+  pageNumber?: number;
+  pageSize?: number;
+  unpaged?: boolean;
+};
+export type PageTrackDay = {
+  totalElements?: number;
+  totalPages?: number;
+  size?: number;
+  content?: TrackDay[];
+  number?: number;
+  sort?: SortObject[];
+  first?: boolean;
+  last?: boolean;
+  numberOfElements?: number;
+  pageable?: PageableObject;
+  empty?: boolean;
 };
 export type Pageable = {
   page?: number;
@@ -220,17 +248,17 @@ export type OptionDto = {
   disabled?: boolean;
 };
 export enum BleedingEnum {
-  Stark = "STARK",
-  Mittel = "MITTEL",
-  Schwach = "SCHWACH",
-  Schmierblutung = "SCHMIERBLUTUNG",
+  Strong = "STRONG",
+  Medium = "MEDIUM",
+  Weak = "WEAK",
+  SpottingBleeding = "SPOTTING_BLEEDING",
 }
 export enum CervicalMucusEnum {
-  Trocken = "TROCKEN",
+  Dry = "DRY",
   Normal = "NORMAL",
-  Feucht = "FEUCHT",
-  Cremig = "CREMIG",
-  Spinnbar = "SPINNBAR",
+  Moist = "MOIST",
+  Creamy = "CREAMY",
+  Spinnable = "SPINNABLE",
 }
 export enum CervixOpeningStateEnum {
   Open = "OPEN",
@@ -246,23 +274,23 @@ export enum CervixTextureEnum {
   Soft = "SOFT",
 }
 export enum DisturbanceEnum {
-  UngewohntSpaetesZubettgehen = "UNGEWOHNT_SPAETES_ZUBETTGEHEN",
-  UngewohnterAlkoholgenuss = "UNGEWOHNTER_ALKOHOLGENUSS",
+  GoingToBedUnusuallyLate = "GOING_TO_BED_UNUSUALLY_LATE",
+  UnusualAlcoholConsumption = "UNUSUAL_ALCOHOL_CONSUMPTION",
   Stress = "STRESS",
-  SeelischeBelastung = "SEELISCHE_BELASTUNG",
-  Zeitumstellung = "ZEITUMSTELLUNG",
-  Zeitverschiebung = "ZEITVERSCHIEBUNG",
-  KurzeOderGestoerteNachtruhe = "KURZE_ODER_GESTOERTE_NACHTRUHE",
-  EssenSpaetabends = "ESSEN_SPAETABENDS",
-  ReisenUndOderKlimawechsel = "REISEN_UND_ODER_KLIMAWECHSEL",
-  ErkrankungUndUnpaesslichkeitenFieber = "ERKRANKUNG_UND_UNPAESSLICHKEITEN_FIEBER",
-  AndereKrankheiten = "ANDERE_KRANKHEITEN",
-  Medikament = "MEDIKAMENT",
-  ThermometerwechselImZyklus = "THERMOMETERWECHSEL_IM_ZYKLUS",
-  Aufregung = "AUFREGUNG",
-  FeiernSpaetabends = "FEIERN_SPAETABENDS",
-  Schichtarbeit = "SCHICHTARBEIT",
-  Sonstiges = "SONSTIGES",
+  MentalStress = "MENTAL_STRESS",
+  TimeChange = "TIME_CHANGE",
+  TimeShift = "TIME_SHIFT",
+  ShortOrShortNightRest = "SHORT_OR_SHORT_NIGHT_REST",
+  EatingLateEvenings = "EATING_LATE_EVENINGS",
+  TravelAndChangeOfClimate = "TRAVEL_AND_CHANGE_OF_CLIMATE",
+  IllnessAndUnpleasantFever = "ILLNESS_AND_UNPLEASANT_FEVER",
+  OtherIllnesses = "OTHER_ILLNESSES",
+  Medicine = "MEDICINE",
+  ThermometerChangeInTheCycle = "THERMOMETER_CHANGE_IN_THE_CYCLE",
+  Excitement = "EXCITEMENT",
+  CelebrationEvenings = "CELEBRATION_EVENINGS",
+  ShiftWork = "SHIFT_WORK",
+  Other = "OTHER",
 }
 export const {
   useGetTrackDayQuery,

@@ -1,21 +1,41 @@
 package de.lumiliaro.symptothermapp.service;
 
-import de.lumiliaro.symptothermapp.dto.TrackDayDto;
-import de.lumiliaro.symptothermapp.dto.TrackDayLineChartStatisticDto;
-import de.lumiliaro.symptothermapp.model.TrackDay;
-import de.lumiliaro.symptothermapp.repository.TrackDayRepository;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import de.lumiliaro.symptothermapp.dto.TrackDayDto;
+import de.lumiliaro.symptothermapp.dto.TrackDayLineChartStatisticDto;
+import de.lumiliaro.symptothermapp.exception.ItemAlreadyExistsException;
+import de.lumiliaro.symptothermapp.exception.ItemNotFoundException;
+import de.lumiliaro.symptothermapp.mapper.TrackDayMapperImpl;
+import de.lumiliaro.symptothermapp.model.TrackDay;
+import de.lumiliaro.symptothermapp.repository.TrackDayRepository;
+import lombok.Data;
 
-@Data
 @Service
-@AllArgsConstructor
+@Data
 public class TrackDayService {
-    public final TrackDayRepository repository;
+    private final TrackDayRepository repository;
+    private final String resource = "TrackDay";
+
+    public Page<TrackDay> findAllPageable(Pageable pageable) {
+        Page<TrackDay> page = repository.findAll(PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                pageable.getSortOr(Sort.by(Sort.Direction.DESC, "day"))));
+
+        return page;
+    }
 
     public List<TrackDay> findAllByMonth(int month, int year) {
         Calendar calendar = Calendar.getInstance();
@@ -32,41 +52,62 @@ public class TrackDayService {
         return repository.findAllByMonth(startDate, endDate);
     }
 
-    public TrackDay save(TrackDayDto trackDayDto) {
-        Date trackDayDate = trackDayDto.getTrackDay();
-
-        // Überprüfen, ob ein TrackDay mit diesem Datum bereits existiert
-        if (repository.existsByTrackDay(trackDayDate)) {
-            throw new IllegalArgumentException("Ein Datensatz mit diesem Datum existiert bereits.");
-        }
-
-        TrackDay trackDay = this.mapDtoToTrackDay(trackDayDto);
-        return repository.save(trackDay);
-    }
-
-    public boolean update(Long id, TrackDayDto trackDayDto) {
-        Optional<TrackDay> foundTrackDay = repository.findById(id);
-
-        if (foundTrackDay.isEmpty()) {
-            return false;
-        }
-
-        TrackDay trackDay = this.mapDtoToTrackDay(trackDayDto);
-        trackDay.setId(id);
-        repository.save(trackDay);
-
-        return true;
-    }
-
-    public boolean delete(Long id) {
+    public TrackDay findOne(Long id) throws ItemNotFoundException {
         Optional<TrackDay> trackDay = repository.findById(id);
 
         if (trackDay.isEmpty()) {
-            return false;
+            throw new ItemNotFoundException(id, resource);
+        }
+
+        return trackDay.get();
+    }
+
+    public TrackDay save(TrackDayDto trackDayDto) throws ItemAlreadyExistsException {
+        Date trackDayDate = trackDayDto.getDay();
+
+        if (repository.existsByDay(trackDayDate)) {
+            throw new ItemAlreadyExistsException("Ein Datensatz mit diesem Datum existiert bereits.");
+        }
+
+        TrackDay trackDay = new TrackDayMapperImpl().fromDto(trackDayDto);
+
+        if (!trackDay.getHadSex()) {
+            trackDay.setWithContraceptives(false);
+        }
+
+        return repository.save(trackDay);
+    }
+
+    public void update(Long id, TrackDayDto trackDayDto) throws ItemNotFoundException, ItemAlreadyExistsException {
+        Optional<TrackDay> foundTrackDay = repository.findById(id);
+
+        if (foundTrackDay.isEmpty()) {
+            throw new ItemNotFoundException(id, resource);
+        }
+
+        TrackDay trackDayWithSameDay = repository.findByDayWithOtherId(trackDayDto.getDay(),
+                foundTrackDay.get().getId());
+
+        if (trackDayWithSameDay != null) {
+            throw new ItemAlreadyExistsException("Ein Datensatz mit diesem Datum existiert bereits.");
+        }
+
+        TrackDay trackDay = new TrackDayMapperImpl().fromDto(trackDayDto);
+        trackDay.setId(id);
+
+        if (!trackDay.getHadSex()) {
+            trackDay.setWithContraceptives(false);
+        }
+
+        repository.save(trackDay);
+    }
+
+    public void delete(Long id) throws ItemNotFoundException {
+        if (repository.findById(id).isEmpty()) {
+            throw new ItemNotFoundException(id, resource);
         }
 
         repository.deleteById(id);
-        return true;
     }
 
     public List<TrackDayLineChartStatisticDto> getTrackDaysForMonthStatistic(int month, int year) {
@@ -93,15 +134,17 @@ public class TrackDayService {
             Date currentDate = calendar.getTime();
 
             Optional<TrackDay> trackDayOpt = trackDays.stream().filter(
-                    trackDay -> dateFormatterTrackDay.format(trackDay.getTrackDay()).equals(dateFormatterTrackDay.format(currentDate))).findFirst();
+                    trackDay -> dateFormatterTrackDay.format(trackDay.getDay())
+                            .equals(dateFormatterTrackDay.format(currentDate)))
+                    .findFirst();
 
             if (trackDayOpt.isPresent()) {
                 TrackDay trackDay = trackDayOpt.get();
                 response.add(new TrackDayLineChartStatisticDto(dateFormatterResponse.format(
-                        trackDay.getTrackDay()) + (trackDay.getCervicalMucus() != null ? " " + trackDay.getCervicalMucus().getValue() : ""),
+                        trackDay.getDay())
+                        + (trackDay.getCervicalMucus() != null ? " " + trackDay.getCervicalMucus().getValue() : ""),
                         trackDay.getTemperature(),
-                        trackDay.getCervicalMucus() != null ? trackDay.getCervicalMucus().getValue() : null)
-                );
+                        trackDay.getCervicalMucus() != null ? trackDay.getCervicalMucus().getValue() : null));
             } else {
                 response.add(new TrackDayLineChartStatisticDto(dateFormatterResponse.format(currentDate), null, null));
             }
@@ -110,20 +153,22 @@ public class TrackDayService {
         return response;
     }
 
-    public TrackDay mapDtoToTrackDay(TrackDayDto dto) {
-        TrackDay trackDay = new TrackDay();
-        trackDay.setTemperature(dto.getTemperature());
-        trackDay.setTrackDay(dto.getTrackDay());
-        trackDay.setBleeding(dto.getBleeding());
-        trackDay.setCervicalMucus(dto.getCervicalMucus());
-        trackDay.setCervixOpeningState(dto.getCervixOpeningState());
-        trackDay.setCervixHeightPosition(dto.getCervixHeightPosition());
-        trackDay.setCervixTexture(dto.getCervixTexture());
-        trackDay.setHadSex(dto.getHadSex());
-        trackDay.setWithContraceptives(dto.getWithContraceptives());
-        trackDay.setDisturbances(dto.getDisturbances());
-        trackDay.setOtherDisturbanceNotes(dto.getOtherDisturbanceNotes());
-        trackDay.setNotes(dto.getNotes());
-        return trackDay;
-    }
+    // public TrackDay mapDtoToTrackDay(TrackDayDto dto) {
+    // TrackDay trackDay = new TrackDay();
+    // trackDay.setTemperature(dto.getTemperature());
+    // trackDay.setDay(dto.getDay());
+    // trackDay.setBleeding(dto.getBleeding());
+    // trackDay.setCervicalMucus(dto.getCervicalMucus());
+    // trackDay.setCervixOpeningState(dto.getCervixOpeningState());
+    // trackDay.setCervixHeightPosition(dto.getCervixHeightPosition());
+    // trackDay.setCervixTexture(dto.getCervixTexture());
+    // trackDay.setHadSex(dto.getHadSex());
+    // if (dto.getHadSex()) {
+    // trackDay.setWithContraceptives(dto.getWithContraceptives());
+    // }
+    // trackDay.setDisturbances(dto.getDisturbances());
+    // trackDay.setOtherDisturbanceNotes(dto.getOtherDisturbanceNotes());
+    // trackDay.setNotes(dto.getNotes());
+    // return trackDay;
+    // }
 }

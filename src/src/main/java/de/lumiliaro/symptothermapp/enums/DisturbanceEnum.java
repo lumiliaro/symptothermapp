@@ -8,41 +8,23 @@ import lombok.Getter;
 @AllArgsConstructor
 @Schema(description = "Disturbance Enum", enumAsRef = true)
 public enum DisturbanceEnum {
-    UNGEWOHNT_SPAETES_ZUBETTGEHEN("Ungewohnt spätes Zubettgehen"),
-    UNGEWOHNTER_ALKOHOLGENUSS("Ungewohnter Alkoholgenuss"),
+    GOING_TO_BED_UNUSUALLY_LATE("Ungewohnt spätes Zubettgehen"),
+    UNUSUAL_ALCOHOL_CONSUMPTION("Ungewohnter Alkoholgenuss"),
     STRESS("Stress"),
-    SEELISCHE_BELASTUNG("Seelische Belastung"),
-    ZEITUMSTELLUNG("Zeitumstellung"),
-    ZEITVERSCHIEBUNG("Zeitverschiebung"),
-    KURZE_ODER_GESTOERTE_NACHTRUHE("Kurze oder gestörte Nachtruhe"),
-    ESSEN_SPAETABENDS("Essen spätabends"),
-    REISEN_UND_ODER_KLIMAWECHSEL("Reisen und/oder Klimawechsel"),
-    ERKRANKUNG_UND_UNPAESSLICHKEITEN_FIEBER("Erkrankung und Unpässlichkeiten/Fieber"),
-    ANDERE_KRANKHEITEN("Andere Krankheiten"),
-    MEDIKAMENT("Medikament"),
-    THERMOMETERWECHSEL_IM_ZYKLUS("Thermometerwechsel im Zyklus"),
-    AUFREGUNG("Aufregung"),
-    FEIERN_SPAETABENDS("Feiern spätabends"),
-    SCHICHTARBEIT("Schichtarbeit"),
-    SONSTIGES("Sonstiges");
+    MENTAL_STRESS("Seelische Belastung"),
+    TIME_CHANGE("Zeitumstellung"),
+    TIME_SHIFT("Zeitverschiebung"),
+    SHORT_OR_SHORT_NIGHT_REST("Kurze oder gestörte Nachtruhe"),
+    EATING_LATE_EVENINGS("Essen spätabends"),
+    TRAVEL_AND_CHANGE_OF_CLIMATE("Reisen und/oder Klimawechsel"),
+    ILLNESS_AND_UNPLEASANT_FEVER("Erkrankung und Unpässlichkeiten/Fieber"),
+    OTHER_ILLNESSES("Andere Krankheiten"),
+    MEDICINE("Medikament"),
+    THERMOMETER_CHANGE_IN_THE_CYCLE("Thermometerwechsel im Zyklus"),
+    EXCITEMENT("Aufregung"),
+    CELEBRATION_EVENINGS("Feiern spätabends"),
+    SHIFT_WORK("Schichtarbeit"),
+    OTHER("Sonstiges");
 
     private final String value;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

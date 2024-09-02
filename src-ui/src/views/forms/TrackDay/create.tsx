@@ -55,7 +55,7 @@ export default function TrackDayCreate() {
 
     useEffect(() => {
         if (selectedTrackDate) {
-            form.setValue("trackDay", selectedTrackDate);
+            form.setValue("day", selectedTrackDate);
         }
     }, [selectedTrackDate, form]);
 

@@ -1,0 +1,15 @@
+{
+  "id": 101,
+  "temperature": 35,
+  "trackDay": "2024-08-25",
+  "bleeding": "STARK",
+  "cervicalMucus": "Ø",
+  "cervixOpeningState": "OPEN",
+  "cervixHeightPosition": "HIGH",
+  "cervixTexture": "SOFT",
+  "hadSex": false,
+  "withContraceptives": false,
+  "disturbances": "",
+  "otherDisturbanceNotes": null,
+  "notes": "test123"
+}

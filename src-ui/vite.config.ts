@@ -5,18 +5,13 @@ import { defineConfig } from "vite";
 export default defineConfig({
     plugins: [react()],
     build: {
-        outDir: "dist",
+        outDir: "../src/src/main/resources/static",
         rollupOptions: {
             output: {
                 format: "es",
                 globals: {
                     react: "React",
                     "react-dom": "ReactDOM",
-                },
-                manualChunks(id) {
-                    if (/envVars.ts/.test(id)) {
-                        return "envVars";
-                    }
                 },
             },
         },
