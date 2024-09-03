@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+    postgres:
+        image: postgres:16-alpine
+        ports:
+            - 5432:5432
+        volumes:
+            - ~/apps/postgres16:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_DB=symptothermapp
+            - POSTGRES_USER=symptothermapp
+            - POSTGRES_PASSWORD=symptothermapp

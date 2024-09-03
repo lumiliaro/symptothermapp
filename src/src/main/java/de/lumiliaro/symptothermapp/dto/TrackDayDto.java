@@ -11,6 +11,8 @@ import de.lumiliaro.symptothermapp.enums.CervixHeightPositionEnum;
 import de.lumiliaro.symptothermapp.enums.CervixOpeningStateEnum;
 import de.lumiliaro.symptothermapp.enums.CervixTextureEnum;
 import de.lumiliaro.symptothermapp.enums.DisturbanceEnum;
+import io.swagger.v3.oas.annotations.Hidden;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
@@ -32,8 +34,10 @@ public class TrackDayDto {
     private CervixOpeningStateEnum cervixOpeningState = null;
     private CervixHeightPositionEnum cervixHeightPosition = null;
     private CervixTextureEnum cervixTexture = null;
-    private Boolean hadSex = false;
-    private Boolean withContraceptives = false;
+    @NotNull
+    private final Boolean hadSex = false;
+    @NotNull
+    private final Boolean withContraceptives = false;
     private List<DisturbanceEnum> disturbances = null;
 
     @Size(max = 1000, message = "Die Sonstigen Störungen dürfen nicht länger als 1000 Zeichen lang sein.")
@@ -41,4 +45,10 @@ public class TrackDayDto {
 
     @Size(max = 1000, message = "Die Notizen dürfen nicht länger als 1000 Zeichen lang sein.")
     private String notes = null;
+
+    @Hidden
+    @AssertTrue(message = "\"mit Verhütungsmittel\" darf nur aktiviert sein, wenn \"sex gehabt\" aktiviert ist.")
+    public boolean isContraceptiveUsageValid() {
+        return hadSex ? withContraceptives || !withContraceptives : !withContraceptives;
+    }
 }

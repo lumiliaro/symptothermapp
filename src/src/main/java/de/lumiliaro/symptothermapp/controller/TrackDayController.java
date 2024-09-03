@@ -50,10 +50,10 @@ public class TrackDayController {
         return service.findAllByMonth(month, year);
     }
 
-    @GetMapping("/date/{trackDay}")
+    @GetMapping("/date/{day}")
     public final ResponseEntity<TrackDay> getTrackDayByDate(
-            @PathVariable("trackDay") @DateTimeFormat(pattern = "yyyy-MM-dd") Date trackDay) {
-        return ResponseEntity.ok(service.getRepository().findByDay(trackDay));
+            @PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd") Date day) {
+        return ResponseEntity.ok(service.getRepository().findByDay(day));
     }
 
     @GetMapping("/statistic/{month}/{year}")
@@ -64,9 +64,9 @@ public class TrackDayController {
     }
 
     @PostMapping
-    public final ResponseEntity<Void> storeTrackDay(@Valid @RequestBody TrackDayDto trackDayDto,
+    public final ResponseEntity<Void> storeTrackDay(@Valid @RequestBody TrackDayDto request,
             UriComponentsBuilder ucb) {
-        TrackDay savedTrackDay = service.save(trackDayDto);
+        TrackDay savedTrackDay = service.save(request);
         URI location = ucb
                 .path("api/track-days/{id}")
                 .buildAndExpand(savedTrackDay.getId())

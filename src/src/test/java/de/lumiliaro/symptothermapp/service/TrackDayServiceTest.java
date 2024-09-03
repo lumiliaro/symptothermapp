@@ -1,5 +1,34 @@
 package de.lumiliaro.symptothermapp.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import de.lumiliaro.symptothermapp.dto.TrackDayDto;
 import de.lumiliaro.symptothermapp.dto.TrackDayLineChartStatisticDto;
 import de.lumiliaro.symptothermapp.exception.ItemAlreadyExistsException;
@@ -7,18 +36,6 @@ import de.lumiliaro.symptothermapp.exception.ItemNotFoundException;
 import de.lumiliaro.symptothermapp.mapper.TrackDayMapperImpl;
 import de.lumiliaro.symptothermapp.model.TrackDay;
 import de.lumiliaro.symptothermapp.repository.TrackDayRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.*;
-
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 class TrackDayServiceTest {
 
@@ -117,7 +134,8 @@ class TrackDayServiceTest {
             service.findOne(id);
         });
 
-        assertEquals("Die angefragte Resource \"TrackDay\" mit der ID \"1\" wurde nicht gefunden.", exception.getMessage());
+        assertEquals("Die angefragte Resource \"TrackDay\" mit der ID \"1\" wurde nicht gefunden.",
+                exception.getMessage());
         verify(repository, times(1)).findById(id);
     }
 
@@ -178,7 +196,7 @@ class TrackDayServiceTest {
                 null,
                 null);
         when(repository.findById(id)).thenReturn(Optional.of(existingTrackDay));
-        when(repository.findByDayWithOtherId(trackDayDate, id)).thenReturn(null);
+        when(repository.findByDayAndIdNot(trackDayDate, id)).thenReturn(null);
 
         TrackDay updatedTrackDay = new TrackDayMapperImpl().fromDto(trackDayDto);
         updatedTrackDay.setId(id);
@@ -188,7 +206,7 @@ class TrackDayServiceTest {
 
         // Then
         verify(repository, times(1)).findById(id);
-        verify(repository, times(1)).findByDayWithOtherId(trackDayDto.getDay(), id);
+        verify(repository, times(1)).findByDayAndIdNot(trackDayDto.getDay(), id);
         verify(repository, times(1)).save(any(TrackDay.class));
     }
 
@@ -207,7 +225,7 @@ class TrackDayServiceTest {
         });
 
         verify(repository, times(1)).findById(id);
-        verify(repository, never()).findByDayWithOtherId(any(), any());
+        verify(repository, never()).findByDayAndIdNot(any(), any());
         verify(repository, never()).save(any(TrackDay.class));
     }
 
@@ -224,10 +242,11 @@ class TrackDayServiceTest {
                 null);
         when(repository.findById(id)).thenReturn(Optional.of(existingTrackDay));
 
-        TrackDay conflictingTrackDay = new TrackDay(2L, trackDayDate, null, null, null, null, null, null, null, null, null,
+        TrackDay conflictingTrackDay = new TrackDay(2L, trackDayDate, null, null, null, null, null, null, null, null,
+                null,
                 null,
                 null);
-        when(repository.findByDayWithOtherId(trackDayDate, id)).thenReturn(conflictingTrackDay);
+        when(repository.findByDayAndIdNot(trackDayDate, id)).thenReturn(conflictingTrackDay);
 
         // When & Then
         assertThrows(ItemAlreadyExistsException.class, () -> {
@@ -235,7 +254,7 @@ class TrackDayServiceTest {
         });
 
         verify(repository, times(1)).findById(id);
-        verify(repository, times(1)).findByDayWithOtherId(trackDayDto.getDay(), id);
+        verify(repository, times(1)).findByDayAndIdNot(trackDayDto.getDay(), id);
         verify(repository, never()).save(any(TrackDay.class));
     }
 

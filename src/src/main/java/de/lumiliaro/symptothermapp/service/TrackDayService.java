@@ -17,6 +17,7 @@ import de.lumiliaro.symptothermapp.dto.TrackDayDto;
 import de.lumiliaro.symptothermapp.dto.TrackDayLineChartStatisticDto;
 import de.lumiliaro.symptothermapp.exception.ItemAlreadyExistsException;
 import de.lumiliaro.symptothermapp.exception.ItemNotFoundException;
+import de.lumiliaro.symptothermapp.helper.CalenderHelper;
 import de.lumiliaro.symptothermapp.mapper.TrackDayMapperImpl;
 import de.lumiliaro.symptothermapp.model.TrackDay;
 import de.lumiliaro.symptothermapp.repository.TrackDayRepository;
@@ -38,18 +39,8 @@ public class TrackDayService {
     }
 
     public List<TrackDay> findAllByMonth(int month, int year) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.MONTH, month - 1);
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-
-        int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-        Date startDate = calendar.getTime();
-        calendar.set(Calendar.DAY_OF_MONTH, maxDay);
-        Date endDate = calendar.getTime();
-
-        return repository.findAllByMonth(startDate, endDate);
+        CalenderHelper calender = new CalenderHelper(month, year);
+        return repository.findByDayBetween(calender.getStartDate(), calender.getEndDate());
     }
 
     public TrackDay findOne(Long id) throws ItemNotFoundException {
@@ -85,7 +76,7 @@ public class TrackDayService {
             throw new ItemNotFoundException(id, resource);
         }
 
-        TrackDay trackDayWithSameDay = repository.findByDayWithOtherId(trackDayDto.getDay(),
+        TrackDay trackDayWithSameDay = repository.findByDayAndIdNot(trackDayDto.getDay(),
                 foundTrackDay.get().getId());
 
         if (trackDayWithSameDay != null) {
@@ -118,12 +109,7 @@ public class TrackDayService {
 
         int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-        Date startDate = calendar.getTime();
-        calendar.set(Calendar.DAY_OF_MONTH, maxDay);
-        Date endDate = calendar.getTime();
-
-        List<TrackDay> trackDays = repository.findAllByMonth(startDate, endDate);
-
+        List<TrackDay> trackDays = this.findAllByMonth(month, year);
         List<TrackDayLineChartStatisticDto> response = new ArrayList<>();
 
         SimpleDateFormat dateFormatterTrackDay = new SimpleDateFormat("yyyy-MM-dd");
@@ -152,23 +138,4 @@ public class TrackDayService {
 
         return response;
     }
-
-    // public TrackDay mapDtoToTrackDay(TrackDayDto dto) {
-    // TrackDay trackDay = new TrackDay();
-    // trackDay.setTemperature(dto.getTemperature());
-    // trackDay.setDay(dto.getDay());
-    // trackDay.setBleeding(dto.getBleeding());
-    // trackDay.setCervicalMucus(dto.getCervicalMucus());
-    // trackDay.setCervixOpeningState(dto.getCervixOpeningState());
-    // trackDay.setCervixHeightPosition(dto.getCervixHeightPosition());
-    // trackDay.setCervixTexture(dto.getCervixTexture());
-    // trackDay.setHadSex(dto.getHadSex());
-    // if (dto.getHadSex()) {
-    // trackDay.setWithContraceptives(dto.getWithContraceptives());
-    // }
-    // trackDay.setDisturbances(dto.getDisturbances());
-    // trackDay.setOtherDisturbanceNotes(dto.getOtherDisturbanceNotes());
-    // trackDay.setNotes(dto.getNotes());
-    // return trackDay;
-    // }
 }

@@ -1,0 +1,62 @@
+databaseChangeLog:
+    - changeSet:
+          id: createTableTrackDay
+          author: Lukas Röhr
+          changes:
+              - createTable:
+                    tableName: track_day
+                    columns:
+                        - column:
+                              name: id
+                              type: BIGINT
+                              autoIncrement: true
+                              constraints:
+                                  primaryKey: true
+                        - column:
+                              name: day
+                              type: DATE
+                              constraints:
+                                  nullable: false
+                                  unique: true
+                        - column:
+                              name: temperature
+                              type: FLOAT
+                        - column:
+                              name: bleeding
+                              type: VARCHAR(255)
+                        - column:
+                              name: cervical_mucus
+                              type: VARCHAR(255)
+                        - column:
+                              name: cervix_opening_state
+                              type: VARCHAR(255)
+                        - column:
+                              name: cervix_height_position
+                              type: VARCHAR(255)
+                        - column:
+                              name: cervix_texture
+                              type: VARCHAR(255)
+                        - column:
+                              name: had_sex
+                              type: BOOLEAN
+                              defaultValueBoolean: false
+                              constraints:
+                                  nullable: false
+                        - column:
+                              name: with_contraceptives
+                              type: BOOLEAN
+                              defaultValueBoolean: false
+                              constraints:
+                                  nullable: false
+                        - column:
+                              name: disturbances
+                              type: VARCHAR(255) []
+                        - column:
+                              name: other_disturbance_notes
+                              type: VARCHAR(1000)
+                        - column:
+                              name: notes
+                              type: VARCHAR(1000)
+          rollback:
+              - dropTable:
+                    tableName: track_day

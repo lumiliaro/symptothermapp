@@ -23,22 +23,26 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Entity
-@Table(name = "track_day")
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@Table(name = "track_day")
+@Entity
 public class TrackDay {
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "day", unique = true)
+    @Column(name = "day", nullable = false, unique = true)
     @NotNull(message = "Das Datum muss gesetzt sein.")
     @PastOrPresent(message = "Das Datum muss in der Vergangenheit oder Gegenwart liegen.")
     @Temporal(TemporalType.DATE)
@@ -67,22 +71,22 @@ public class TrackDay {
     @Column(name = "cervix_texture")
     private CervixTextureEnum cervixTexture;
 
-    @Column(name = "had_sex")
+    @Column(name = "had_sex", nullable = false)
     private Boolean hadSex = false;
 
     // mit Verhütungsmittel
-    @Column(name = "with_contraceptives")
+    @Column(name = "with_contraceptives", nullable = false)
     private Boolean withContraceptives = false;
 
     @Column(name = "disturbances")
     @Enumerated(EnumType.STRING)
     private List<DisturbanceEnum> disturbances;
 
-    @Column(name = "other_disturbance_notes")
+    @Column(name = "other_disturbance_notes", length = 1000)
     @Size(max = 1000, message = "Die Sonstigen Störungen dürfen nicht länger als 1000 Zeichen lang sein.")
     private String otherDisturbanceNotes;
 
-    @Column(name = "notes")
+    @Column(name = "notes", length = 1000)
     @Size(max = 1000, message = "Die Notizen dürfen nicht länger als 1000 Zeichen lang sein.")
     private String notes;
 }
