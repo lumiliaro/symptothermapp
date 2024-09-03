@@ -83,7 +83,3 @@ VOLUME ["/app/db/hsqldb"]
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
-## Temp
-
-docker build -t 12ukas/symptothermapp:latest . --push

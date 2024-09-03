@@ -71,9 +71,7 @@ const injectedRtkApi = api
         GetTrackDayByDateApiResponse,
         GetTrackDayByDateApiArg
       >({
-        query: (queryArg) => ({
-          url: `/api/track-days/date/${queryArg.trackDay}`,
-        }),
+        query: (queryArg) => ({ url: `/api/track-days/date/${queryArg.day}` }),
         providesTags: ["TrackDay"],
       }),
       getDisturbanceOptions: build.query<
@@ -157,7 +155,7 @@ export type GetTrackDaysByMonthAndYearApiArg = {
 };
 export type GetTrackDayByDateApiResponse = /** status 200 OK */ TrackDay;
 export type GetTrackDayByDateApiArg = {
-  trackDay: string;
+  day: string;
 };
 export type GetDisturbanceOptionsApiResponse = /** status 200 OK */ OptionDto[];
 export type GetDisturbanceOptionsApiArg = void;
@@ -198,8 +196,8 @@ export type TrackDayDto = {
   cervixOpeningState?: CervixOpeningStateEnum;
   cervixHeightPosition?: CervixHeightPositionEnum;
   cervixTexture?: CervixTextureEnum;
-  hadSex?: boolean;
-  withContraceptives?: boolean;
+  hadSex: boolean;
+  withContraceptives: boolean;
   disturbances?: DisturbanceEnum[];
   otherDisturbanceNotes?: string;
   notes?: string;
@@ -214,20 +212,20 @@ export type SortObject = {
 export type PageableObject = {
   offset?: number;
   sort?: SortObject[];
-  paged?: boolean;
-  pageNumber?: number;
   pageSize?: number;
+  pageNumber?: number;
+  paged?: boolean;
   unpaged?: boolean;
 };
 export type PageTrackDay = {
-  totalElements?: number;
   totalPages?: number;
+  totalElements?: number;
+  first?: boolean;
+  last?: boolean;
   size?: number;
   content?: TrackDay[];
   number?: number;
   sort?: SortObject[];
-  first?: boolean;
-  last?: boolean;
   numberOfElements?: number;
   pageable?: PageableObject;
   empty?: boolean;

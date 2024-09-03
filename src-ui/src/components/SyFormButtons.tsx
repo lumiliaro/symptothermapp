@@ -1,4 +1,6 @@
-import { Button, Group } from "@mantine/core";
+import { Group } from "@mantine/core";
+import SyCancelButton from "./SyCancelButton";
+import SyCreateSaveButton from "./SyCreateSaveButton";
 
 export default function SyFormButtons(props: {
     onReset: () => void;
@@ -7,18 +9,11 @@ export default function SyFormButtons(props: {
 }) {
     return (
         <Group justify="space-between">
-            <Button
-                type="button"
-                size="lg"
-                color="gray"
-                onClick={props.onReset}
-            >
-                Abbrechen
-            </Button>
-
-            <Button type="submit" size="lg" disabled={props.isSubmitDisabled}>
-                {props.formType === "create" ? "Erstellen" : "Speichern"}
-            </Button>
+            <SyCancelButton onReset={props.onReset} />
+            <SyCreateSaveButton
+                isSubmitDisabled={props.isSubmitDisabled}
+                formType={props.formType}
+            />
         </Group>
     );
 }
