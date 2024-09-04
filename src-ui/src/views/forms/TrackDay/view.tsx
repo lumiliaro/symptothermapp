@@ -1,4 +1,4 @@
-import { Center, Checkbox, Group, SimpleGrid } from "@mantine/core";
+import { Checkbox, Group, SimpleGrid } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -14,7 +14,6 @@ import SyDisturbanceMultiSelect from "../../../components/SyDisturbanceMultiSele
 import SySexCheckboxes from "../../../components/SySexCheckboxes";
 import SyTemperatureNumberInput from "../../../components/SyTemperatureNumberInput";
 import SyTextarea from "../../../components/SyTextarea";
-import SyTrackDayDatePicker from "../../../components/SyTrackDayDatePicker";
 import { DisturbanceEnum, TrackDay } from "../../../store/api/generatedApi";
 import { RootState } from "../../../store/store";
 
@@ -45,9 +44,6 @@ export default function TrackDayView(props: {
 
     return (
         <>
-            <Center>
-                <SyTrackDayDatePicker />
-            </Center>
             <Group justify="flex-end">
                 <SyCreateSaveButton
                     formType={formType}

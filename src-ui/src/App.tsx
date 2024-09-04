@@ -1,6 +1,7 @@
-import { Box, Container, Tabs } from "@mantine/core";
+import { Box, Center, Container, Tabs } from "@mantine/core";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import SyTrackDayDatePicker from "./components/SyTrackDayDatePicker";
 import { useLazyGetTrackDayByDateQuery } from "./store/api/lazyApi";
 import { RootState } from "./store/store";
 import CyclusView from "./views/forms/Cyclus/view";
@@ -34,11 +35,16 @@ export default function App() {
                 </Tabs.List>
                 <Tabs.Panel value="track">
                     <Box mt="sm" mb="lg">
-                        {trackDay.data ? (
-                            <TrackDayEdit data={trackDay?.data} />
-                        ) : (
-                            <TrackDayCreate />
-                        )}
+                        <>
+                            <Center>
+                                <SyTrackDayDatePicker />
+                            </Center>
+                            {trackDay.data ? (
+                                <TrackDayEdit data={trackDay?.data} />
+                            ) : (
+                                <TrackDayCreate />
+                            )}
+                        </>
                     </Box>
                 </Tabs.Panel>
                 <Tabs.Panel value="cyclus">
