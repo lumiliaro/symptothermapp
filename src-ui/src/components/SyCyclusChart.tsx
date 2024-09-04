@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useLazyGetCyclusStatisticByIdQuery } from "../store/api/lazyApi";
 
-export default function SyLineChart() {
+export default function SyCyclusChart() {
     const { watch } = useFormContext();
     const cyclusId: number | undefined = watch("cyclus");
     const [averageTemperature, setAverageTemperature] = useState<number>();

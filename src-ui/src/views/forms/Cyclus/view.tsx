@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
+import SyCyclusChart from "../../../components/SyCyclusChart";
 import SyCyclusStatisticSelect from "../../../components/SyCyclusStatisticSelect";
-import SyLineChart from "../../../components/SyLineChart";
 
 export default function CyclusView() {
     const form = useForm({
@@ -14,7 +14,7 @@ export default function CyclusView() {
         <FormProvider {...form}>
             <form>
                 <SyCyclusStatisticSelect />
-                <SyLineChart />
+                <SyCyclusChart />
             </form>
         </FormProvider>
     );

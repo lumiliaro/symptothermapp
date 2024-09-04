@@ -182,7 +182,7 @@ export type GetOneCyclusApiArg = {
   id: number;
 };
 export type GetCyclusStatisticByIdApiResponse =
-  /** status 200 OK */ TrackDayLineChartStatisticDto[];
+  /** status 200 OK */ CyclusStatisticDto[];
 export type GetCyclusStatisticByIdApiArg = {
   cyclusId: number;
 };
@@ -227,14 +227,14 @@ export type SortObject = {
 export type PageableObject = {
   offset?: number;
   sort?: SortObject[];
-  paged?: boolean;
-  pageSize?: number;
   pageNumber?: number;
+  pageSize?: number;
+  paged?: boolean;
   unpaged?: boolean;
 };
 export type PageTrackDay = {
-  totalElements?: number;
   totalPages?: number;
+  totalElements?: number;
   size?: number;
   content?: TrackDay[];
   number?: number;
@@ -261,10 +261,11 @@ export type Cyclus = {
   updatedAt?: string;
   date: string;
 };
-export type TrackDayLineChartStatisticDto = {
+export type CyclusStatisticDto = {
   date: string;
   temperature?: number;
   cervicalMucus?: string;
+  hasBleeding?: boolean;
   createdAt?: string;
   updatedAt?: string;
 };

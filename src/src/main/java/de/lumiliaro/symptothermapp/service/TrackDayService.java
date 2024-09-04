@@ -13,8 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import de.lumiliaro.symptothermapp.dto.CyclusStatisticDto;
 import de.lumiliaro.symptothermapp.dto.TrackDayDto;
-import de.lumiliaro.symptothermapp.dto.TrackDayLineChartStatisticDto;
 import de.lumiliaro.symptothermapp.exception.ItemAlreadyExistsException;
 import de.lumiliaro.symptothermapp.exception.ItemNotFoundException;
 import de.lumiliaro.symptothermapp.helper.CalenderHelper;
@@ -119,9 +119,9 @@ public class TrackDayService {
         trackDayRepository.deleteById(id);
     }
 
-    public List<TrackDayLineChartStatisticDto> getCyclusData(Date cyclusStartDate) {
+    public List<CyclusStatisticDto> getCyclusData(Date cyclusStartDate) {
         List<TrackDay> trackDays = trackDayRepository.findTop30ByDayGreaterThanEqualOrderByDayAsc(cyclusStartDate);
-        List<TrackDayLineChartStatisticDto> response = new ArrayList<>();
+        List<CyclusStatisticDto> response = new ArrayList<>();
         SimpleDateFormat dateFormatterTrackDay = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat dateFormatterResponse = new SimpleDateFormat("dd");
 
@@ -139,15 +139,16 @@ public class TrackDayService {
                     break;
                 }
                 TrackDay trackDay = trackDayOpt.get();
-                response.add(new TrackDayLineChartStatisticDto(dateFormatterResponse.format(
+                response.add(new CyclusStatisticDto(dateFormatterResponse.format(
                         trackDay.getDay())
                         + (trackDay.getCervicalMucus() != null ? " " + trackDay.getCervicalMucus().getValue() : ""),
                         trackDay.getTemperature(),
                         trackDay.getCervicalMucus() != null ? trackDay.getCervicalMucus().getValue() : null,
+                        trackDay.getBleeding() != null,
                         trackDay.getCreatedAt(),
                         trackDay.getUpdatedAt()));
             } else {
-                response.add(new TrackDayLineChartStatisticDto(dateFormatterResponse.format(date), null, null,
+                response.add(new CyclusStatisticDto(dateFormatterResponse.format(date), null, null, false,
                         null, null));
             }
         }

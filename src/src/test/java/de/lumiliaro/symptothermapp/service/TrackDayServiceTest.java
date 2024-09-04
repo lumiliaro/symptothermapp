@@ -1,7 +1,7 @@
 package de.lumiliaro.symptothermapp.service;
 
+import de.lumiliaro.symptothermapp.dto.CyclusStatisticDto;
 import de.lumiliaro.symptothermapp.dto.TrackDayDto;
-import de.lumiliaro.symptothermapp.dto.TrackDayLineChartStatisticDto;
 import de.lumiliaro.symptothermapp.exception.ItemAlreadyExistsException;
 import de.lumiliaro.symptothermapp.exception.ItemNotFoundException;
 import de.lumiliaro.symptothermapp.mapper.TrackDayMapperImpl;
@@ -296,7 +296,7 @@ class TrackDayServiceTest {
         when(repository.findByDayBetween(startDate, endDate)).thenReturn(trackDays);
 
         // When
-        List<TrackDayLineChartStatisticDto> result = service.getTrackDaysForMonthStatistic(month, year);
+        List<CyclusStatisticDto> result = service.getTrackDaysForMonthStatistic(month, year);
 
         // Then
         assertNotNull(result);
