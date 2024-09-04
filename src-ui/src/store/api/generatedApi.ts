@@ -49,15 +49,6 @@ const injectedRtkApi = api
         }),
         invalidatesTags: ["TrackDay"],
       }),
-      getTrackDaysStatisticByMonthAndYear: build.query<
-        GetTrackDaysStatisticByMonthAndYearApiResponse,
-        GetTrackDaysStatisticByMonthAndYearApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/track-days/statistic/${queryArg.month}/${queryArg.year}`,
-        }),
-        providesTags: ["TrackDay"],
-      }),
       getTrackDaysByMonthAndYear: build.query<
         GetTrackDaysByMonthAndYearApiResponse,
         GetTrackDaysByMonthAndYearApiArg
@@ -116,6 +107,23 @@ const injectedRtkApi = api
         query: () => ({ url: `/api/options/bleeding` }),
         providesTags: ["options"],
       }),
+      getAllCycli: build.query<GetAllCycliApiResponse, GetAllCycliApiArg>({
+        query: () => ({ url: `/api/cyclus` }),
+        providesTags: ["TrackDay"],
+      }),
+      getOneCyclus: build.query<GetOneCyclusApiResponse, GetOneCyclusApiArg>({
+        query: (queryArg) => ({ url: `/api/cyclus/${queryArg.id}` }),
+        providesTags: ["TrackDay"],
+      }),
+      getCyclusStatisticById: build.query<
+        GetCyclusStatisticByIdApiResponse,
+        GetCyclusStatisticByIdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/cyclus/statistic/${queryArg.cyclusId}`,
+        }),
+        providesTags: ["TrackDay"],
+      }),
     }),
     overrideExisting: false,
   });
@@ -140,12 +148,6 @@ export type GetTrackDaysApiArg = {
 export type StoreTrackDayApiResponse = unknown;
 export type StoreTrackDayApiArg = {
   trackDayDto: TrackDayDto;
-};
-export type GetTrackDaysStatisticByMonthAndYearApiResponse =
-  /** status 200 OK */ TrackDayLineChartStatisticDto[];
-export type GetTrackDaysStatisticByMonthAndYearApiArg = {
-  month: number;
-  year: number;
 };
 export type GetTrackDaysByMonthAndYearApiResponse =
   /** status 200 OK */ TrackDay[];
@@ -173,8 +175,21 @@ export type GetCervicalMucusOptionsApiResponse =
 export type GetCervicalMucusOptionsApiArg = void;
 export type GetBleedingOptionsApiResponse = /** status 200 OK */ OptionDto[];
 export type GetBleedingOptionsApiArg = void;
+export type GetAllCycliApiResponse = /** status 200 OK */ Cyclus[];
+export type GetAllCycliApiArg = void;
+export type GetOneCyclusApiResponse = /** status 200 OK */ Cyclus;
+export type GetOneCyclusApiArg = {
+  id: number;
+};
+export type GetCyclusStatisticByIdApiResponse =
+  /** status 200 OK */ TrackDayLineChartStatisticDto[];
+export type GetCyclusStatisticByIdApiArg = {
+  cyclusId: number;
+};
 export type TrackDay = {
   id?: number;
+  createdAt?: string;
+  updatedAt?: string;
   day: string;
   temperature?: number;
   bleeding?: BleedingEnum;
@@ -212,20 +227,20 @@ export type SortObject = {
 export type PageableObject = {
   offset?: number;
   sort?: SortObject[];
+  paged?: boolean;
   pageSize?: number;
   pageNumber?: number;
-  paged?: boolean;
   unpaged?: boolean;
 };
 export type PageTrackDay = {
-  totalPages?: number;
   totalElements?: number;
-  first?: boolean;
-  last?: boolean;
+  totalPages?: number;
   size?: number;
   content?: TrackDay[];
   number?: number;
   sort?: SortObject[];
+  first?: boolean;
+  last?: boolean;
   numberOfElements?: number;
   pageable?: PageableObject;
   empty?: boolean;
@@ -235,15 +250,23 @@ export type Pageable = {
   size?: number;
   sort?: string[];
 };
-export type TrackDayLineChartStatisticDto = {
-  date: string;
-  temperature?: number;
-  cervicalMucus?: string;
-};
 export type OptionDto = {
   label: string;
   value: string;
   disabled?: boolean;
+};
+export type Cyclus = {
+  id?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  date: string;
+};
+export type TrackDayLineChartStatisticDto = {
+  date: string;
+  temperature?: number;
+  cervicalMucus?: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 export enum BleedingEnum {
   Strong = "STRONG",
@@ -296,7 +319,6 @@ export const {
   useDeleteTrackDayMutation,
   useGetTrackDaysQuery,
   useStoreTrackDayMutation,
-  useGetTrackDaysStatisticByMonthAndYearQuery,
   useGetTrackDaysByMonthAndYearQuery,
   useGetTrackDayByDateQuery,
   useGetDisturbanceOptionsQuery,
@@ -305,4 +327,7 @@ export const {
   useGetCervixHeightPositionOptionsQuery,
   useGetCervicalMucusOptionsQuery,
   useGetBleedingOptionsQuery,
+  useGetAllCycliQuery,
+  useGetOneCyclusQuery,
+  useGetCyclusStatisticByIdQuery,
 } = injectedRtkApi;

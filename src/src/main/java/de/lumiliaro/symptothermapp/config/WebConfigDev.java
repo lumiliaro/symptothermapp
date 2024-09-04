@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Profile("dev")
 public class WebConfigDev implements WebMvcConfigurer {
 
-    @Value("${frontend.port}")
+    @Value("${app.frontend.port}")
     private String port;
 
     @Override

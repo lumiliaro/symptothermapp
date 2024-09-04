@@ -4,4 +4,5 @@ export const {
     useLazyGetTrackDayByDateQuery,
     useLazyGetTrackDaysByMonthAndYearQuery,
     useLazyGetTrackDaysStatisticByMonthAndYearQuery,
+    useLazyGetCyclusStatisticByIdQuery,
 } = api;

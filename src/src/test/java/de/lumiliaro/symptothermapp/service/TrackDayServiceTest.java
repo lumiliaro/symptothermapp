@@ -1,34 +1,5 @@
 package de.lumiliaro.symptothermapp.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-
 import de.lumiliaro.symptothermapp.dto.TrackDayDto;
 import de.lumiliaro.symptothermapp.dto.TrackDayLineChartStatisticDto;
 import de.lumiliaro.symptothermapp.exception.ItemAlreadyExistsException;
@@ -36,6 +7,18 @@ import de.lumiliaro.symptothermapp.exception.ItemNotFoundException;
 import de.lumiliaro.symptothermapp.mapper.TrackDayMapperImpl;
 import de.lumiliaro.symptothermapp.model.TrackDay;
 import de.lumiliaro.symptothermapp.repository.TrackDayRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.*;
+
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 class TrackDayServiceTest {
 
@@ -96,14 +79,14 @@ class TrackDayServiceTest {
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         Date endDate = calendar.getTime();
 
-        when(repository.findAllByMonth(startDate, endDate)).thenReturn(trackDays);
+        when(repository.findByDayBetween(startDate, endDate)).thenReturn(trackDays);
 
         // When
         List<TrackDay> result = service.findAllByMonth(month, year);
 
         // Then
-        // assertEquals(trackDays.size(), result.size());
-        // verify(repository, times(1)).findAllByMonth(startDate, endDate);
+        assertEquals(trackDays.size(), result.size());
+        verify(repository, times(1)).findByDayBetween(startDate, endDate);
     }
 
     @Test
@@ -143,8 +126,8 @@ class TrackDayServiceTest {
     void testSave_WhenTrackDayDoesNotExist() throws ItemAlreadyExistsException {
         // Given
         Date trackDayDate = new Date();
-        TrackDayDto trackDayDto = new TrackDayDto(null, trackDayDate, null, null, null, null, null, false, null, null,
-                null, null);
+        TrackDayDto trackDayDto = new TrackDayDto(null, trackDayDate, null, null, null, null, null, null, null, null
+        );
 
         TrackDay trackDay = new TrackDayMapperImpl().fromDto(trackDayDto);
 
@@ -168,8 +151,8 @@ class TrackDayServiceTest {
     void testSave_WhenTrackDayAlreadyExists() {
         // Given
         Date trackDayDate = new Date();
-        TrackDayDto trackDayDto = new TrackDayDto(null, trackDayDate, null, null, null, null, null, null, null, null,
-                null, null);
+        TrackDayDto trackDayDto = new TrackDayDto(null, trackDayDate, null, null, null, null, null, null, null, null
+        );
 
         when(repository.existsByDay(trackDayDate)).thenReturn(true);
 
@@ -189,8 +172,7 @@ class TrackDayServiceTest {
         Long id = 1L;
         Date trackDayDate = new Date();
         TrackDayDto trackDayDto = new TrackDayDto(null, trackDayDate, null, null, null, null, null,
-                false, null, null,
-                null, null); // Beispielwert, wenn kein Geschlechtsverkehr stattgefunden hat
+                null, null, null); // Beispielwert, wenn kein Geschlechtsverkehr stattgefunden hat
 
         TrackDay existingTrackDay = new TrackDay(id, trackDayDate, null, null, null, null, null, null, null, null, null,
                 null,
@@ -214,8 +196,8 @@ class TrackDayServiceTest {
     void testUpdate_WhenTrackDayNotFound() {
         // Given
         Long id = 1L;
-        TrackDayDto trackDayDto = new TrackDayDto(null, new Date(), null, null, null, null, null, null, null, null,
-                null, null);
+        TrackDayDto trackDayDto = new TrackDayDto(null, new Date(), null, null, null, null, null, null, null, null
+        );
 
         when(repository.findById(id)).thenReturn(Optional.empty());
 
@@ -234,8 +216,8 @@ class TrackDayServiceTest {
         // Given
         Long id = 1L;
         Date trackDayDate = new Date();
-        TrackDayDto trackDayDto = new TrackDayDto(null, trackDayDate, null, null, null, null, null, null, null, null,
-                null, null);
+        TrackDayDto trackDayDto = new TrackDayDto(null, trackDayDate, null, null, null, null, null, null, null, null
+        );
 
         TrackDay existingTrackDay = new TrackDay(id, trackDayDate, null, null, null, null, null, null, null, null, null,
                 null,
@@ -311,7 +293,7 @@ class TrackDayServiceTest {
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         Date endDate = calendar.getTime();
 
-        when(repository.findAllByMonth(startDate, endDate)).thenReturn(trackDays);
+        when(repository.findByDayBetween(startDate, endDate)).thenReturn(trackDays);
 
         // When
         List<TrackDayLineChartStatisticDto> result = service.getTrackDaysForMonthStatistic(month, year);

@@ -60,3 +60,73 @@ databaseChangeLog:
           rollback:
               - dropTable:
                     tableName: track_day
+
+    - changeSet:
+          id: updateTableTrackDay_addTimestamps
+          author: Lukas Röhr
+          changes:
+              - addColumn:
+                    tableName: track_day
+                    columns:
+                        - column:
+                              name: created_at
+                              type: timestamp
+                              constraints:
+                                  nullable: false
+                              defaultValueComputed: CURRENT_TIMESTAMP
+                        - column:
+                              name: updated_at
+                              type: timestamp
+                              constraints:
+                                  nullable: true
+                              defaultValueComputed: CURRENT_TIMESTAMP
+              - addNotNullConstraint:
+                    tableName: track_day
+                    columnName: created_at
+                    columnDataType: timestamp
+          rollback:
+              - dropColumn:
+                    name: updated_at
+                    tableName: track_day
+              - dropColumn:
+                    name: created_at
+                    tableName: track_day
+
+    - changeSet:
+          id: createTableCyclus
+          author: Lukas Röhr
+          changes:
+              - createTable:
+                    tableName: cyclus
+                    columns:
+                        - column:
+                              name: id
+                              type: BIGINT
+                              autoIncrement: true
+                              constraints:
+                                  primaryKey: true
+                        - column:
+                              name: date
+                              type: DATE
+                              constraints:
+                                  nullable: false
+                                  unique: true
+                        - column:
+                              name: created_at
+                              type: timestamp
+                              constraints:
+                                  nullable: false
+                              defaultValueComputed: CURRENT_TIMESTAMP
+                        - column:
+                              name: updated_at
+                              type: timestamp
+                              constraints:
+                                  nullable: true
+                              defaultValueComputed: CURRENT_TIMESTAMP
+              - addNotNullConstraint:
+                    tableName: cyclus
+                    columnName: created_at
+                    columnDataType: timestamp
+          rollback:
+              - dropTable:
+                    tableName: cyclus

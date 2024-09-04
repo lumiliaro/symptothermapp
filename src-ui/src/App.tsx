@@ -1,10 +1,9 @@
-import { Center, Container, Tabs } from "@mantine/core";
+import { Box, Container, Tabs } from "@mantine/core";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import SyLineChart from "./components/SyLineChart";
-import SyTrackDayDatePicker from "./components/SyTrackDayDatePicker";
 import { useLazyGetTrackDayByDateQuery } from "./store/api/lazyApi";
 import { RootState } from "./store/store";
+import CyclusView from "./views/forms/Cyclus/view";
 import TrackDayCreate from "./views/forms/TrackDay/create";
 import TrackDayEdit from "./views/forms/TrackDay/edit";
 
@@ -24,9 +23,6 @@ export default function App() {
 
     return (
         <Container>
-            <Center>
-                <SyTrackDayDatePicker />
-            </Center>
             <Tabs
                 defaultValue="track"
                 orientation="horizontal"
@@ -34,17 +30,21 @@ export default function App() {
             >
                 <Tabs.List>
                     <Tabs.Tab value="track">Erfassung</Tabs.Tab>
-                    <Tabs.Tab value="statistic">Statistik</Tabs.Tab>
+                    <Tabs.Tab value="cyclus">Zyklus</Tabs.Tab>
                 </Tabs.List>
                 <Tabs.Panel value="track">
-                    {trackDay.data ? (
-                        <TrackDayEdit data={trackDay?.data} />
-                    ) : (
-                        <TrackDayCreate />
-                    )}
+                    <Box mt="sm" mb="lg">
+                        {trackDay.data ? (
+                            <TrackDayEdit data={trackDay?.data} />
+                        ) : (
+                            <TrackDayCreate />
+                        )}
+                    </Box>
                 </Tabs.Panel>
-                <Tabs.Panel value="statistic">
-                    <SyLineChart />
+                <Tabs.Panel value="cyclus">
+                    <Box mt="sm" mb="lg">
+                        <CyclusView />
+                    </Box>
                 </Tabs.Panel>
             </Tabs>
         </Container>

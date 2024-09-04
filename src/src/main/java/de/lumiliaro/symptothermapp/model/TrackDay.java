@@ -13,9 +13,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -35,12 +32,7 @@ import lombok.ToString;
 @ToString
 @Table(name = "track_day")
 @Entity
-public class TrackDay {
-
-    @Id
-    @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class TrackDay extends BaseEntity {
 
     @Column(name = "day", nullable = false, unique = true)
     @NotNull(message = "Das Datum muss gesetzt sein.")

@@ -27,13 +27,6 @@ spring:
 
     liquibase:
         change-log: classpath:db/changelog/db.changelog-master.yaml
-
-    profiles:
-        active:
-            - dev
 springdoc:
     swagger-ui:
         path: /swagger-ui.html
-
-frontend:
-    port: 3232

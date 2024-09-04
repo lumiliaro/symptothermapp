@@ -1,42 +1,38 @@
 import { LineChart } from "@mantine/charts";
 import { ScrollAreaAutosize } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useLazyGetTrackDaysStatisticByMonthAndYearQuery } from "../store/api/lazyApi";
-import { RootState } from "../store/store";
+import { useFormContext } from "react-hook-form";
+import { useLazyGetCyclusStatisticByIdQuery } from "../store/api/lazyApi";
 
 export default function SyLineChart() {
-    const trackDayDate = useSelector((state: RootState) => state.trackDayDate);
+    const { watch } = useFormContext();
+    const cyclusId: number | undefined = watch("cyclus");
     const [averageTemperature, setAverageTemperature] = useState<number>();
-    const [getStatisticData, { data: statisticData }] =
-        useLazyGetTrackDaysStatisticByMonthAndYearQuery();
+    const [getCyclusStatisticData, { data: cyclusStatisticData }] =
+        useLazyGetCyclusStatisticByIdQuery();
 
     useEffect(() => {
-        if (trackDayDate?.selectedMonth && trackDayDate?.selectedYear) {
-            const fetchData = async (month: number, year: number) => {
-                await getStatisticData({
-                    month,
-                    year,
+        if (cyclusId) {
+            const fetchData = async (cyclusId: number) => {
+                await getCyclusStatisticData({
+                    cyclusId,
                 });
             };
 
-            void fetchData(
-                trackDayDate?.selectedMonth,
-                trackDayDate?.selectedYear
-            );
+            void fetchData(cyclusId);
         }
-    }, [trackDayDate, getStatisticData]);
+    }, [cyclusId, getCyclusStatisticData]);
 
     useEffect(() => {
         // Calculate average temperature
-        const daysWithTemperature = statisticData?.filter(
+        const daysWithTemperature = cyclusStatisticData?.filter(
             (day) => day.temperature
         );
         if (daysWithTemperature?.length === 0) {
             setAverageTemperature(undefined);
             return;
         }
-        const sumTemperature = statisticData?.reduce(
+        const sumTemperature = cyclusStatisticData?.reduce(
             (prevValue, currentValue) =>
                 prevValue + (currentValue?.temperature || 0),
             0
@@ -44,14 +40,14 @@ export default function SyLineChart() {
         if (sumTemperature && daysWithTemperature) {
             setAverageTemperature(sumTemperature / daysWithTemperature.length);
         }
-    }, [statisticData, setAverageTemperature]);
+    }, [cyclusStatisticData, setAverageTemperature]);
 
     return (
         <ScrollAreaAutosize>
             <LineChart
                 h="45vh"
                 w="90rem"
-                data={statisticData || []}
+                data={cyclusStatisticData || []}
                 p="lg"
                 dataKey="date"
                 series={[{ name: "temperature", color: "indigo.6" }]}

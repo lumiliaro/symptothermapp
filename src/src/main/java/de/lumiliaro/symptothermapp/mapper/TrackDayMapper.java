@@ -14,10 +14,14 @@ public interface TrackDayMapper {
     TrackDayDto toDto(TrackDay trackDay);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     TrackDay fromDto(TrackDayDto trackDayDto);
 
     List<TrackDayDto> toDtoList(List<TrackDay> trackDayList);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "created_at", ignore = true)
+    @Mapping(target = "updated_at", ignore = true)
     List<TrackDay> fromDtoList(List<TrackDayDto> trackDayList);
 }

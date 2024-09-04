@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import de.lumiliaro.symptothermapp.dto.TrackDayDto;
-import de.lumiliaro.symptothermapp.dto.TrackDayLineChartStatisticDto;
 import de.lumiliaro.symptothermapp.model.TrackDay;
 import de.lumiliaro.symptothermapp.service.TrackDayService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -53,14 +52,7 @@ public class TrackDayController {
     @GetMapping("/date/{day}")
     public final ResponseEntity<TrackDay> getTrackDayByDate(
             @PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd") Date day) {
-        return ResponseEntity.ok(service.getRepository().findByDay(day));
-    }
-
-    @GetMapping("/statistic/{month}/{year}")
-    public final ResponseEntity<List<TrackDayLineChartStatisticDto>> getTrackDaysStatisticByMonthAndYear(
-            @PathVariable int month,
-            @PathVariable int year) {
-        return ResponseEntity.ok(service.getTrackDaysForMonthStatistic(month, year));
+        return ResponseEntity.ok(service.getTrackDayRepository().findByDay(day));
     }
 
     @PostMapping

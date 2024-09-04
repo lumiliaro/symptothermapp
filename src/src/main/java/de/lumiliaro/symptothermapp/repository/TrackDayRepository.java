@@ -22,4 +22,6 @@ public interface TrackDayRepository
     List<TrackDay> findByDayBetween(Date startDate, Date endDate);
 
     TrackDay findByDayAndIdNot(Date day, Long id);
+
+    List<TrackDay> findTop30ByDayGreaterThanEqualOrderByDayAsc(Date date);
 }

@@ -17,9 +17,9 @@ WORKDIR /app
 COPY --from=compile /app/build/libs/*.jar app.jar
 
 # Set up the volume for HSQLDB data
-RUN mkdir -p /app/data/hsqldb
-VOLUME ["/app/data/hsqldb"]
-ENV DB_PATH=jdbc:hsqldb:file:/app/data/hsqldb/db
+# RUN mkdir -p /app/data/hsqldb
+# VOLUME ["/app/data/hsqldb"]
+# ENV DB_PATH=jdbc:hsqldb:file:/app/data/hsqldb/db
 ENV SPRING_PROFILES_ACTIVE=prod
 
 EXPOSE 8080

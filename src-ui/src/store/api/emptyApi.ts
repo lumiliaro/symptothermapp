@@ -6,4 +6,5 @@ export const emptySplitApi = createApi({
     }),
     endpoints: () => ({}),
     refetchOnReconnect: true,
+    refetchOnFocus: true,
 });
