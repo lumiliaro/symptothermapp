@@ -34,7 +34,7 @@ export default function App() {
                     <Tabs.Tab value="cyclus">Zyklus</Tabs.Tab>
                 </Tabs.List>
                 <Tabs.Panel value="track">
-                    <Box mt="sm" mb="lg">
+                    <Box mt="lg" mb="lg">
                         <>
                             <Center>
                                 <SyTrackDayDatePicker />
@@ -48,7 +48,7 @@ export default function App() {
                     </Box>
                 </Tabs.Panel>
                 <Tabs.Panel value="cyclus">
-                    <Box mt="sm" mb="lg">
+                    <Box mt="lg" mb="lg">
                         <CyclusView />
                     </Box>
                 </Tabs.Panel>

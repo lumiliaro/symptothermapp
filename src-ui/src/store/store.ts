@@ -1,12 +1,14 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "./api/generatedApi";
+import CyclusSlice, { cyclusSliceName } from "./Cyclus.Slice";
 import { queryErrorLogger } from "./middlewares/queryErrorLogger";
 import TrackDayDateSlice, { trackDayDateSliceName } from "./TrackDayDate.Slice";
 
 const reducer = combineReducers({
     [api.reducerPath]: api.reducer,
     [trackDayDateSliceName]: TrackDayDateSlice,
+    [cyclusSliceName]: CyclusSlice,
 });
 
 export const store = configureStore({

@@ -123,7 +123,7 @@ public class TrackDayService {
         List<TrackDay> trackDays = trackDayRepository.findTop30ByDayGreaterThanEqualOrderByDayAsc(cyclusStartDate);
         List<CyclusStatisticDto> response = new ArrayList<>();
         SimpleDateFormat dateFormatterTrackDay = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat dateFormatterResponse = new SimpleDateFormat("dd");
+        SimpleDateFormat dateFormatterResponse = new SimpleDateFormat("dd.MM");
 
         for (int day = 0; day < 30; day++) {
             Date date = DateUtils.addDays(cyclusStartDate, day);
@@ -139,17 +139,23 @@ public class TrackDayService {
                     break;
                 }
                 TrackDay trackDay = trackDayOpt.get();
-                response.add(new CyclusStatisticDto(dateFormatterResponse.format(
-                        trackDay.getDay())
-                        + (trackDay.getCervicalMucus() != null ? " " + trackDay.getCervicalMucus().getValue() : ""),
+                response.add(new CyclusStatisticDto(
+                        String.valueOf(day + 1),
+                        dateFormatterResponse.format(trackDay.getDay()),
                         trackDay.getTemperature(),
                         trackDay.getCervicalMucus() != null ? trackDay.getCervicalMucus().getValue() : null,
-                        trackDay.getBleeding() != null,
+                        trackDay.getBleeding() != null ? trackDay.getBleeding().getValue() : null,
                         trackDay.getCreatedAt(),
                         trackDay.getUpdatedAt()));
             } else {
-                response.add(new CyclusStatisticDto(dateFormatterResponse.format(date), null, null, false,
-                        null, null));
+                response.add(new CyclusStatisticDto(
+                        String.valueOf(day + 1),
+                        dateFormatterResponse.format(date),
+                        null,
+                        null,
+                        null,
+                        null,
+                        null));
             }
         }
 

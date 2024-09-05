@@ -35,15 +35,13 @@ public class CyclusService {
   }
 
   public void save(Cyclus cyclus) {
-    // There is already a cyclus on that day
-    if (cyclusRepository.findByDate(cyclus.getDate()) != null) {
-      return;
-    }
+    // There is already one cyclus today or past 10 days
+    for (int day = 0; day < 10; day++) {
+      Date past10Days = DateUtils.addDays(cyclus.getDate(), -day);
 
-    // There is already a cyclus minus one day
-    Date yesterday = DateUtils.addDays(cyclus.getDate(), -1);
-    if (cyclusRepository.findByDate(yesterday) != null) {
-      return;
+      if (cyclusRepository.findByDate(past10Days) != null) {
+        return;
+      }
     }
 
     cyclusRepository.save(cyclus);

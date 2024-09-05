@@ -1,4 +1,4 @@
-import { Checkbox, Group, SimpleGrid } from "@mantine/core";
+import { Box, Checkbox, Group, SimpleGrid } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -23,7 +23,11 @@ export default function TrackDayView(props: {
 }) {
     const { formType, onDelete } = props;
     const { reset, watch, setValue } = useFormContext<TrackDay>();
-    const [disturbances, temperature] = watch(["disturbances", "temperature"]);
+    const [disturbances, temperature, bleeding] = watch([
+        "disturbances",
+        "temperature",
+        "bleeding",
+    ]);
     const selectedTrackDate = useSelector(
         (state: RootState) => state.trackDayDate.selectedDateString
     );
@@ -42,8 +46,14 @@ export default function TrackDayView(props: {
         }
     }, [temperature]);
 
+    useEffect(() => {
+        if (!isTemperatureInputDisabled && bleeding) {
+            setIsTemperatureInputDisabled(true);
+        }
+    }, [isTemperatureInputDisabled, bleeding]);
+
     return (
-        <>
+        <Box mt="lg">
             <Group justify="flex-end">
                 <SyCreateSaveButton
                     formType={formType}
@@ -101,6 +111,6 @@ export default function TrackDayView(props: {
                     />
                 </Group>
             </SimpleGrid>
-        </>
+        </Box>
     );
 }

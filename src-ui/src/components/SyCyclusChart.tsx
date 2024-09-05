@@ -1,12 +1,24 @@
-import { LineChart } from "@mantine/charts";
 import { ScrollAreaAutosize } from "@mantine/core";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useSelector } from "react-redux";
+import {
+    CartesianGrid,
+    Line,
+    LineChart,
+    ReferenceLine,
+    Tooltip,
+    XAxis,
+    YAxis,
+} from "recharts";
 import { useLazyGetCyclusStatisticByIdQuery } from "../store/api/lazyApi";
+import { RootState } from "../store/store";
+import SyCyclusChartTooltip from "./SyCyclusChartTooltip";
 
 export default function SyCyclusChart() {
-    const { watch } = useFormContext();
-    const cyclusId: number | undefined = watch("cyclus");
+    const cyclusId = useSelector(
+        (state: RootState) => state.cyclus.selectedCyclusId
+    );
     const [averageTemperature, setAverageTemperature] = useState<number>();
     const [getCyclusStatisticData, { data: cyclusStatisticData }] =
         useLazyGetCyclusStatisticByIdQuery();
@@ -42,32 +54,85 @@ export default function SyCyclusChart() {
         }
     }, [cyclusStatisticData, setAverageTemperature]);
 
+    if (!cyclusId) {
+        return <></>;
+    }
+
     return (
-        <ScrollAreaAutosize>
+        <ScrollAreaAutosize mt="lg" offsetScrollbars={true}>
             <LineChart
-                h="45vh"
-                w="90rem"
+                width={2000}
+                height={520}
                 data={cyclusStatisticData || []}
-                p="lg"
-                dataKey="date"
-                series={[{ name: "temperature", color: "indigo.6" }]}
-                curveType="linear"
-                tickLine="xy"
-                gridAxis="xy"
-                connectNulls={false}
-                yAxisProps={{ domain: ["auto", "auto"] }}
-                valueFormatter={(temperature) => `${temperature.toFixed(2)} °C`}
-                tooltipAnimationDuration={200}
-                referenceLines={[
-                    {
-                        y: averageTemperature,
-                        label: `Durchschnitt ${averageTemperature?.toFixed(
-                            2
-                        )} °C`,
-                        color: "red.6",
-                    },
-                ]}
-            />
+            >
+                <CartesianGrid strokeDasharray="4 4" />
+                <XAxis
+                    xAxisId={0}
+                    dataKey="date"
+                    type="category"
+                    orientation="top"
+                    interval={0}
+                    tickLine={true}
+                />
+                <XAxis
+                    xAxisId={1}
+                    dataKey="createdAt"
+                    type="category"
+                    orientation="top"
+                    tickFormatter={(createdAt: string) =>
+                        createdAt ? dayjs(createdAt).format("HH:mm") : ""
+                    }
+                    interval={0}
+                    tickLine={true}
+                />
+                <XAxis
+                    xAxisId={2}
+                    dataKey="bleeding"
+                    interval={0}
+                    orientation="bottom"
+                    tickFormatter={(value) => (value ? "🩸" : "")}
+                    label={{
+                        value: "",
+                        position: "bottom",
+                        offset: 0,
+                    }}
+                    dy={4}
+                    tickLine={true}
+                    axisLine={true}
+                />
+                <XAxis
+                    xAxisId={3}
+                    dataKey="cervicalMucus"
+                    type="category"
+                    interval={0}
+                    label={{
+                        value: "",
+                        position: "bottom",
+                        offset: 0,
+                    }}
+                    tickLine={true}
+                    axisLine={true}
+                />
+                <YAxis domain={["auto", "auto"]} type="number" />
+                <ReferenceLine
+                    y={averageTemperature}
+                    label={{
+                        value: `${averageTemperature?.toFixed(2)} °C`,
+                        position: "insideLeft",
+                        fill: "red",
+                        dy: -10,
+                    }}
+                    stroke="#fa5252"
+                />
+                <Tooltip content={<SyCyclusChartTooltip />} />
+                <Line
+                    type="linear"
+                    dataKey="temperature"
+                    stroke="#4c6ef5"
+                    activeDot={{ r: 8 }}
+                    dot={{ r: 5, fill: "#4c6ef5" }}
+                />
+            </LineChart>
         </ScrollAreaAutosize>
     );
 }

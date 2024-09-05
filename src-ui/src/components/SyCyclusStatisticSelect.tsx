@@ -1,15 +1,40 @@
-import { SelectProps } from "@mantine/core";
+import { Select, SelectProps } from "@mantine/core";
 import dayjs from "dayjs";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetAllCycliQuery } from "../store/api/generatedApi";
-import SySelect from "./SySelect";
+import { setSelectedCyclusId } from "../store/Cyclus.Slice";
+import { RootState } from "../store/store";
+import SyInputSkeleton from "./SyInputSkeleton";
 
 export default function SyCyclusStatisticSelect(props: SelectProps) {
     const { data: cycli } = useGetAllCycliQuery();
+    const dispatch = useDispatch();
+    const cyclusId = useSelector(
+        (state: RootState) => state.cyclus.selectedCyclusId
+    );
+
+    if (!cycli) {
+        return <SyInputSkeleton />;
+    }
+
     const data =
         cycli?.map((cyclus) => ({
             label: dayjs(cyclus.date, "YYYY-MM-DD").format("DD.MM.YYYY"),
             value: cyclus.id?.toString() || "",
         })) || [];
 
-    return <SySelect name="cyclus" label="Zyklus" data={data} {...props} />;
+    return (
+        <Select
+            data={data}
+            label="Zyklus"
+            placeholder="Bitte auswählen"
+            size="md"
+            color="blue"
+            {...props}
+            value={cyclusId ? cyclusId.toString() : null}
+            onChange={(value) => {
+                dispatch(setSelectedCyclusId(value ? parseInt(value) : null));
+            }}
+        />
+    );
 }
