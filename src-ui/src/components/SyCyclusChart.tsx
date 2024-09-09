@@ -11,6 +11,7 @@ import {
     XAxis,
     YAxis,
 } from "recharts";
+import { useGetTrackDayMinMaxTemperatureQuery } from "../store/api/generatedApi";
 import { useLazyGetCyclusStatisticByIdQuery } from "../store/api/lazyApi";
 import { RootState } from "../store/store";
 import SyCyclusChartTooltip from "./SyCyclusChartTooltip";
@@ -22,6 +23,7 @@ export default function SyCyclusChart() {
     const [averageTemperature, setAverageTemperature] = useState<number>();
     const [getCyclusStatisticData, { data: cyclusStatisticData }] =
         useLazyGetCyclusStatisticByIdQuery();
+    const { data: minMaxTemperature } = useGetTrackDayMinMaxTemperatureQuery();
 
     useEffect(() => {
         if (cyclusId) {
@@ -113,7 +115,13 @@ export default function SyCyclusChart() {
                     tickLine={true}
                     axisLine={true}
                 />
-                <YAxis domain={["auto", "auto"]} type="number" />
+                <YAxis
+                    domain={[
+                        minMaxTemperature?.minTemperature || "auto",
+                        minMaxTemperature?.maxTemperature || "auto",
+                    ]}
+                    type="number"
+                />
                 <ReferenceLine
                     y={averageTemperature}
                     label={{
@@ -131,6 +139,7 @@ export default function SyCyclusChart() {
                     stroke="#4c6ef5"
                     activeDot={{ r: 8 }}
                     dot={{ r: 5, fill: "#4c6ef5" }}
+                    isAnimationActive={false}
                 />
             </LineChart>
         </ScrollAreaAutosize>

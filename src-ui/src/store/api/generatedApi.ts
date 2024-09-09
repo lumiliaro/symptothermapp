@@ -58,6 +58,13 @@ const injectedRtkApi = api
         }),
         providesTags: ["TrackDay"],
       }),
+      getTrackDayMinMaxTemperature: build.query<
+        GetTrackDayMinMaxTemperatureApiResponse,
+        GetTrackDayMinMaxTemperatureApiArg
+      >({
+        query: () => ({ url: `/api/track-days/min-max-temperature` }),
+        providesTags: ["TrackDay"],
+      }),
       getTrackDayByDate: build.query<
         GetTrackDayByDateApiResponse,
         GetTrackDayByDateApiArg
@@ -155,6 +162,9 @@ export type GetTrackDaysByMonthAndYearApiArg = {
   month: number;
   year: number;
 };
+export type GetTrackDayMinMaxTemperatureApiResponse =
+  /** status 200 OK */ TrackDayMinMaxTemperatureDto;
+export type GetTrackDayMinMaxTemperatureApiArg = void;
 export type GetTrackDayByDateApiResponse = /** status 200 OK */ TrackDay;
 export type GetTrackDayByDateApiArg = {
   day: string;
@@ -227,14 +237,14 @@ export type SortObject = {
 export type PageableObject = {
   offset?: number;
   sort?: SortObject[];
-  unpaged?: boolean;
-  pageSize?: number;
   pageNumber?: number;
   paged?: boolean;
+  pageSize?: number;
+  unpaged?: boolean;
 };
 export type PageTrackDay = {
-  totalPages?: number;
   totalElements?: number;
+  totalPages?: number;
   size?: number;
   content?: TrackDay[];
   number?: number;
@@ -249,6 +259,10 @@ export type Pageable = {
   page?: number;
   size?: number;
   sort?: string[];
+};
+export type TrackDayMinMaxTemperatureDto = {
+  minTemperature?: number;
+  maxTemperature?: number;
 };
 export type OptionDto = {
   label: string;
@@ -322,6 +336,7 @@ export const {
   useGetTrackDaysQuery,
   useStoreTrackDayMutation,
   useGetTrackDaysByMonthAndYearQuery,
+  useGetTrackDayMinMaxTemperatureQuery,
   useGetTrackDayByDateQuery,
   useGetDisturbanceOptionsQuery,
   useGetCervixTextureOptionsQuery,
