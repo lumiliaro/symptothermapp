@@ -3,6 +3,7 @@ package de.lumiliaro.symptothermapp.repository;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -24,4 +25,10 @@ public interface TrackDayRepository
     TrackDay findByDayAndIdNot(Date day, Long id);
 
     List<TrackDay> findTop30ByDayGreaterThanEqualOrderByDayAsc(Date date);
+
+    @Query("SELECT MIN(t.temperature) FROM TrackDay t")
+    Float findMinTemperature();
+
+    @Query("SELECT MAX(t.temperature) FROM TrackDay t")
+    Float findMaxTemperature();
 }

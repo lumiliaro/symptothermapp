@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import de.lumiliaro.symptothermapp.dto.CyclusStatisticDto;
 import de.lumiliaro.symptothermapp.dto.TrackDayDto;
+import de.lumiliaro.symptothermapp.dto.TrackDayMinMaxTemperatureDto;
 import de.lumiliaro.symptothermapp.exception.ItemAlreadyExistsException;
 import de.lumiliaro.symptothermapp.exception.ItemNotFoundException;
 import de.lumiliaro.symptothermapp.helper.CalenderHelper;
@@ -160,5 +161,12 @@ public class TrackDayService {
         }
 
         return response;
+    }
+
+    public TrackDayMinMaxTemperatureDto getMinAndMaxTemperature() {
+        Float minTemperature = trackDayRepository.findMinTemperature();
+        Float maxTemperature = trackDayRepository.findMaxTemperature();
+
+        return new TrackDayMinMaxTemperatureDto(minTemperature, maxTemperature);
     }
 }
