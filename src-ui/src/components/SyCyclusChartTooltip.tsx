@@ -11,7 +11,7 @@ export default function SyCyclusChartTooltip(props: {
     return (
         <Paper px="md" py="sm" withBorder shadow="md" radius="md">
             <Text fw={500} mb={5}>
-                Tag: {label}
+                Datum: {label}
             </Text>
             {payload?.map((item) => (
                 <>
