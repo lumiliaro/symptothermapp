@@ -14,46 +14,37 @@ export default function SyCyclusChartTooltip(props: {
                 Datum: {label}
             </Text>
             {payload?.map((item) => (
-                <>
-                    <Text key={`${item.payload.date}-cyclusDay`} fz="sm">
-                        Zyklustag: {item.payload.cyclusDay}
-                    </Text>
-                    <Text key={`${item.payload.date}-temperature`} fz="sm">
+                <div key={item.payload.date}>
+                    <Text fz="sm">Zyklustag: {item.payload.cyclusDay}</Text>
+                    <Text fz="sm">
                         Temperatur: {item.payload.temperature} {" °C"}
                     </Text>
                     {item.payload.cervicalMucus && (
-                        <Text
-                            key={`${item.payload.date}-cervicalMucus`}
-                            fz="sm"
-                        >
+                        <Text fz="sm">
                             Zervixschleim: {item.payload.cervicalMucus}
                         </Text>
                     )}
                     {item.payload.bleeding && (
-                        <Text
-                            key={`${item.payload.date}-bleeding`}
-                            c="red.6"
-                            fz="sm"
-                        >
+                        <Text c="red.6" fz="sm">
                             Blutung: {item.payload.bleeding}
                         </Text>
                     )}
 
-                    <Text key={`${item.payload.date}-createdAt`} fz="sm">
+                    <Text fz="sm">
                         {"Messung am: "}
                         {dayjs(item.payload.createdAt).format(
                             DATETIME_FORMAT_UI
                         )}
                         {" Uhr"}
                     </Text>
-                    <Text key={`${item.payload.date}-updatedAt`} fz="sm">
+                    <Text fz="sm">
                         {"Aktualisiert am: "}
                         {dayjs(item.payload.updatedAt).format(
                             DATETIME_FORMAT_UI
                         )}
                         {" Uhr"}
                     </Text>
-                </>
+                </div>
             ))}
         </Paper>
     );

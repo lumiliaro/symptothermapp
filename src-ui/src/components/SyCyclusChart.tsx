@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
     CartesianGrid,
+    Dot,
+    DotProps,
     Line,
     LineChart,
     ReferenceLine,
@@ -11,7 +13,10 @@ import {
     XAxis,
     YAxis,
 } from "recharts";
-import { useGetTrackDayMinMaxTemperatureQuery } from "../store/api/generatedApi";
+import {
+    CyclusStatisticDto,
+    useGetTrackDayMinMaxTemperatureQuery,
+} from "../store/api/generatedApi";
 import { useLazyGetCyclusStatisticByIdQuery } from "../store/api/lazyApi";
 import { RootState } from "../store/store";
 import SyCyclusChartTooltip from "./SyCyclusChartTooltip";
@@ -137,8 +142,22 @@ export default function SyCyclusChart() {
                     type="linear"
                     dataKey="temperature"
                     stroke="#4c6ef5"
-                    activeDot={{ r: 8 }}
-                    dot={{ r: 5, fill: "#4c6ef5" }}
+                    activeDot={{
+                        r: 8,
+                        onClick: (_event: any, payload: any) =>
+                            console.info(payload?.payload),
+                    }}
+                    // dot={{
+                    //     r: 5,
+                    //     fill: "#4c6ef5",
+                    // }}
+                    dot={(
+                        props: DotProps & { payload: CyclusStatisticDto }
+                    ) => {
+                        const { cx, cy, payload } = props;
+                        const fill = payload.bleeding ? "#ff0000" : "#4c6ef5";
+                        return <Dot cx={cx} cy={cy} r={5} fill={fill} />;
+                    }}
                     isAnimationActive={false}
                 />
             </LineChart>
