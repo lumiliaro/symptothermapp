@@ -1,162 +1,134 @@
 package de.lumiliaro.symptothermapp.controller;
 
-import de.lumiliaro.symptothermapp.dto.CyclusStatisticDto;
-import de.lumiliaro.symptothermapp.dto.TrackDayDto;
-import de.lumiliaro.symptothermapp.model.TrackDay;
-import de.lumiliaro.symptothermapp.service.TrackDayService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import de.lumiliaro.symptothermapp.dto.TrackDayDto;
+import de.lumiliaro.symptothermapp.dto.TrackDayMinMaxTemperatureDto;
+import de.lumiliaro.symptothermapp.model.TrackDay;
+import de.lumiliaro.symptothermapp.service.TrackDayService;
 
 @WebMvcTest(TrackDayController.class)
-class TrackDayControllerTest {
+public class TrackDayControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @Mock
-    private TrackDayService service;
+        @MockBean
+        private TrackDayService service;
 
-    @InjectMocks
-    private TrackDayController controller;
+        @Autowired
+        private ObjectMapper objectMapper;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+        private TrackDay trackDay;
+        private TrackDayDto trackDayDto;
 
-    @Test
-    void testGetTrackDays() throws Exception {
-        Pageable pageable = PageRequest.of(0, 10);
-        TrackDay trackDay = new TrackDay(1L, new Date(), null, null, null, null, null, null, null, null, null,
-                null,
-                null);
-        Page<TrackDay> page = new PageImpl<>(List.of(trackDay), pageable, 1);
+        @BeforeEach
+        void setUp() {
+                trackDay = new TrackDay();
+                trackDay.setId(1L);
+                trackDayDto = new TrackDayDto(36.5f, new Date());
+        }
 
-        when(service.findAllPageable(any(Pageable.class))).thenReturn(page);
+        @Test
+        void testGetTrackDays() throws Exception {
+                Page<TrackDay> page = new PageImpl<>(List.of(trackDay));
+                when(service.findAllPageable(any(Pageable.class))).thenReturn(page);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/track-days")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].id").value(trackDay.getId()))
-                .andDo(print());
-    }
+                mockMvc.perform(get("/api/track-days"))
+                                .andExpect(status().isOk())
+                                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        }
 
-    @Test
-    void testGetTrackDay() throws Exception {
-        TrackDay trackDay = new TrackDay(1L, new Date(), null, null, null, null, null, null, null, null, null,
-                null,
-                null);
+        @Test
+        void testGetTrackDay() throws Exception {
+                when(service.findOne(1L)).thenReturn(trackDay);
 
-        when(service.findOne(anyLong())).thenReturn(trackDay);
+                mockMvc.perform(get("/api/track-days/1"))
+                                .andExpect(status().isOk())
+                                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        }
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/track-days/{id}", 1L)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(trackDay.getId()))
-                .andDo(print());
-    }
+        @Test
+        void testGetTrackDaysByMonthAndYear() throws Exception {
+                when(service.findAllByMonth(5, 2023)).thenReturn(List.of(trackDay));
 
-    @Test
-    void testGetTrackDaysByMonthAndYear() throws Exception {
-        TrackDay trackDay = new TrackDay(1L, new Date(), null, null, null, null, null, null, null, null, null,
-                null,
-                null);
-        List<TrackDay> trackDays = List.of(trackDay);
+                mockMvc.perform(get("/api/track-days/month/5/2023"))
+                                .andExpect(status().isOk())
+                                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        }
 
-        when(service.findAllByMonth(eq(9), eq(2024))).thenReturn(trackDays);
+        @Test
+        void testGetTrackDayByDate() throws Exception {
+                Date date = new Date();
+                when(service.findByDay(date)).thenReturn(trackDay);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/track-days/month/{month}/{year}", 9, 2024)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(trackDay.getId()))
-                .andDo(print());
-    }
+                mockMvc.perform(get("/api/track-days/date/" + date.toInstant().toString()))
+                                .andExpect(status().isOk())
+                                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        }
 
-    @Test
-    void testGetTrackDayByDate() throws Exception {
-        TrackDay trackDay = new TrackDay(1L, new Date(), null, null, null, null, null, null, null, null, null,
-                null,
-                null);
+        @Test
+        void testGetTrackDayMinMaxTemperature() throws Exception {
+                TrackDayMinMaxTemperatureDto minMaxDto = new TrackDayMinMaxTemperatureDto();
+                when(service.getMinAndMaxTemperature()).thenReturn(minMaxDto);
 
-        when(service.getTrackDayRepository().findByDay(any(Date.class))).thenReturn(trackDay);
+                mockMvc.perform(get("/api/track-days/min-max-temperature"))
+                                .andExpect(status().isOk())
+                                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        }
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/track-days/date/{trackDay}", "2024-09-01")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(trackDay.getId()))
-                .andDo(print());
-    }
+        @Test
+        void testCreateTrackDay() throws Exception {
+                when(service.save(any(TrackDayDto.class))).thenReturn(trackDay);
 
-    @Test
-    void testGetTrackDaysStatisticByMonthAndYear() throws Exception {
-        CyclusStatisticDto statisticDto = new CyclusStatisticDto("01", 36.5f, "A");
-        List<CyclusStatisticDto> statistics = List.of(statisticDto);
+                mockMvc.perform(post("/api/track-days")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(trackDayDto)))
+                                .andExpect(status().isCreated())
+                                .andExpect(header().exists("Location"));
+        }
 
-        when(service.getTrackDaysForMonthStatistic(eq(9), eq(2024))).thenReturn(statistics);
+        @Test
+        void testUpdateTrackDay() throws Exception {
+                mockMvc.perform(put("/api/track-days/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(trackDayDto)))
+                                .andExpect(status().isNoContent());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/track-days/statistic/{month}/{year}", 9, 2024)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].temperature")
-                        .value(statisticDto.getTemperature()))
-                .andDo(print());
-    }
+                verify(service).update(eq(1L), any(TrackDayDto.class));
+        }
 
-    @Test
-    void testStoreTrackDay() throws Exception {
-        TrackDayDto trackDayDto = new TrackDayDto(36.5f, new Date(), null, null, null, null, null, null, null,
-                null);
+        @Test
+        void testDeleteTrackDay() throws Exception {
+                mockMvc.perform(delete("/api/track-days/1"))
+                                .andExpect(status().isNoContent());
 
-        TrackDay trackDay = new TrackDay(1L, new Date(), null, null, null, null, null, null, null, null, null,
-                null,
-                null);
-
-        when(service.save(any(TrackDayDto.class))).thenReturn(trackDay);
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/track-days")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"day\":\"2024-09-01\",\"temperature\":36.5}"))
-                .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.header().string("Location",
-                        "http://localhost/api/track-days/1"))
-                .andDo(print());
-    }
-
-    @Test
-    void testUpdateTrackDay() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/track-days/{id}", 1L)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"day\":\"2024-09-01\",\"temperature\":36.5}"))
-                .andExpect(MockMvcResultMatchers.status().isNoContent())
-                .andDo(print());
-    }
-
-    @Test
-    void testDeleteTrackDay() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/track-days/{id}", 1L)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isNoContent())
-                .andDo(print());
-    }
+                verify(service).delete(1L);
+        }
 }

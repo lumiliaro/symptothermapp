@@ -16,18 +16,20 @@ import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class TrackDayDto {
-    private Float temperature;
+    private final Float temperature;
 
     @NotNull(message = "Das Datum muss gesetzt sein.")
     @PastOrPresent(message = "Das Datum muss in der Vergangenheit oder Gegenwart liegen.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date day;
+    private final Date day;
 
     private BleedingEnum bleeding = null;
     private CervicalMucusEnum cervicalMucus = null;
@@ -35,9 +37,9 @@ public class TrackDayDto {
     private CervixHeightPositionEnum cervixHeightPosition = null;
     private CervixTextureEnum cervixTexture = null;
     @NotNull
-    private final Boolean hadSex = false;
+    private Boolean hadSex = false;
     @NotNull
-    private final Boolean withContraceptives = false;
+    private Boolean withContraceptives = false;
     private List<DisturbanceEnum> disturbances = null;
 
     @Size(max = 1000, message = "Die Sonstigen Störungen dürfen nicht länger als 1000 Zeichen lang sein.")

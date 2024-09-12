@@ -6,17 +6,22 @@ import lombok.Getter;
 
 /**
  * Cervix / Gebärmutterhals Enum
- * OPEN           -> offen
+ * OPEN -> offen
  * PARTIALLY_OPEN -> leicht
- * CLOSED         -> geschlossen
+ * CLOSED -> geschlossen
  */
 @Getter
 @AllArgsConstructor
 @Schema(description = "CervixOpeningState Enum", enumAsRef = true)
-public enum CervixOpeningStateEnum {
+public enum CervixOpeningStateEnum implements ValueEnum {
     OPEN("offen"),
     PARTIALLY_OPEN("leicht geöffnet"),
     CLOSED("geschlossen");
 
     private final String value;
+
+    @Override
+    public String getValue() {
+        return this.value;
+    }
 }

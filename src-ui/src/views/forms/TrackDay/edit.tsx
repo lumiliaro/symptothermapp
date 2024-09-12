@@ -17,7 +17,7 @@ export default function TrackDayEdit(props: { data: TrackDay }) {
     const {
         openLoadingNotification,
         updateNotificationToSuccess,
-        updateNotificationToFailure,
+        // updateNotificationToFailure,
     } = useFormNotification();
 
     const form = useForm<TrackDayDto>({
@@ -27,21 +27,23 @@ export default function TrackDayEdit(props: { data: TrackDay }) {
 
     const onSubmit = async (trackDayDto: TrackDayDto) => {
         if (data.id) {
-            const id = openLoadingNotification({
+            const notificationId = openLoadingNotification({
                 message: "Daten werden gespeichert...",
             });
 
-            await update({ id: data.id, trackDayDto })
+            await update({
+                id: data.id,
+                trackDayDto,
+                // @ts-expect-error notificationId is not part of the api call but is needed to update the notification
+                notificationId,
+            })
                 .unwrap()
                 .then(() => {
-                    updateNotificationToSuccess(id, {
+                    updateNotificationToSuccess(notificationId, {
                         message: "Daten wurden erfolgreich gespeichert!",
                     });
                 })
                 .catch((error) => {
-                    updateNotificationToFailure(id, {
-                        message: "Daten konnten nicht gespeichert werden!",
-                    });
                     handleFormErrors(form, error);
                 });
         }
@@ -67,9 +69,6 @@ export default function TrackDayEdit(props: { data: TrackDay }) {
                     });
                 })
                 .catch((error) => {
-                    updateNotificationToFailure(id, {
-                        message: "Datensatz konnte nicht gelöscht werden!",
-                    });
                     handleFormErrors(form, error);
                 });
         }

@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 import de.lumiliaro.symptothermapp.dto.TrackDayDto;
 import de.lumiliaro.symptothermapp.model.TrackDay;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface TrackDayMapper {
 
     TrackDayDto toDto(TrackDay trackDay);

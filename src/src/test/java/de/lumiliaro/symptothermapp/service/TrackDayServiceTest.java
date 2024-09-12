@@ -1,29 +1,54 @@
 package de.lumiliaro.symptothermapp.service;
 
-import de.lumiliaro.symptothermapp.dto.CyclusStatisticDto;
-import de.lumiliaro.symptothermapp.dto.TrackDayDto;
-import de.lumiliaro.symptothermapp.exception.ItemAlreadyExistsException;
-import de.lumiliaro.symptothermapp.exception.ItemNotFoundException;
-import de.lumiliaro.symptothermapp.mapper.TrackDayMapperImpl;
-import de.lumiliaro.symptothermapp.model.TrackDay;
-import de.lumiliaro.symptothermapp.repository.TrackDayRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import de.lumiliaro.symptothermapp.dto.CyclusStatisticDto;
+import de.lumiliaro.symptothermapp.dto.TrackDayDto;
+import de.lumiliaro.symptothermapp.dto.TrackDayMinMaxTemperatureDto;
+import de.lumiliaro.symptothermapp.enums.BleedingEnum;
+import de.lumiliaro.symptothermapp.exception.ItemAlreadyExistsException;
+import de.lumiliaro.symptothermapp.exception.ItemNotFoundException;
+import de.lumiliaro.symptothermapp.mapper.TrackDayMapperImpl;
+import de.lumiliaro.symptothermapp.model.Cyclus;
+import de.lumiliaro.symptothermapp.model.TrackDay;
+import de.lumiliaro.symptothermapp.repository.TrackDayRepository;
 
 class TrackDayServiceTest {
 
     @Mock
     private TrackDayRepository repository;
+
+    @Mock
+    private CyclusService cyclusService;
 
     @InjectMocks
     private TrackDayService service;
@@ -61,10 +86,17 @@ class TrackDayServiceTest {
         int month = 5;
         int year = 2023;
 
-        TrackDay trackday1 = new TrackDay(1L, new Date(), null, null, null, null, null, null, null, null, null, null,
-                null);
-        TrackDay trackday2 = new TrackDay(1L, new Date(), null, null, null, null, null, null, null, null, null, null,
-                null);
+        TrackDay trackday1 = new TrackDay();
+        trackday1.setId(1L);
+        trackday1.setDay(new Date());
+        trackday1.setHadSex(false);
+        trackday1.setWithContraceptives(false);
+
+        TrackDay trackday2 = new TrackDay();
+        trackday2.setId(2L);
+        trackday2.setDay(new Date());
+        trackday2.setHadSex(false);
+        trackday2.setWithContraceptives(false);
 
         List<TrackDay> trackDays = Arrays.asList(
                 trackday1,
@@ -93,9 +125,16 @@ class TrackDayServiceTest {
     void testFindOne_WhenTrackDayExists() throws ItemNotFoundException {
         // Given
         Long id = 1L;
-        TrackDay trackDay = new TrackDay(1L, new Date(), null, null, null, null, null, null, null, null, null, null,
-                null);
-        when(repository.findById(id)).thenReturn(Optional.of(trackDay));
+        TrackDay trackday1 = new TrackDay();
+        trackday1.setId(1L);
+        trackday1.setDay(new Date());
+
+        TrackDay trackday2 = new TrackDay();
+        trackday2.setId(2L);
+        trackday2.setDay(new Date());
+        trackday2.setHadSex(false);
+        trackday2.setWithContraceptives(false);
+        when(repository.findById(id)).thenReturn(Optional.of(trackday1));
 
         // When
         TrackDay foundTrackDay = service.findOne(id);
@@ -126,9 +165,7 @@ class TrackDayServiceTest {
     void testSave_WhenTrackDayDoesNotExist() throws ItemAlreadyExistsException {
         // Given
         Date trackDayDate = new Date();
-        TrackDayDto trackDayDto = new TrackDayDto(null, trackDayDate, null, null, null, null, null, null, null, null
-        );
-
+        TrackDayDto trackDayDto = new TrackDayDto(36.5f, new Date());
         TrackDay trackDay = new TrackDayMapperImpl().fromDto(trackDayDto);
 
         when(repository.existsByDay(trackDayDate)).thenReturn(false);
@@ -141,18 +178,17 @@ class TrackDayServiceTest {
         assertNotNull(savedTrackDay);
         assertEquals(trackDayDate, savedTrackDay.getDay());
         assertFalse(savedTrackDay.getHadSex());
-        assertNotEquals(true, savedTrackDay.getWithContraceptives());
-        // hat
-        verify(repository, times(1)).existsByDay(trackDayDate);
-        verify(repository, times(1)).save(any(TrackDay.class));
+        assertFalse(savedTrackDay.getWithContraceptives());
+        verify(repository).existsByDay(trackDayDate);
+        verify(repository).save(any(TrackDay.class));
+        verify(cyclusService, never()).save(any(Cyclus.class));
     }
 
     @Test
     void testSave_WhenTrackDayAlreadyExists() {
         // Given
         Date trackDayDate = new Date();
-        TrackDayDto trackDayDto = new TrackDayDto(null, trackDayDate, null, null, null, null, null, null, null, null
-        );
+        TrackDayDto trackDayDto = new TrackDayDto(36.5f, new Date());
 
         when(repository.existsByDay(trackDayDate)).thenReturn(true);
 
@@ -167,16 +203,34 @@ class TrackDayServiceTest {
     }
 
     @Test
+    void testSave_WhenTrackDayHasBleeding() throws ItemAlreadyExistsException {
+        // Given
+        Date trackDayDate = new Date();
+        TrackDayDto trackDayDto = new TrackDayDto(36.5f, new Date());
+        trackDayDto.setBleeding(BleedingEnum.MEDIUM);
+
+        TrackDay trackDay = new TrackDayMapperImpl().fromDto(trackDayDto);
+
+        when(repository.existsByDay(trackDayDate)).thenReturn(false);
+        when(repository.save(any(TrackDay.class))).thenReturn(trackDay);
+
+        // When
+        service.save(trackDayDto);
+
+        // Then
+        verify(cyclusService).save(eq(new Cyclus(trackDayDate)));
+    }
+
+    @Test
     void testUpdate_WhenTrackDayExistsAndNoConflict() throws ItemNotFoundException, ItemAlreadyExistsException {
         // Given
         Long id = 1L;
         Date trackDayDate = new Date();
-        TrackDayDto trackDayDto = new TrackDayDto(null, trackDayDate, null, null, null, null, null,
-                null, null, null); // Beispielwert, wenn kein Geschlechtsverkehr stattgefunden hat
+        TrackDayDto trackDayDto = new TrackDayDto(36.5f, trackDayDate);
 
-        TrackDay existingTrackDay = new TrackDay(id, trackDayDate, null, null, null, null, null, null, null, null, null,
-                null,
-                null);
+        TrackDay existingTrackDay = new TrackDay();
+        existingTrackDay.setId(id);
+        existingTrackDay.setDay(trackDayDate);
         when(repository.findById(id)).thenReturn(Optional.of(existingTrackDay));
         when(repository.findByDayAndIdNot(trackDayDate, id)).thenReturn(null);
 
@@ -196,8 +250,7 @@ class TrackDayServiceTest {
     void testUpdate_WhenTrackDayNotFound() {
         // Given
         Long id = 1L;
-        TrackDayDto trackDayDto = new TrackDayDto(null, new Date(), null, null, null, null, null, null, null, null
-        );
+        TrackDayDto trackDayDto = new TrackDayDto(36.5f, new Date());
 
         when(repository.findById(id)).thenReturn(Optional.empty());
 
@@ -216,28 +269,51 @@ class TrackDayServiceTest {
         // Given
         Long id = 1L;
         Date trackDayDate = new Date();
-        TrackDayDto trackDayDto = new TrackDayDto(null, trackDayDate, null, null, null, null, null, null, null, null
-        );
+        TrackDayDto updateTrackDayDto = new TrackDayDto(36.5f, trackDayDate);
 
-        TrackDay existingTrackDay = new TrackDay(id, trackDayDate, null, null, null, null, null, null, null, null, null,
-                null,
-                null);
+        TrackDay existingTrackDay = new TrackDay();
+        existingTrackDay.setId(id);
+        existingTrackDay.setDay(trackDayDate);
+        existingTrackDay.setTemperature(39.0f);
+
         when(repository.findById(id)).thenReturn(Optional.of(existingTrackDay));
 
-        TrackDay conflictingTrackDay = new TrackDay(2L, trackDayDate, null, null, null, null, null, null, null, null,
-                null,
-                null,
-                null);
+        TrackDay conflictingTrackDay = new TrackDay();
+        conflictingTrackDay.setId(2L);
+        conflictingTrackDay.setDay(trackDayDate);
+        conflictingTrackDay.setTemperature(35.0f);
         when(repository.findByDayAndIdNot(trackDayDate, id)).thenReturn(conflictingTrackDay);
 
         // When & Then
         assertThrows(ItemAlreadyExistsException.class, () -> {
-            service.update(id, trackDayDto);
+            service.update(id, updateTrackDayDto);
         });
 
         verify(repository, times(1)).findById(id);
-        verify(repository, times(1)).findByDayAndIdNot(trackDayDto.getDay(), id);
+        verify(repository, times(1)).findByDayAndIdNot(updateTrackDayDto.getDay(), id);
         verify(repository, never()).save(any(TrackDay.class));
+    }
+
+    @Test
+    void testUpdate_WhenTrackDayExistsAndBleedingChanged() throws ItemNotFoundException, ItemAlreadyExistsException {
+        // Given
+        Long id = 1L;
+        Date trackDayDate = new Date();
+        TrackDayDto trackDayDto = new TrackDayDto(36.5F, trackDayDate);
+        trackDayDto.setBleeding(BleedingEnum.SPOTTING_BLEEDING);
+
+        TrackDay existingTrackDay = new TrackDay();
+        existingTrackDay.setId(id);
+        existingTrackDay.setDay(trackDayDate);
+        when(repository.findById(id)).thenReturn(Optional.of(existingTrackDay));
+        when(repository.findByDayAndIdNot(trackDayDate, id)).thenReturn(null);
+
+        // When
+        service.update(id, trackDayDto);
+
+        // Then
+        verify(repository).save(any(TrackDay.class));
+        verify(cyclusService).save(eq(new Cyclus(trackDayDate)));
     }
 
     @Test
@@ -270,36 +346,108 @@ class TrackDayServiceTest {
     }
 
     @Test
-    void testGetTrackDaysForMonthStatistic() {
+    void testDelete_WhenTrackDayExistsWithBleeding() throws ItemNotFoundException {
         // Given
-        int month = 5;
-        int year = 2023;
+        Long id = 1L;
+        Date trackDayDate = new Date();
+        TrackDay trackDay = new TrackDay();
+        trackDay.setId(id);
+        trackDay.setDay(trackDayDate);
+        trackDay.setBleeding(BleedingEnum.STRONG);
 
-        TrackDay trackday1 = new TrackDay(1L, new Date(), null, null, null, null, null, null, null, null, null, null,
-                null);
-        TrackDay trackday2 = new TrackDay(2L, new Date(), null, null, null, null, null, null, null, null, null, null,
-                null);
+        when(repository.findById(id)).thenReturn(Optional.of(trackDay));
 
+        // When
+        service.delete(id);
+
+        // Then
+        verify(repository).deleteById(id);
+        verify(cyclusService).deleteByDate(trackDayDate);
+    }
+
+    // @Test
+    // void testGetTrackDaysForMonthStatistic() {
+    // // Given
+    // int month = 5;
+    // int year = 2023;
+
+    // TrackDay trackday1 = new TrackDay();
+    // trackday1.setId(1L);
+    // trackday1.setDay(new Date());
+    // trackday1.setBleeding(BleedingEnum.STRONG);
+
+    // TrackDay trackday2 = new TrackDay();
+    // trackday2.setId(2L);
+    // trackday2.setDay(new Date());
+    // trackday2.setBleeding(BleedingEnum.STRONG);
+
+    // List<TrackDay> trackDays = Arrays.asList(
+    // trackday1,
+    // trackday2);
+
+    // Calendar calendar = Calendar.getInstance();
+    // calendar.set(Calendar.MONTH, month - 1);
+    // calendar.set(Calendar.YEAR, year);
+    // calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+    // Date startDate = calendar.getTime();
+    // calendar.set(Calendar.DAY_OF_MONTH,
+    // calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+    // Date endDate = calendar.getTime();
+
+    // when(repository.findByDayBetween(startDate, endDate)).thenReturn(trackDays);
+
+    // // When
+    // List<CyclusStatisticDto> result = service.getCyclusData();
+
+    // // Then
+    // assertNotNull(result);
+    // assertEquals(31, result.size());
+    // }
+
+    @Test
+    void testGetCyclusData() {
+        // Given
+        Date cyclusStartDate = new Date();
+        TrackDay trackday1 = new TrackDay();
+        trackday1.setId(1L);
+        trackday1.setDay(cyclusStartDate);
+        trackday1.setBleeding(BleedingEnum.STRONG);
+
+        TrackDay trackday2 = new TrackDay();
+        trackday2.setId(2L);
+        trackday2.setDay(DateUtils.addDays(cyclusStartDate, 1));
+        trackday2.setBleeding(BleedingEnum.STRONG);
         List<TrackDay> trackDays = Arrays.asList(
                 trackday1,
                 trackday2);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.MONTH, month - 1);
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-
-        Date startDate = calendar.getTime();
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-        Date endDate = calendar.getTime();
-
-        when(repository.findByDayBetween(startDate, endDate)).thenReturn(trackDays);
+        when(repository.findTop30ByDayGreaterThanEqualOrderByDayAsc(cyclusStartDate)).thenReturn(trackDays);
+        when(cyclusService.findByDate(any())).thenReturn(null);
 
         // When
-        List<CyclusStatisticDto> result = service.getTrackDaysForMonthStatistic(month, year);
+        List<CyclusStatisticDto> result = service.getCyclusData(cyclusStartDate);
 
         // Then
-        assertNotNull(result);
-        assertEquals(31, result.size());
+        assertEquals(30, result.size());
+        assertNotNull(result.get(0).getTemperature());
+        assertNotNull(result.get(0).getBleeding());
+        assertNull(result.get(1).getBleeding());
+    }
+
+    @Test
+    void testGetMinAndMaxTemperature() {
+        // Given
+        Float minTemp = 36.0f;
+        Float maxTemp = 37.5f;
+        when(repository.findMinTemperature()).thenReturn(minTemp);
+        when(repository.findMaxTemperature()).thenReturn(maxTemp);
+
+        // When
+        TrackDayMinMaxTemperatureDto result = service.getMinAndMaxTemperature();
+
+        // Then
+        assertEquals(minTemp, result.getMinTemperature());
+        assertEquals(maxTemp, result.getMaxTemperature());
     }
 }

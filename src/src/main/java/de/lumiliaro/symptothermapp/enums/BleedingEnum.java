@@ -6,15 +6,15 @@ import lombok.Getter;
 
 /**
  * Blutung Enum
- * STRONG (STARK)                    -> stark
- * MEDIUM (MITTEL)                   -> mittel
- * WEAK (SCHWACH)                    -> schwach
+ * STRONG (STARK) -> stark
+ * MEDIUM (MITTEL) -> mittel
+ * WEAK (SCHWACH) -> schwach
  * SPOTTING_BLEEDING (SCHMIERBLUTUNG) -> Schmierblutung
  */
 @Getter
 @AllArgsConstructor
 @Schema(description = "Bleeding Enum", enumAsRef = true)
-public enum BleedingEnum {
+public enum BleedingEnum implements ValueEnum {
     STRONG("stark"),
     MEDIUM("mittel"),
     WEAK("schwach"),
@@ -22,4 +22,8 @@ public enum BleedingEnum {
 
     private final String value;
 
+    @Override
+    public String getValue() {
+        return this.value;
+    }
 }

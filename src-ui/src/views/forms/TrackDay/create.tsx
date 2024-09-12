@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import useFormNotification from "../../../hooks/useFormNotification";
 import {
     TrackDayDto,
-    useStoreTrackDayMutation,
+    useCreateTrackDayMutation,
 } from "../../../store/api/generatedApi";
 import { RootState } from "../../../store/store";
 import handleFormErrors from "../../../utils/FormErrorHandler.utils";
@@ -14,11 +14,11 @@ export default function TrackDayCreate() {
     const selectedTrackDate = useSelector(
         (state: RootState) => state.trackDayDate.selectedDateString
     );
-    const [store] = useStoreTrackDayMutation();
+    const [store] = useCreateTrackDayMutation();
     const {
         openLoadingNotification,
         updateNotificationToSuccess,
-        updateNotificationToFailure,
+        // updateNotificationToFailure,
     } = useFormNotification();
 
     const form = useForm<TrackDayDto>({
@@ -30,21 +30,19 @@ export default function TrackDayCreate() {
     });
 
     const onSubmit = async (trackDayDto: TrackDayDto) => {
-        const id = openLoadingNotification({
+        const notificationId = openLoadingNotification({
             message: "Daten werden erstellt...",
         });
 
-        await store({ trackDayDto })
+        // @ts-expect-error notificationId is not part of the api call but is needed to update the notification
+        await store({ trackDayDto, notificationId })
             .unwrap()
             .then(() => {
-                updateNotificationToSuccess(id, {
+                updateNotificationToSuccess(notificationId, {
                     message: "Daten wurden erstellt!",
                 });
             })
             .catch((error) => {
-                updateNotificationToFailure(id, {
-                    message: "Daten konnten nicht erstellt werden!",
-                });
                 handleFormErrors(form, error);
             });
     };

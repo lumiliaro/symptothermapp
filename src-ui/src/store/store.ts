@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "./api/generatedApi";
 import CyclusSlice, { cyclusSliceName } from "./Cyclus.Slice";
-import { queryErrorLogger } from "./middlewares/queryErrorLogger";
+import { queryErrorLoggerMiddleware } from "./middlewares/queryErrorLoggerMiddleware";
 import TrackDayDateSlice, { trackDayDateSliceName } from "./TrackDayDate.Slice";
 
 const reducer = combineReducers({
@@ -14,7 +14,10 @@ const reducer = combineReducers({
 export const store = configureStore({
     reducer,
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat([api.middleware, queryErrorLogger]),
+        getDefaultMiddleware().concat([
+            api.middleware,
+            queryErrorLoggerMiddleware,
+        ]),
 });
 
 setupListeners(store.dispatch);

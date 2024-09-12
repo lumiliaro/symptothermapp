@@ -30,7 +30,7 @@ import lombok.Data;
 public class TrackDayService {
     private final TrackDayRepository trackDayRepository;
     private final CyclusService cyclusService;
-    private final String resource = "TrackDay";
+    private final String RESOURCE = "TrackDay";
 
     public Page<TrackDay> findAllPageable(Pageable pageable) {
         Page<TrackDay> page = trackDayRepository.findAll(PageRequest.of(
@@ -50,10 +50,14 @@ public class TrackDayService {
         Optional<TrackDay> trackDay = trackDayRepository.findById(id);
 
         if (trackDay.isEmpty()) {
-            throw new ItemNotFoundException(id, resource);
+            throw new ItemNotFoundException(id, RESOURCE);
         }
 
         return trackDay.get();
+    }
+
+    public TrackDay findByDay(Date day) {
+        return trackDayRepository.findByDay(day);
     }
 
     public TrackDay save(TrackDayDto trackDayDto) throws ItemAlreadyExistsException {
@@ -80,7 +84,7 @@ public class TrackDayService {
         Optional<TrackDay> foundTrackDay = trackDayRepository.findById(id);
 
         if (foundTrackDay.isEmpty()) {
-            throw new ItemNotFoundException(id, resource);
+            throw new ItemNotFoundException(id, RESOURCE);
         }
 
         TrackDay trackDayWithSameDay = trackDayRepository.findByDayAndIdNot(trackDayDto.getDay(),
@@ -110,7 +114,7 @@ public class TrackDayService {
         Optional<TrackDay> trackday = trackDayRepository.findById(id);
 
         if (trackday.isEmpty()) {
-            throw new ItemNotFoundException(id, resource);
+            throw new ItemNotFoundException(id, RESOURCE);
         }
 
         if (trackday.get().getBleeding() != null) {

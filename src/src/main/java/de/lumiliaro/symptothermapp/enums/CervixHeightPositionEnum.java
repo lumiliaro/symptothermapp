@@ -7,14 +7,19 @@ import lombok.Getter;
 /**
  * Cervix / Gebärmutterhals Enum
  * HIGH -> hochstehend
- * LOW  -> tiefstehend
+ * LOW -> tiefstehend
  */
 @Getter
 @AllArgsConstructor
 @Schema(description = "CervixHeightPosition Enum", enumAsRef = true)
-public enum CervixHeightPositionEnum {
+public enum CervixHeightPositionEnum implements ValueEnum {
     HIGH("hochstehend"),
     LOW("tiefstehend");
 
     private final String value;
+
+    @Override
+    public String getValue() {
+        return this.value;
+    }
 }

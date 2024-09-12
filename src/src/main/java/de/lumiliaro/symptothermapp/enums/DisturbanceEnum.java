@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 @Schema(description = "Disturbance Enum", enumAsRef = true)
-public enum DisturbanceEnum {
+public enum DisturbanceEnum implements ValueEnum {
     GOING_TO_BED_UNUSUALLY_LATE("Ungewohnt spätes Zubettgehen"),
     UNUSUAL_ALCOHOL_CONSUMPTION("Ungewohnter Alkoholgenuss"),
     STRESS("Stress"),
@@ -27,4 +27,9 @@ public enum DisturbanceEnum {
     OTHER("Sonstiges");
 
     private final String value;
+
+    @Override
+    public String getValue() {
+        return this.value;
+    }
 }

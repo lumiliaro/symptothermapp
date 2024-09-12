@@ -1,5 +1,5 @@
 import { emptySplitApi as api } from "./emptyApi";
-export const addTagTypes = ["TrackDay", "options"] as const;
+export const addTagTypes = ["TrackDay", "Options"] as const;
 const injectedRtkApi = api
   .enhanceEndpoints({
     addTagTypes,
@@ -38,9 +38,9 @@ const injectedRtkApi = api
         }),
         providesTags: ["TrackDay"],
       }),
-      storeTrackDay: build.mutation<
-        StoreTrackDayApiResponse,
-        StoreTrackDayApiArg
+      createTrackDay: build.mutation<
+        CreateTrackDayApiResponse,
+        CreateTrackDayApiArg
       >({
         query: (queryArg) => ({
           url: `/api/track-days`,
@@ -77,42 +77,42 @@ const injectedRtkApi = api
         GetDisturbanceOptionsApiArg
       >({
         query: () => ({ url: `/api/options/disturbance` }),
-        providesTags: ["options"],
+        providesTags: ["Options"],
       }),
       getCervixTextureOptions: build.query<
         GetCervixTextureOptionsApiResponse,
         GetCervixTextureOptionsApiArg
       >({
         query: () => ({ url: `/api/options/cervix/texture` }),
-        providesTags: ["options"],
+        providesTags: ["Options"],
       }),
       getCervixOpeningStateOptions: build.query<
         GetCervixOpeningStateOptionsApiResponse,
         GetCervixOpeningStateOptionsApiArg
       >({
         query: () => ({ url: `/api/options/cervix/opening-state` }),
-        providesTags: ["options"],
+        providesTags: ["Options"],
       }),
       getCervixHeightPositionOptions: build.query<
         GetCervixHeightPositionOptionsApiResponse,
         GetCervixHeightPositionOptionsApiArg
       >({
         query: () => ({ url: `/api/options/cervix/height-position` }),
-        providesTags: ["options"],
+        providesTags: ["Options"],
       }),
       getCervicalMucusOptions: build.query<
         GetCervicalMucusOptionsApiResponse,
         GetCervicalMucusOptionsApiArg
       >({
         query: () => ({ url: `/api/options/cervical-mucus` }),
-        providesTags: ["options"],
+        providesTags: ["Options"],
       }),
       getBleedingOptions: build.query<
         GetBleedingOptionsApiResponse,
         GetBleedingOptionsApiArg
       >({
         query: () => ({ url: `/api/options/bleeding` }),
-        providesTags: ["options"],
+        providesTags: ["Options"],
       }),
       getAllCycli: build.query<GetAllCycliApiResponse, GetAllCycliApiArg>({
         query: () => ({ url: `/api/cyclus` }),
@@ -139,12 +139,12 @@ export type GetTrackDayApiResponse = /** status 200 OK */ TrackDay;
 export type GetTrackDayApiArg = {
   id: number;
 };
-export type UpdateTrackDayApiResponse = unknown;
+export type UpdateTrackDayApiResponse = /** status 200 OK */ void;
 export type UpdateTrackDayApiArg = {
   id: number;
   trackDayDto: TrackDayDto;
 };
-export type DeleteTrackDayApiResponse = unknown;
+export type DeleteTrackDayApiResponse = /** status 200 OK */ void;
 export type DeleteTrackDayApiArg = {
   id: number;
 };
@@ -152,8 +152,8 @@ export type GetTrackDaysApiResponse = /** status 200 OK */ PageTrackDay;
 export type GetTrackDaysApiArg = {
   pageable: Pageable;
 };
-export type StoreTrackDayApiResponse = unknown;
-export type StoreTrackDayApiArg = {
+export type CreateTrackDayApiResponse = /** status 200 OK */ void;
+export type CreateTrackDayApiArg = {
   trackDayDto: TrackDayDto;
 };
 export type GetTrackDaysByMonthAndYearApiResponse =
@@ -213,6 +213,16 @@ export type TrackDay = {
   otherDisturbanceNotes?: string;
   notes?: string;
 };
+export type ErrorDto = {
+  /** Fehlermeldung */
+  message?: string;
+  /** Fehlercode */
+  code?: string;
+  /** Zeitstempel des Fehlers */
+  timestamp?: string;
+  /** HTTP-Statuscode */
+  status?: number;
+};
 export type TrackDayDto = {
   temperature?: number;
   day: string;
@@ -238,8 +248,8 @@ export type PageableObject = {
   offset?: number;
   sort?: SortObject[];
   pageNumber?: number;
-  paged?: boolean;
   pageSize?: number;
+  paged?: boolean;
   unpaged?: boolean;
 };
 export type PageTrackDay = {
@@ -334,7 +344,7 @@ export const {
   useUpdateTrackDayMutation,
   useDeleteTrackDayMutation,
   useGetTrackDaysQuery,
-  useStoreTrackDayMutation,
+  useCreateTrackDayMutation,
   useGetTrackDaysByMonthAndYearQuery,
   useGetTrackDayMinMaxTemperatureQuery,
   useGetTrackDayByDateQuery,
