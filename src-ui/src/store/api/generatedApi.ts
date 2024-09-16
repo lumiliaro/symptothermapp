@@ -1,5 +1,5 @@
 import { emptySplitApi as api } from "./emptyApi";
-export const addTagTypes = ["TrackDay", "Options"] as const;
+export const addTagTypes = ["TrackDay", "Options", "Server-Infor"] as const;
 const injectedRtkApi = api
   .enhanceEndpoints({
     addTagTypes,
@@ -114,6 +114,12 @@ const injectedRtkApi = api
         query: () => ({ url: `/api/options/bleeding` }),
         providesTags: ["Options"],
       }),
+      getServerInfo: build.query<GetServerInfoApiResponse, GetServerInfoApiArg>(
+        {
+          query: () => ({ url: `/api/info` }),
+          providesTags: ["Server-Infor"],
+        }
+      ),
       getAllCycli: build.query<GetAllCycliApiResponse, GetAllCycliApiArg>({
         query: () => ({ url: `/api/cyclus` }),
         providesTags: ["TrackDay"],
@@ -185,6 +191,8 @@ export type GetCervicalMucusOptionsApiResponse =
 export type GetCervicalMucusOptionsApiArg = void;
 export type GetBleedingOptionsApiResponse = /** status 200 OK */ OptionDto[];
 export type GetBleedingOptionsApiArg = void;
+export type GetServerInfoApiResponse = /** status 200 OK */ ServerInfoDto;
+export type GetServerInfoApiArg = void;
 export type GetAllCycliApiResponse = /** status 200 OK */ Cyclus[];
 export type GetAllCycliApiArg = void;
 export type GetOneCyclusApiResponse = /** status 200 OK */ Cyclus;
@@ -247,8 +255,8 @@ export type SortObject = {
 export type PageableObject = {
   offset?: number;
   sort?: SortObject[];
-  pageNumber?: number;
   pageSize?: number;
+  pageNumber?: number;
   paged?: boolean;
   unpaged?: boolean;
 };
@@ -278,6 +286,9 @@ export type OptionDto = {
   label: string;
   value: string;
   disabled?: boolean;
+};
+export type ServerInfoDto = {
+  version?: string;
 };
 export type Cyclus = {
   id?: number;
@@ -354,6 +365,7 @@ export const {
   useGetCervixHeightPositionOptionsQuery,
   useGetCervicalMucusOptionsQuery,
   useGetBleedingOptionsQuery,
+  useGetServerInfoQuery,
   useGetAllCycliQuery,
   useGetOneCyclusQuery,
   useGetCyclusStatisticByIdQuery,

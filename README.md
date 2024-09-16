@@ -1,85 +1,144 @@
 # SymptothermApp
 
-SymptothermApp is a web application that helps women monitor their fertility using the symptothermal method.
-The application consists of a frontend and backend, both of which can be run in a Docker container.
+SymptothermApp ist eine Webanwendung zur Unterstützung von Frauen bei der Überwachung ihrer Fruchtbarkeit mittels der symptothermalen Methode (NFP).
+Die Anwendung besteht aus einem Frontend und einem Backend, die beide in einem Docker-Container ausgeführt werden können.
 
-## Contents
+## Inhaltsverzeichnis
 
--   [Features](#features)
--   [Technologies](#technologies)
--   [Requirements](#requirements)
+-   [Funktionen](#funktionen)
+-   [Technologien](#technologien)
+-   [Projektstruktur](#projektstruktur)
+-   [Voraussetzungen](#voraussetzungen)
 -   [Installation](#installation)
--   [Usage](#usage)
--   [Docker Setup](#docker-setup)
--   [License](#license)
+-   [Verwendung](#verwendung)
+-   [Docker-Setup](#docker-setup)
+-   [Entwicklung](#entwicklung)
+-   [Lizenz](#lizenz)
 
-## Features
+## Funktionen
 
--   Monitor fertility using the symptothermal method
--   Web-based interface for easy data entry and management
--   Backend for secure data processing and storage
--   **Frontend is in German**
+-   Überwachung der Fruchtbarkeit mittels symptothermaler Methode
+-   Webbasierte Benutzeroberfläche für einfache Dateneingabe und -verwaltung
+-   Backend für sichere Datenverarbeitung und -speicherung
+-   Zyklusdiagramm mit Recharts
+-   Benutzerauthentifizierung und -verwaltung
+-   **Benutzeroberfläche auf Deutsch**
 
-## Technologies
+## Technologien
 
--   **Frontend**: TypeScript, React, Redux Toolkit, Mantine
+-   **Frontend**: TypeScript, React, Redux Toolkit, Mantine, Recharts
 -   **Backend**: Java, Spring Boot
--   **Database**: HSQLDB (embedded)
--   **Containerization**: Docker
+-   **Datenbank**: PostgreSQL (Containerisiert)
+-   **Containerisierung**: Docker
+-   **Build-Tool**: Gradle
 
-## Requirements
+## Projektstruktur
 
--   [Docker](https://www.docker.com/) (version 20.10 or higher)
--   Optional: [Docker Compose](https://docs.docker.com/compose/) (version 1.29 or higher)
+-   `src-ui/`: Frontend-Quellcode
+-   `src/`: Backend-Quellcode
+-   `src/main/resources/db/`: Datenbankdateien
+-   `Dockerfile`: Docker-Konfiguration
+-   `src/build.gradle`: Gradle-Build-Konfiguration
+
+## Voraussetzungen
+
+-   [Docker](https://www.docker.com/) (Version 20.10 oder höher)
+-   Optional: [Docker Compose](https://docs.docker.com/compose/) (Version 1.29 oder höher)
+-   Für die Entwicklung: Node.js, Java JDK 11+, Gradle
 
 ## Installation
 
-1. **Clone the repository:**
+1. **Repository klonen:**
 
     ```bash
     git clone https://github.com/lumiliaro/symptothermapp.git
     cd symptothermapp
     ```
 
-2. **Build and run the Docker image:**
+2. **Docker-Image bauen und ausführen:**
 
     ```bash
     docker build -t symptothermapp .
     docker run -p 8080:8080 symptothermapp
     ```
 
-3. **Access the application:**
+3. **Zugriff auf die Anwendung:**
 
-    - Frontend: [http://localhost:8080](http://localhost:8080)
-    - Backend: [http://localhost:8080](http://localhost:8080)
+    - Frontend und Backend: [http://localhost:8080](http://localhost:8080)
 
-## Usage
+## Verwendung
 
-Once the container is running, the application can be accessed through a web browser. Begin monitoring your fertility.
+Nach dem Start des Containers kann auf die Anwendung über einen Webbrowser zugegriffen werden. Beginnen Sie mit der Überwachung Ihrer Fruchtbarkeit durch Eingabe Ihrer täglichen Messwerte und Beobachtungen.
 
-## Docker Setup
+## Docker-Setup
 
-### Multi-Stage Build
+Das Projekt verwendet Docker für eine einfache Bereitstellung und Ausführung. Die `Dockerfile` im Wurzelverzeichnis definiert den Build- und Ausführungsprozess.
 
-The Docker setup uses a multi-stage build to minimize the size of the final image:
+### Dockerfile-Struktur
 
-Backend Build: Builds the backend application using Gradle.
-Production Image: Combines the frontend and backend into a final image and runs both using Tomcat.
+Die `Dockerfile` verwendet einen Multi-Stage-Build-Prozess:
+
+1. **Build-Stage**:
+
+    - Basis: `gradle:8.10.0-jdk21-alpine`
+    - Kopiert den Quellcode und baut die Anwendung mit Gradle
+    - Führt `gradle clean build -x test --no-daemon` aus
+
+2. **Production-Stage**:
+    - Basis: `eclipse-temurin:21-jre-alpine`
+    - Kopiert die gebaute JAR-Datei aus der Build-Stage
+    - Setzt das Spring-Profil auf `prod`
+    - Erstellt einen nicht-Root-Benutzer für verbesserte Sicherheit
+
+### Sicherheitsaspekte
+
+-   Verwendung eines nicht-Root-Benutzers (`appuser`) für die Ausführung der Anwendung
+-   Nutzung des Alpine-Linux-Basisimages für eine minimale Angriffsfläche
 
 ### Ports
 
-The container exposes one port:
+Der Container exponiert Port 8080 für den Zugriff auf die Anwendung.
 
--   8080: backend, frontend
+### Umgebungsvariablen
 
-### Volumes
+-   `SPRING_PROFILES_ACTIVE=prod`: Setzt das Spring-Profil auf Produktion
 
-The HSQLDB database is stored in a volume to persist the data:
+### Docker-Befehle
 
-```bash
-VOLUME ["/app/db/hsqldb"]
-```
+1. **Image bauen:**
 
-## License
+    ```bash
+    docker build -t symptothermapp .
+    ```
 
-This project is licensed under the [MIT License](LICENSE).
+2. **Container starten:**
+    ```bash
+    docker run -p 8080:8080 symptothermapp
+    ```
+
+## Entwicklung
+
+Für die lokale Entwicklung:
+
+1. Datenbank (PostgreSQL) starten:
+
+    ```bash
+    cd ./src && docker compose up -d
+    ```
+
+2. Backend starten:
+
+    ```bash
+    ./gradlew bootRun --args='--spring.profiles.active=dev'
+    ```
+
+3. Frontend starten:
+    ```bash
+    cd src-ui
+    npm install
+    npm run dev
+    ```
+
+## Lizenz
+
+Dieses Projekt ist unter der [MIT-Lizenz](LICENSE) lizenziert.

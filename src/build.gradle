@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'de.lumiliaro'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 
 java {
     toolchain {
@@ -42,7 +42,6 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-
 tasks.named('test') {
     useJUnitPlatform()
 }
@@ -59,4 +58,9 @@ test {
         // Change to `true` for more verbose test output
         showStandardStreams = true
     }
+}
+
+
+springBoot {
+    buildInfo()
 }

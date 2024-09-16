@@ -5,28 +5,18 @@ spring:
         url: ${DB_PATH:jdbc:postgresql://localhost:5432/symptothermapp}
         username: ${DB_USER:symptothermapp}
         password: ${DB_PASSWORD:symptothermapp}
-        # url: ${DB_PATH:jdbc:hsqldb:mem:db}
-        # username: symptothermapp
-        # password: symptothermapp
-        # driver-class-name: org.hsqldb.jdbc.JDBCDriver
     jpa:
         open-in-view: false
         properties:
             hibernate:
-                # dialect: org.hibernate.dialect.PostgreSQLDialect
                 ddl-auto: validate
-        #   hibernate:
-        #     dialect: org.hibernate.dialect.HSQLDialect
-        #     ddl-auto: validate
-        # database-platform: org.hibernate.dialect.HSQLDialect
     sql:
         init:
-            # The default value is 'embedded', which only works for in-memory databases.
-            # Since we're using a 'non-embedded' database here, we now need to set this to 'always'.
             mode: always
-
     liquibase:
         change-log: classpath:db/changelog/db.changelog-master.yaml
+app:
+    version: "@project.version@"
 springdoc:
     swagger-ui:
         path: /swagger-ui.html

@@ -22,6 +22,7 @@ import { RootState } from "../store/store";
 import SyCyclusChartTooltip from "./SyCyclusChartTooltip";
 
 export default function SyCyclusChart() {
+    const [isOpen, setIsOpen] = useState(false);
     const cyclusId = useSelector(
         (state: RootState) => state.cyclus.selectedCyclusId
     );
@@ -137,20 +138,28 @@ export default function SyCyclusChart() {
                     }}
                     stroke="#fa5252"
                 />
-                <Tooltip content={<SyCyclusChartTooltip />} />
+                <Tooltip
+                    trigger="click"
+                    wrapperStyle={{ pointerEvents: "auto" }}
+                    content={
+                        <SyCyclusChartTooltip
+                            isOpen={isOpen}
+                            setIsOpen={setIsOpen}
+                        />
+                    }
+                    isAnimationActive={false}
+                />
                 <Line
                     type="linear"
                     dataKey="temperature"
                     stroke="#4c6ef5"
                     activeDot={{
                         r: 8,
-                        onClick: (_event: any, payload: any) =>
-                            console.info(payload?.payload),
+                        onClick: (_event: any, payload: any) => {
+                            console.info(payload?.payload);
+                            setIsOpen(true);
+                        },
                     }}
-                    // dot={{
-                    //     r: 5,
-                    //     fill: "#4c6ef5",
-                    // }}
                     dot={(
                         props: DotProps & { payload: CyclusStatisticDto }
                     ) => {

@@ -1,15 +1,23 @@
-import { Paper, Text } from "@mantine/core";
+import { Button, Paper, Text } from "@mantine/core";
 import dayjs from "dayjs";
 import { Payload } from "recharts/types/component/DefaultTooltipContent";
 import { DATETIME_FORMAT_UI } from "../utils/DateFormats.utils";
 
 export default function SyCyclusChartTooltip(props: {
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
     payload?: Payload<any, any>[];
     label?: string;
 }) {
-    const { payload, label } = props;
+    const { payload, label, isOpen, setIsOpen } = props;
+
+    if (!isOpen) {
+        return <></>;
+    }
+
     return (
         <Paper px="md" py="sm" withBorder shadow="md" radius="md">
+            <Button onClick={() => setIsOpen(false)}>Schließen</Button>
             <Text fw={500} mb={5}>
                 Datum: {label}
             </Text>
