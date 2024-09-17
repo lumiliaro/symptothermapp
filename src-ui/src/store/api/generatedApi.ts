@@ -255,9 +255,9 @@ export type SortObject = {
 export type PageableObject = {
   offset?: number;
   sort?: SortObject[];
+  paged?: boolean;
   pageSize?: number;
   pageNumber?: number;
-  paged?: boolean;
   unpaged?: boolean;
 };
 export type PageTrackDay = {
@@ -302,6 +302,7 @@ export type CyclusStatisticDto = {
   temperature?: number;
   cervicalMucus?: string;
   bleeding?: string;
+  fertile?: boolean;
   createdAt?: string;
   updatedAt?: string;
 };

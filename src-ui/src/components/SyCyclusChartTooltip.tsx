@@ -38,6 +38,12 @@ export default function SyCyclusChartTooltip(props: {
                         </Text>
                     )}
 
+                    {item.payload.fertile && (
+                        <Text c="red.6" fz="sm" fw={700}>
+                            Mögliche Fruchtbarkeit!
+                        </Text>
+                    )}
+
                     <Text fz="sm">
                         {"Messung am: "}
                         {dayjs(item.payload.createdAt).format(

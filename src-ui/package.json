@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "npm run gen-api && tsc && vite",
         "build": "tsc -b && vite build --emptyOutDir",
-        "deploy": "npm run release && cross-env VITE_MODE=production VITE_APP_VERSION=$npm_package_version && npm run build && cd ../ && docker build -t 12ukas/symptothermapp:latest .  --push",
+        "deploy": "npm run release && npm run build && cd ../ && docker build -t 12ukas/symptothermapp:latest .  --push",
         "lint": "eslint .",
         "preview": "vite preview",
         "gen-api": "npx @rtk-query/codegen-openapi openapi-config.ts",
@@ -34,7 +34,6 @@
         "@types/react": "^18.3.3",
         "@types/react-dom": "^18.3.0",
         "@vitejs/plugin-react-swc": "^3.5.0",
-        "cross-env": "^7.0.3",
         "esbuild-runner": "^2.2.2",
         "eslint": "^9.9.1",
         "eslint-plugin-react": "^7.35.0",

@@ -1,12 +1,9 @@
 package de.lumiliaro.symptothermapp.service;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +27,7 @@ import lombok.Data;
 public class TrackDayService {
     private final TrackDayRepository trackDayRepository;
     private final CyclusService cyclusService;
+    private final CyclusStatisticService cyclusStatisticService;
     private final String RESOURCE = "TrackDay";
 
     public Page<TrackDay> findAllPageable(Pageable pageable) {
@@ -126,45 +124,7 @@ public class TrackDayService {
 
     public List<CyclusStatisticDto> getCyclusData(Date cyclusStartDate) {
         List<TrackDay> trackDays = trackDayRepository.findTop30ByDayGreaterThanEqualOrderByDayAsc(cyclusStartDate);
-        List<CyclusStatisticDto> response = new ArrayList<>();
-        SimpleDateFormat dateFormatterTrackDay = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat dateFormatterResponse = new SimpleDateFormat("dd.MM");
-
-        for (int day = 0; day < 30; day++) {
-            Date date = DateUtils.addDays(cyclusStartDate, day);
-
-            Optional<TrackDay> trackDayOpt = trackDays.stream().filter(
-                    trackDay -> dateFormatterTrackDay.format(trackDay.getDay())
-                            .equals(dateFormatterTrackDay.format(date)))
-                    .findFirst();
-
-            if (trackDayOpt.isPresent()) {
-                // Check if this day is a new cyclus
-                if (day != 0 && cyclusService.findByDate(trackDayOpt.get().getDay()) != null) {
-                    break;
-                }
-                TrackDay trackDay = trackDayOpt.get();
-                response.add(new CyclusStatisticDto(
-                        String.valueOf(day + 1),
-                        dateFormatterResponse.format(trackDay.getDay()),
-                        trackDay.getTemperature(),
-                        trackDay.getCervicalMucus() != null ? trackDay.getCervicalMucus().getValue() : null,
-                        trackDay.getBleeding() != null ? trackDay.getBleeding().getValue() : null,
-                        trackDay.getCreatedAt(),
-                        trackDay.getUpdatedAt()));
-            } else {
-                response.add(new CyclusStatisticDto(
-                        String.valueOf(day + 1),
-                        dateFormatterResponse.format(date),
-                        null,
-                        null,
-                        null,
-                        null,
-                        null));
-            }
-        }
-
-        return response;
+        return cyclusStatisticService.getCyclusData(cyclusStartDate, trackDays);
     }
 
     public TrackDayMinMaxTemperatureDto getMinAndMaxTemperature() {
