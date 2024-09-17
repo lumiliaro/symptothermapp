@@ -1,14 +1,18 @@
 package de.lumiliaro.symptothermapp.service;
 
-import de.lumiliaro.symptothermapp.dto.CyclusStatisticDto;
-import de.lumiliaro.symptothermapp.model.TrackDay;
-import lombok.RequiredArgsConstructor;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import de.lumiliaro.symptothermapp.dto.CyclusStatisticDto;
+import de.lumiliaro.symptothermapp.model.TrackDay;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
@@ -36,18 +40,8 @@ public class CyclusStatisticService {
         return cyclusData.subList(size - 3, size);
     }
 
-    private CyclusStatisticDto findLowestTemperatureFromLastThree(List<CyclusStatisticDto> cyclusData) {
-        List<CyclusStatisticDto> lastThree = getLastThreeCyclusStatisticDtos(cyclusData);
-
-        return lastThree.stream()
-                .filter(dto -> dto.getTemperature() != null)
-                .min(Comparator.comparing(CyclusStatisticDto::getTemperature))
-                .orElseThrow(() -> new NoSuchElementException(
-                        "Keine gültige Temperatur in den letzten drei Einträgen gefunden."));
-    }
-
-    private boolean checkIfTrackDayIsFertile(CyclusStatisticDto trackDayWithLowestTemperature,
-                                             List<CyclusStatisticDto> cyclusData) {
+    private boolean checkIfTrackDayIsFertile(List<CyclusStatisticDto> lastThreeTrackDays,
+            List<CyclusStatisticDto> cyclusData) {
         int size = cyclusData.size();
         if (size < 9) {
             throw new IllegalArgumentException("Die Liste muss mindestens 9 Elemente enthalten.");
@@ -55,12 +49,14 @@ public class CyclusStatisticService {
 
         List<CyclusStatisticDto> firstSix = cyclusData.subList(size - 9, size - 3);
 
-        if (firstSix.stream().anyMatch(dto -> dto.getTemperature() == null)) {
+        if (firstSix.stream().anyMatch(dto -> dto.getTemperature() == null) ||
+                lastThreeTrackDays.stream().anyMatch(dto -> dto.getTemperature() == null)) {
             return false;
         }
 
         return firstSix.stream()
-                .allMatch(dto -> dto.getTemperature() < trackDayWithLowestTemperature.getTemperature());
+                .allMatch(firstSixDto -> lastThreeTrackDays.stream()
+                        .allMatch(lastThreeDto -> firstSixDto.getTemperature() < lastThreeDto.getTemperature()));
     }
 
     private void setFertileForLastThree(List<CyclusStatisticDto> cyclusData) {
@@ -80,14 +76,14 @@ public class CyclusStatisticService {
             Date date = DateUtils.addDays(cyclusStartDate, day);
 
             Optional<TrackDay> trackDayOpt = trackDays.stream().filter(
-                            trackDay -> dateFormatterTrackDay.format(trackDay.getDay())
-                                    .equals(dateFormatterTrackDay.format(date)))
+                    trackDay -> dateFormatterTrackDay.format(trackDay.getDay())
+                            .equals(dateFormatterTrackDay.format(date)))
                     .findFirst();
 
             // Set fertile days
             if (checkIfLastNineAreValidForFertileCheck(response)) {
-                CyclusStatisticDto trackDayWithLowestTemperature = findLowestTemperatureFromLastThree(response);
-                if (checkIfTrackDayIsFertile(trackDayWithLowestTemperature, response)) {
+                List<CyclusStatisticDto> lastThree = getLastThreeCyclusStatisticDtos(response);
+                if (checkIfTrackDayIsFertile(lastThree, response)) {
                     setFertileForLastThree(response);
                 }
             }
