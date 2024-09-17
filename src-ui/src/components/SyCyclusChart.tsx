@@ -164,7 +164,12 @@ export default function SyCyclusChart() {
                         props: DotProps & { payload: CyclusStatisticDto }
                     ) => {
                         const { cx, cy, payload } = props;
-                        const fill = payload.bleeding ? "#ff0000" : "#4c6ef5";
+                        let fill = "#4c6ef5";
+                        if (payload.fertile) {
+                            fill = "#f59f00";
+                        } else if (payload.bleeding) {
+                            fill = "#f03e3e";
+                        }
                         return <Dot cx={cx} cy={cy} r={5} fill={fill} />;
                     }}
                     isAnimationActive={false}
