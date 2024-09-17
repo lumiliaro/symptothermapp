@@ -255,14 +255,14 @@ export type SortObject = {
 export type PageableObject = {
   offset?: number;
   sort?: SortObject[];
-  paged?: boolean;
-  pageSize?: number;
   pageNumber?: number;
+  pageSize?: number;
+  paged?: boolean;
   unpaged?: boolean;
 };
 export type PageTrackDay = {
-  totalElements?: number;
   totalPages?: number;
+  totalElements?: number;
   size?: number;
   content?: TrackDay[];
   number?: number;
