@@ -71,6 +71,7 @@ public class CyclusStatisticService {
         List<CyclusStatisticDto> response = new ArrayList<>();
         SimpleDateFormat dateFormatterTrackDay = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat dateFormatterResponse = new SimpleDateFormat("dd.MM");
+        boolean isFertileSet = false;
 
         for (int day = 0; day < 30; day++) {
             Date date = DateUtils.addDays(cyclusStartDate, day);
@@ -81,10 +82,11 @@ public class CyclusStatisticService {
                     .findFirst();
 
             // Set fertile days
-            if (checkIfLastNineAreValidForFertileCheck(response)) {
+            if (!isFertileSet && checkIfLastNineAreValidForFertileCheck(response)) {
                 List<CyclusStatisticDto> lastThree = getLastThreeCyclusStatisticDtos(response);
                 if (checkIfTrackDayIsFertile(lastThree, response)) {
                     setFertileForLastThree(response);
+                    isFertileSet = true;
                 }
             }
 
