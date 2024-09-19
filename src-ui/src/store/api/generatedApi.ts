@@ -220,6 +220,7 @@ export type TrackDay = {
   disturbances?: DisturbanceEnum[];
   otherDisturbanceNotes?: string;
   notes?: string;
+  dayIsoDate?: string;
 };
 export type ErrorDto = {
   /** Fehlermeldung */
@@ -255,9 +256,9 @@ export type SortObject = {
 export type PageableObject = {
   offset?: number;
   sort?: SortObject[];
+  paged?: boolean;
   pageNumber?: number;
   pageSize?: number;
-  paged?: boolean;
   unpaged?: boolean;
 };
 export type PageTrackDay = {
@@ -302,7 +303,7 @@ export type CyclusStatisticDto = {
   temperature?: number;
   cervicalMucus?: string;
   bleeding?: string;
-  fertile?: boolean;
+  cyclusDotType?: CyclusDotType;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -350,6 +351,11 @@ export enum DisturbanceEnum {
   CelebrationEvenings = "CELEBRATION_EVENINGS",
   ShiftWork = "SHIFT_WORK",
   Other = "OTHER",
+}
+export enum CyclusDotType {
+  Bleeding = "BLEEDING",
+  Fertile = "FERTILE",
+  Infertile = "INFERTILE",
 }
 export const {
   useGetTrackDayQuery,

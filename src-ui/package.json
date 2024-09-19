@@ -4,7 +4,7 @@
     "version": "1.2.0",
     "type": "module",
     "scripts": {
-        "dev": "npm run gen-api && tsc && vite",
+        "dev": "npm run gen-api && tsc -b && vite",
         "build": "tsc -b && vite build --emptyOutDir",
         "deploy": "npm run build && cd ../ && docker build -t 12ukas/symptothermapp:latest .  --push",
         "deploy-release": "npm run release && npm run build && cd ../ && docker build -t 12ukas/symptothermapp:latest .  --push",

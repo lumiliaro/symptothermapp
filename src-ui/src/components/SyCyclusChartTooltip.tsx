@@ -1,20 +1,20 @@
 import { Button, Paper, Text } from "@mantine/core";
 import dayjs from "dayjs";
-import { Payload } from "recharts/types/component/DefaultTooltipContent";
+import { TooltipProps } from "recharts";
 import { DATETIME_FORMAT_UI } from "../utils/DateFormats.utils";
 
-export default function SyCyclusChartTooltip(props: {
-    isOpen: boolean;
-    setIsOpen: (isOpen: boolean) => void;
-    payload?: Payload<any, any>[];
-    label?: string;
-}) {
+export default function SyCyclusChartTooltip(
+    props: TooltipProps<number, string> & {
+        isOpen: boolean;
+        setIsOpen: (isOpen: boolean) => void;
+        label?: string;
+    }
+) {
     const { payload, label, isOpen, setIsOpen } = props;
 
     if (!isOpen) {
         return <></>;
     }
-
     return (
         <Paper px="md" py="sm" withBorder shadow="md" radius="md">
             <Button onClick={() => setIsOpen(false)}>Schließen</Button>
@@ -38,9 +38,15 @@ export default function SyCyclusChartTooltip(props: {
                         </Text>
                     )}
 
-                    {item.payload.fertile && (
+                    {item.payload.cyclusDotType === "FERTILE" && (
                         <Text c="red.6" fz="sm" fw={700}>
                             Mögliche Fruchtbarkeit!
+                        </Text>
+                    )}
+
+                    {item.payload.cyclusDotType === "INFERTILE" && (
+                        <Text c="green.6" fz="sm" fw={700}>
+                            Mögliche Unfruchtbarkeit!
                         </Text>
                     )}
 

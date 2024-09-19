@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
     CartesianGrid,
-    Dot,
     DotProps,
     Line,
     LineChart,
@@ -19,6 +18,7 @@ import {
 } from "../store/api/generatedApi";
 import { useLazyGetCyclusStatisticByIdQuery } from "../store/api/lazyApi";
 import { RootState } from "../store/store";
+import SyCyclusChartDot from "./SyCyclusChartDot";
 import SyCyclusChartTooltip from "./SyCyclusChartTooltip";
 
 export default function SyCyclusChart() {
@@ -136,7 +136,7 @@ export default function SyCyclusChart() {
                         fill: "red",
                         dy: -10,
                     }}
-                    stroke="#fa5252"
+                    stroke="var(--mantine-color-red-8)"
                 />
                 <Tooltip
                     trigger="click"
@@ -152,7 +152,7 @@ export default function SyCyclusChart() {
                 <Line
                     type="linear"
                     dataKey="temperature"
-                    stroke="#4c6ef5"
+                    stroke="var(--mantine-color-indigo-6)"
                     activeDot={{
                         r: 8,
                         onClick: (_event: any, payload: any) => {
@@ -162,16 +162,7 @@ export default function SyCyclusChart() {
                     }}
                     dot={(
                         props: DotProps & { payload: CyclusStatisticDto }
-                    ) => {
-                        const { cx, cy, payload } = props;
-                        let fill = "#4c6ef5";
-                        if (payload.fertile) {
-                            fill = "#f59f00";
-                        } else if (payload.bleeding) {
-                            fill = "#f03e3e";
-                        }
-                        return <Dot cx={cx} cy={cy} r={5} fill={fill} />;
-                    }}
+                    ) => <SyCyclusChartDot {...props} />}
                     isAnimationActive={false}
                 />
             </LineChart>

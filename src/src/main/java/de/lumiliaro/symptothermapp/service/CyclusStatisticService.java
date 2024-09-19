@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.lumiliaro.symptothermapp.dto.CyclusStatisticDto;
+import de.lumiliaro.symptothermapp.enums.CyclusDotTypeEnum;
 import de.lumiliaro.symptothermapp.model.TrackDay;
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CyclusStatisticService {
     private final CyclusService cyclusService;
+    private final SimpleDateFormat dateFormatterIsoDate = new SimpleDateFormat("yyyy-MM-dd");
+    private final SimpleDateFormat dateFormatterResponse = new SimpleDateFormat("dd.MM.");
 
     private boolean checkIfLastNineAreValidForFertileCheck(List<CyclusStatisticDto> cyclusData) {
         int size = cyclusData.size();
@@ -63,22 +66,20 @@ public class CyclusStatisticService {
         List<CyclusStatisticDto> lastThree = getLastThreeCyclusStatisticDtos(cyclusData);
 
         for (CyclusStatisticDto dto : lastThree) {
-            dto.setFertile(true);
+            dto.setCyclusDotType(CyclusDotTypeEnum.FERTILE);
         }
     }
 
     public List<CyclusStatisticDto> getCyclusData(Date cyclusStartDate, List<TrackDay> trackDays) {
         List<CyclusStatisticDto> response = new ArrayList<>();
-        SimpleDateFormat dateFormatterTrackDay = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat dateFormatterResponse = new SimpleDateFormat("dd.MM");
         boolean isFertileSet = false;
 
         for (int day = 0; day < 30; day++) {
             Date date = DateUtils.addDays(cyclusStartDate, day);
 
             Optional<TrackDay> trackDayOpt = trackDays.stream().filter(
-                    trackDay -> dateFormatterTrackDay.format(trackDay.getDay())
-                            .equals(dateFormatterTrackDay.format(date)))
+                    trackDay -> trackDay.getDayIsoDate()
+                            .equals(dateFormatterIsoDate.format(date)))
                     .findFirst();
 
             // Set fertile days
@@ -101,13 +102,14 @@ public class CyclusStatisticService {
                 cyclusStatisticDto.setCyclusDay(String.valueOf(day + 1));
                 cyclusStatisticDto.setDate(dateFormatterResponse.format(trackDay.getDay()));
                 cyclusStatisticDto.setTemperature(trackDay.getTemperature());
-                cyclusStatisticDto.setCervicalMucus(
-                        trackDay.getCervicalMucus() != null ? trackDay.getCervicalMucus().getValue() : null);
-                cyclusStatisticDto
-                        .setBleeding(trackDay.getBleeding() != null ? trackDay.getBleeding().getValue() : null);
-                cyclusStatisticDto.setFertile(false);
+                cyclusStatisticDto.setCervicalMucus(trackDay.getCervicalMucus());
+                cyclusStatisticDto.setBleeding(trackDay.getBleeding());
                 cyclusStatisticDto.setCreatedAt(trackDay.getCreatedAt());
                 cyclusStatisticDto.setUpdatedAt(trackDay.getUpdatedAt());
+                if (isFertileSet) {
+                    // if fertile is set, set all days after to infertile
+                    cyclusStatisticDto.setCyclusDotType(CyclusDotTypeEnum.INFERTILE);
+                }
                 response.add(cyclusStatisticDto);
             } else {
                 CyclusStatisticDto cyclusStatisticDto = new CyclusStatisticDto();

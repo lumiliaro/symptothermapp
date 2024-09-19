@@ -1,5 +1,6 @@
 package de.lumiliaro.symptothermapp.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -81,4 +82,8 @@ public class TrackDay extends BaseEntity {
     @Column(name = "notes", length = 1000)
     @Size(max = 1000, message = "Die Notizen dürfen nicht länger als 1000 Zeichen lang sein.")
     private String notes;
+
+    public String getDayIsoDate() {
+        return new SimpleDateFormat("yyyy-MM-dd").format(getDay());
+    }
 }

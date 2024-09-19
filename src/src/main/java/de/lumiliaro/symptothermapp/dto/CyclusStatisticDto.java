@@ -2,6 +2,9 @@ package de.lumiliaro.symptothermapp.dto;
 
 import java.time.LocalDateTime;
 
+import de.lumiliaro.symptothermapp.enums.BleedingEnum;
+import de.lumiliaro.symptothermapp.enums.CervicalMucusEnum;
+import de.lumiliaro.symptothermapp.enums.CyclusDotTypeEnum;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +21,26 @@ public class CyclusStatisticDto {
     private Float temperature;
     private String cervicalMucus;
     private String bleeding;
-    private boolean fertile = false; // Möglicher fruchtbarer Tag
+    private CyclusDotTypeEnum cyclusDotType;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public void setBleeding(BleedingEnum bleeding) {
+        if (bleeding == null) {
+            this.cyclusDotType = null;
+            return;
+        }
+
+        this.bleeding = bleeding.getValue();
+        this.cyclusDotType = CyclusDotTypeEnum.BLEEDING;
+    }
+
+    public void setCervicalMucus(CervicalMucusEnum cervicalMucus) {
+        if (cervicalMucus == null) {
+            this.cyclusDotType = null;
+            return;
+        }
+
+        this.cervicalMucus = cervicalMucus.getValue();
+    }
 }
