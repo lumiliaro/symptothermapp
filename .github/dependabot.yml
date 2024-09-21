@@ -1,0 +1,53 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: 'npm'
+    # Look for `package.json` and `lock` files in the `src-ui` directory
+    directory: '/src-ui'
+    # Check the npm registry for updates every day (weekdays)
+    schedule:
+      interval: 'weekly'
+    # ignore all major version updates
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+    versioning-strategy: auto
+    # add the 'dependencies-ui' label to PRs
+    labels:
+      - 'dependencies-ui'
+    # max of 10 PRs at a time from dependabot
+    open-pull-requests-limit: 10
+
+  # Enable version updates for gradle
+  - package-ecosystem: "gradle"
+    directory: "/src"
+    schedule:
+      interval: "weekly"
+    versioning-strategy: auto
+    # add the 'dependencies-backend' label to PRs
+    labels:
+      - 'dependencies-backend'
+    # max of 10 PRs at a time from dependabot
+    open-pull-requests-limit: 10
+
+  # Enable version updates for docker
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # add the 'dependencies-docker' label to PRs
+    labels:
+      - 'dependencies-docker'
+    # max of 10 PRs at a time from dependabot
+    open-pull-requests-limit: 10
+
+  # Enable version updates for github-actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # add the 'dependencies-github-actions' label to PRs
+    labels:
+      - 'dependencies-github-actions'
+    # max of 10 PRs at a time from dependabot
+    open-pull-requests-limit: 10
