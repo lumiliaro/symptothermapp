@@ -1,5 +1,4 @@
 import { NumberInput, NumberInputProps } from "@mantine/core";
-import { useEffect } from "react";
 import { useController } from "react-hook-form";
 
 export type SyTemperatureNumberInputProps = NumberInputProps;
@@ -8,12 +7,6 @@ export default function SyTemperatureNumberInput(
     props: SyTemperatureNumberInputProps
 ) {
     const { field, fieldState } = useController({ name: "temperature" });
-
-    useEffect(() => {
-        if (field.value !== null && (field.value > 42 || field.value < 33)) {
-            field.onChange(36.2);
-        }
-    }, [field]);
 
     return (
         <NumberInput
@@ -29,8 +22,10 @@ export default function SyTemperatureNumberInput(
             fixedDecimalScale
             decimalSeparator=","
             decimalScale={2}
+            stepHoldDelay={1000}
+            stepHoldInterval={75}
             step={0.01}
-            value={field.value || ""}
+            value={field.value || undefined}
             {...props}
             error={fieldState.error?.message}
         />
