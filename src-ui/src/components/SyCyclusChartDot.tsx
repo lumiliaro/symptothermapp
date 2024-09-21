@@ -1,5 +1,5 @@
 import { Dot, DotProps } from "recharts";
-import { CyclusStatisticDto } from "../store/api/generatedApi";
+import { CyclusDotType, CyclusStatisticDto } from "../store/api/generatedApi";
 
 export default function SyCyclusChartDot(
     props: DotProps & { payload: CyclusStatisticDto }
@@ -8,13 +8,13 @@ export default function SyCyclusChartDot(
     let fill = "var(--mantine-color-indigo-6)";
 
     switch (payload.cyclusDotType) {
-        case "BLEEDING":
+        case CyclusDotType.Bleeding:
             fill = "var(--mantine-color-red-6)";
             break;
-        case "FERTILE":
+        case CyclusDotType.Fertile:
             fill = "var(--mantine-color-yellow-6)";
             break;
-        case "INFERTILE":
+        case CyclusDotType.Infertile:
             fill = "var(--mantine-color-green-6)";
             break;
     }
