@@ -11,7 +11,7 @@
         "lint": "eslint .",
         "preview": "vite preview",
         "gen-api": "npx @rtk-query/codegen-openapi openapi-config.ts",
-        "release": "release-it"
+        "release": "tsc -b && release-it"
     },
     "dependencies": {
         "@mantine/core": "^7.12.1",
