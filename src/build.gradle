@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.2'
     id 'io.spring.dependency-management' version '1.1.6'
+    id "org.springdoc.openapi-gradle-plugin" version "1.9.0"
 }
 
 group = 'de.lumiliaro'
@@ -36,10 +37,16 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     // runtimeOnly 'org.hsqldb:hsqldb'
     runtimeOnly 'org.postgresql:postgresql'
+    // runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+openApi {
+	outputDir.set(file("$buildDir/openapi"))
+	outputFileName.set("schema.json")
 }
 
 tasks.named('test') {

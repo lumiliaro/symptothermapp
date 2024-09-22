@@ -1,19 +1,33 @@
-# Build-Stage
+# OpenAPI-Docs-Generation
+# FROM gradle:8.10.0-jdk21-alpine AS openapi-build
+
+# WORKDIR /app/openapi
+# COPY ./src .
+
+# ENV SPRING_PROFILES_ACTIVE=openapi
+# RUN gradle generateOpenApiDocs -x test --no-daemon
+
+# Backend-Build-Stage
 FROM gradle:8.10.0-jdk21-alpine AS backend-build
 
 WORKDIR /app
-COPY ./src ./src
-COPY ./build.gradle ./
-COPY ./settings.gradle ./
-RUN gradle clean build -x test --no-daemon
+COPY ./src .
 
-# Build-Stage für Frontend
+WORKDIR /app
+ENV SPRING_PROFILES_ACTIVE=prod
+RUN gradle clean build generateOpenApiDocs -x test --no-daemon
+
+# Frontend-Build-Stage
 FROM node:20-alpine AS frontend-build
 
 WORKDIR /app
-COPY ./src-ui ./src-ui
-WORKDIR /app/src-ui
+COPY ./src-ui ./ui
+
+COPY --from=backend-build /app/build/openapi/schema.json ./ui/src/store/api/
+
+WORKDIR /app/ui
 RUN npm ci
+RUN npm run gen-api
 RUN npm run build
 
 # Production-Stage
@@ -21,7 +35,7 @@ FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 COPY --from=backend-build /app/build/libs/*.jar app.jar
-COPY --from=frontend-build /app/src-ui/build /app/static
+COPY --from=frontend-build /app/ui/dist /app/static
 
 ENV SPRING_PROFILES_ACTIVE=prod
 

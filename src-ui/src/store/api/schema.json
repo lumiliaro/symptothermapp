@@ -1,0 +1,1514 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Symptothermapp Backend API",
+    "description": "Symptothermapp Backend API für das Frontend",
+    "license": {
+      "name": "MIT License",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "version": "1.2.0"
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Default Server URL"
+    }
+  ],
+  "tags": [
+    {
+      "name": "TrackDay",
+      "description": "Operations related to TrackDay management"
+    },
+    {
+      "name": "TrackDay",
+      "description": "Operations related to Cyclus management"
+    },
+    {
+      "name": "Options",
+      "description": "Operationen für Auswahloptionen"
+    },
+    {
+      "name": "Server-Infor",
+      "description": "Get server informations"
+    }
+  ],
+  "paths": {
+    "/api/track-days/{id}": {
+      "get": {
+        "tags": [
+          "TrackDay"
+        ],
+        "summary": "Get a track day by ID",
+        "operationId": "getTrackDay",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackDay"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "TrackDay"
+        ],
+        "summary": "Update an existing track day",
+        "operationId": "updateTrackDay",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrackDayDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TrackDay"
+        ],
+        "summary": "Delete a track day",
+        "operationId": "deleteTrackDay",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/track-days": {
+      "get": {
+        "tags": [
+          "TrackDay"
+        ],
+        "summary": "Get all track days",
+        "operationId": "getTrackDays",
+        "parameters": [
+          {
+            "name": "pageable",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pageable"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageTrackDay"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "TrackDay"
+        ],
+        "summary": "Create a new track day",
+        "operationId": "createTrackDay",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrackDayDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/track-days/month/{month}/{year}": {
+      "get": {
+        "tags": [
+          "TrackDay"
+        ],
+        "summary": "Get track days by month and year",
+        "operationId": "getTrackDaysByMonthAndYear",
+        "parameters": [
+          {
+            "name": "month",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrackDay"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/track-days/min-max-temperature": {
+      "get": {
+        "tags": [
+          "TrackDay"
+        ],
+        "summary": "Get min and max temperature",
+        "operationId": "getTrackDayMinMaxTemperature",
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackDayMinMaxTemperatureDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/track-days/date/{day}": {
+      "get": {
+        "tags": [
+          "TrackDay"
+        ],
+        "summary": "Get a track day by date",
+        "operationId": "getTrackDayByDate",
+        "parameters": [
+          {
+            "name": "day",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackDay"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/options/disturbance": {
+      "get": {
+        "tags": [
+          "Options"
+        ],
+        "summary": "Störungsoptionen abrufen",
+        "operationId": "getDisturbanceOptions",
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OptionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/options/cervix/texture": {
+      "get": {
+        "tags": [
+          "Options"
+        ],
+        "summary": "Zervixbeschaffenheitsoptionen abrufen",
+        "operationId": "getCervixTextureOptions",
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OptionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/options/cervix/opening-state": {
+      "get": {
+        "tags": [
+          "Options"
+        ],
+        "summary": "Zervixöffnungszustandsoptionen abrufen",
+        "operationId": "getCervixOpeningStateOptions",
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OptionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/options/cervix/height-position": {
+      "get": {
+        "tags": [
+          "Options"
+        ],
+        "summary": "Zervixhöhe-/Positionsoptionen abrufen",
+        "operationId": "getCervixHeightPositionOptions",
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OptionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/options/cervical-mucus": {
+      "get": {
+        "tags": [
+          "Options"
+        ],
+        "summary": "Zervixschleimoptionen abrufen",
+        "operationId": "getCervicalMucusOptions",
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OptionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/options/bleeding": {
+      "get": {
+        "tags": [
+          "Options"
+        ],
+        "summary": "Blutungsoptionen abrufen",
+        "operationId": "getBleedingOptions",
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OptionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/info": {
+      "get": {
+        "tags": [
+          "Server-Infor"
+        ],
+        "operationId": "getServerInfo",
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerInfoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cyclus": {
+      "get": {
+        "tags": [
+          "TrackDay"
+        ],
+        "operationId": "getAllCycli",
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Cyclus"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cyclus/{id}": {
+      "get": {
+        "tags": [
+          "TrackDay"
+        ],
+        "operationId": "getOneCyclus",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cyclus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cyclus/statistic/{cyclusId}": {
+      "get": {
+        "tags": [
+          "TrackDay"
+        ],
+        "operationId": "getCyclusStatisticById",
+        "parameters": [
+          {
+            "name": "cyclusId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Ressource nicht gefunden",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ressource existiert bereits",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CyclusStatisticDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Fehlermeldung",
+            "example": "Ressource nicht gefunden"
+          },
+          "code": {
+            "type": "string",
+            "description": "Fehlercode",
+            "example": "ERR_NOT_FOUND"
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "Zeitstempel des Fehlers",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "integer",
+            "description": "HTTP-Statuscode",
+            "format": "int32",
+            "example": 404
+          }
+        },
+        "description": "Repräsentiert eine Fehlermeldung"
+      },
+      "BleedingEnum": {
+        "type": "string",
+        "description": "Bleeding Enum",
+        "enum": [
+          "STRONG",
+          "MEDIUM",
+          "WEAK",
+          "SPOTTING_BLEEDING"
+        ]
+      },
+      "CervicalMucusEnum": {
+        "type": "string",
+        "description": "Cervical Mucus Enum",
+        "enum": [
+          "DRY",
+          "NORMAL",
+          "MOIST",
+          "CREAMY",
+          "SPINNABLE"
+        ]
+      },
+      "CervixHeightPositionEnum": {
+        "type": "string",
+        "description": "CervixHeightPosition Enum",
+        "enum": [
+          "HIGH",
+          "LOW"
+        ]
+      },
+      "CervixOpeningStateEnum": {
+        "type": "string",
+        "description": "CervixOpeningState Enum",
+        "enum": [
+          "OPEN",
+          "PARTIALLY_OPEN",
+          "CLOSED"
+        ]
+      },
+      "CervixTextureEnum": {
+        "type": "string",
+        "description": "CervixTexture Enum",
+        "enum": [
+          "HARD",
+          "SOFT"
+        ]
+      },
+      "DisturbanceEnum": {
+        "type": "string",
+        "description": "Disturbance Enum",
+        "enum": [
+          "GOING_TO_BED_UNUSUALLY_LATE",
+          "UNUSUAL_ALCOHOL_CONSUMPTION",
+          "STRESS",
+          "MENTAL_STRESS",
+          "TIME_CHANGE",
+          "TIME_SHIFT",
+          "SHORT_OR_SHORT_NIGHT_REST",
+          "EATING_LATE_EVENINGS",
+          "TRAVEL_AND_CHANGE_OF_CLIMATE",
+          "ILLNESS_AND_UNPLEASANT_FEVER",
+          "OTHER_ILLNESSES",
+          "MEDICINE",
+          "THERMOMETER_CHANGE_IN_THE_CYCLE",
+          "EXCITEMENT",
+          "CELEBRATION_EVENINGS",
+          "SHIFT_WORK",
+          "OTHER"
+        ]
+      },
+      "TrackDayDto": {
+        "required": [
+          "day",
+          "hadSex",
+          "withContraceptives"
+        ],
+        "type": "object",
+        "properties": {
+          "temperature": {
+            "type": "number",
+            "format": "float"
+          },
+          "day": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "bleeding": {
+            "$ref": "#/components/schemas/BleedingEnum"
+          },
+          "cervicalMucus": {
+            "$ref": "#/components/schemas/CervicalMucusEnum"
+          },
+          "cervixOpeningState": {
+            "$ref": "#/components/schemas/CervixOpeningStateEnum"
+          },
+          "cervixHeightPosition": {
+            "$ref": "#/components/schemas/CervixHeightPositionEnum"
+          },
+          "cervixTexture": {
+            "$ref": "#/components/schemas/CervixTextureEnum"
+          },
+          "hadSex": {
+            "type": "boolean"
+          },
+          "withContraceptives": {
+            "type": "boolean"
+          },
+          "disturbances": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DisturbanceEnum"
+            }
+          },
+          "otherDisturbanceNotes": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string"
+          },
+          "notes": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string"
+          }
+        }
+      },
+      "Pageable": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PageTrackDay": {
+        "type": "object",
+        "properties": {
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TrackDay"
+            }
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SortObject"
+            }
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "pageable": {
+            "$ref": "#/components/schemas/PageableObject"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PageableObject": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SortObject"
+            }
+          },
+          "paged": {
+            "type": "boolean"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unpaged": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SortObject": {
+        "type": "object",
+        "properties": {
+          "direction": {
+            "type": "string"
+          },
+          "nullHandling": {
+            "type": "string"
+          },
+          "ascending": {
+            "type": "boolean"
+          },
+          "property": {
+            "type": "string"
+          },
+          "ignoreCase": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TrackDay": {
+        "required": [
+          "day"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "day": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "temperature": {
+            "type": "number",
+            "format": "float"
+          },
+          "bleeding": {
+            "$ref": "#/components/schemas/BleedingEnum"
+          },
+          "cervicalMucus": {
+            "$ref": "#/components/schemas/CervicalMucusEnum"
+          },
+          "cervixOpeningState": {
+            "$ref": "#/components/schemas/CervixOpeningStateEnum"
+          },
+          "cervixHeightPosition": {
+            "$ref": "#/components/schemas/CervixHeightPositionEnum"
+          },
+          "cervixTexture": {
+            "$ref": "#/components/schemas/CervixTextureEnum"
+          },
+          "hadSex": {
+            "type": "boolean"
+          },
+          "withContraceptives": {
+            "type": "boolean"
+          },
+          "disturbances": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DisturbanceEnum"
+            }
+          },
+          "otherDisturbanceNotes": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string"
+          },
+          "notes": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string"
+          },
+          "dayIsoDate": {
+            "type": "string"
+          }
+        }
+      },
+      "TrackDayMinMaxTemperatureDto": {
+        "type": "object",
+        "properties": {
+          "minTemperature": {
+            "type": "number",
+            "format": "float"
+          },
+          "maxTemperature": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "OptionDto": {
+        "required": [
+          "label",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "disabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ServerInfoDto": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "Cyclus": {
+        "required": [
+          "date"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CyclusStatisticDto": {
+        "required": [
+          "cyclusDay",
+          "date"
+        ],
+        "type": "object",
+        "properties": {
+          "cyclusDay": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "temperature": {
+            "type": "number",
+            "format": "float"
+          },
+          "cervicalMucus": {
+            "type": "string"
+          },
+          "bleeding": {
+            "type": "string"
+          },
+          "cyclusDotType": {
+            "type": "string",
+            "enum": [
+              "BLEEDING",
+              "FERTILE",
+              "INFERTILE"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}
