@@ -17,7 +17,7 @@ COPY ./src-ui ./ui
 WORKDIR /app/ui
 RUN npm ci
 RUN npm run gen-api
-RUN npm run build
+RUN npx @rtk-query/codegen-openapi openapi-config.ts
 
 # Production-Stage
 FROM eclipse-temurin:21-jre-alpine
