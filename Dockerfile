@@ -6,7 +6,7 @@ COPY ./src .
 
 WORKDIR /app
 ENV SPRING_PROFILES_ACTIVE=prod
-RUN gradle clean build generateOpenApiDocs -x test --no-daemon
+RUN gradle clean build -x test --no-daemon
 
 # Frontend-Build-Stage
 FROM node:20-alpine AS frontend-build
