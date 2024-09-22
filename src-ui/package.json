@@ -1,7 +1,7 @@
 {
     "name": "symptothermapp-frontend",
     "private": true,
-    "version": "1.3.6",
+    "version": "2.0.0",
     "type": "module",
     "scripts": {
         "dev": "node copyOpenApiSchema.js && npm run gen-api && tsc -b && vite",
