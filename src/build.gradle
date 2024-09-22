@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'de.lumiliaro'
-version = '1.2.0'
+version = '2.0.0'
 
 java {
     toolchain {
@@ -37,7 +37,6 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     // runtimeOnly 'org.hsqldb:hsqldb'
     runtimeOnly 'org.postgresql:postgresql'
-    // runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

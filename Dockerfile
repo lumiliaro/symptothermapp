@@ -1,12 +1,3 @@
-# OpenAPI-Docs-Generation
-# FROM gradle:8.10.0-jdk21-alpine AS openapi-build
-
-# WORKDIR /app/openapi
-# COPY ./src .
-
-# ENV SPRING_PROFILES_ACTIVE=openapi
-# RUN gradle generateOpenApiDocs -x test --no-daemon
-
 # Backend-Build-Stage
 FROM gradle:8.10.0-jdk21-alpine AS backend-build
 
@@ -22,8 +13,6 @@ FROM node:20-alpine AS frontend-build
 
 WORKDIR /app
 COPY ./src-ui ./ui
-
-COPY --from=backend-build /app/build/openapi/schema.json ./ui/src/store/api/
 
 WORKDIR /app/ui
 RUN npm ci

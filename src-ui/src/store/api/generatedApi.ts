@@ -268,9 +268,9 @@ export type PageTrackDay = {
   content?: TrackDay[];
   number?: number;
   sort?: SortObject[];
-  numberOfElements?: number;
   first?: boolean;
   last?: boolean;
+  numberOfElements?: number;
   pageable?: PageableObject;
   empty?: boolean;
 };

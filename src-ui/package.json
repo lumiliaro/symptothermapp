@@ -4,12 +4,12 @@
     "version": "2.0.1",
     "type": "module",
     "scripts": {
-        "dev": "node copyOpenApiSchema.js && npm run gen-api && tsc -b && vite",
+        "dev": "npm run gen-api && tsc -b && vite",
         "build": "tsc -b && vite build --emptyOutDir",
         "deploy": "npm run build && cd ../ && docker build -t 12ukas/symptothermapp:latest .  --push",
         "lint": "eslint .",
         "preview": "vite preview",
-        "gen-api": "npx @rtk-query/codegen-openapi openapi-config.ts",
+        "gen-api": "cd ../src && gradlew generateOpenApiDocs && cd ../src-ui && node copyOpenApiSchema.js && npx @rtk-query/codegen-openapi openapi-config.ts",
         "release": "tsc -b && release-it"
     },
     "dependencies": {
