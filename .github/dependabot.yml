@@ -6,7 +6,7 @@ updates:
     directory: '/src-ui'
     # Check the npm registry for updates every day (weekdays)
     schedule:
-      interval: 'weekly'
+      interval: 'daily'
     # ignore all major version updates
     # ignore:
     #  - dependency-name: '*'
@@ -22,7 +22,7 @@ updates:
   - package-ecosystem: "gradle"
     directory: "/src"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     versioning-strategy: auto
     # add the 'dependencies-backend' label to PRs
     labels:
@@ -34,7 +34,7 @@ updates:
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     # add the 'dependencies-docker' label to PRs
     labels:
       - 'dependencies-docker'
@@ -45,7 +45,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     # add the 'dependencies-github-actions' label to PRs
     labels:
       - 'dependencies-github-actions'
