@@ -8,9 +8,9 @@ updates:
     schedule:
       interval: 'weekly'
     # ignore all major version updates
-    ignore:
-      - dependency-name: '*'
-        update-types: ['version-update:semver-major']
+    # ignore:
+    #  - dependency-name: '*'
+    #    update-types: ['version-update:semver-major']
     versioning-strategy: auto
     # add the 'dependencies-ui' label to PRs
     labels:
