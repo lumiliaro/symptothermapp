@@ -9,6 +9,7 @@
         "deploy": "npm run build && cd ../ && docker build -t 12ukas/symptothermapp:latest .  --push",
         "lint": "eslint .",
         "preview": "vite preview",
+        "devserver": "cd ../src && gradlew bootRun --args='--spring.profiles.active=dev'",
         "gen-api": "cd ../src && gradlew generateOpenApiDocs && cd ../src-ui && node copyOpenApiSchema.js && npx @rtk-query/codegen-openapi openapi-config.ts",
         "release": "tsc -b && release-it"
     },

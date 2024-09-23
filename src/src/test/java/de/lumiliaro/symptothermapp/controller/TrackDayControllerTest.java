@@ -2,6 +2,7 @@ package de.lumiliaro.symptothermapp.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -12,11 +13,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,7 +37,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.lumiliaro.symptothermapp.dto.TrackDayDto;
 import de.lumiliaro.symptothermapp.dto.TrackDayMinMaxTemperatureDto;
+import de.lumiliaro.symptothermapp.mapper.TrackDayMapperImpl;
 import de.lumiliaro.symptothermapp.model.TrackDay;
+import de.lumiliaro.symptothermapp.repository.TrackDayRepository;
 import de.lumiliaro.symptothermapp.service.TrackDayService;
 
 @WebMvcTest(TrackDayController.class)
@@ -42,17 +51,22 @@ public class TrackDayControllerTest {
         @MockBean
         private TrackDayService service;
 
+        @MockBean
+        private TrackDayRepository repository;
+
         @Autowired
         private ObjectMapper objectMapper;
 
         private TrackDay trackDay;
         private TrackDayDto trackDayDto;
+        private List<TrackDay> listTrackDays;
 
         @BeforeEach
         void setUp() {
-                trackDay = new TrackDay();
-                trackDay.setId(1L);
-                trackDayDto = new TrackDayDto(36.5f, new Date());
+                MockitoAnnotations.openMocks(this);
+                trackDay = mock(TrackDay.class);
+                trackDayDto = mock(TrackDayDto.class);
+                listTrackDays = List.of(mock(TrackDay.class), mock(TrackDay.class));
         }
 
         @Test
@@ -76,11 +90,12 @@ public class TrackDayControllerTest {
 
         @Test
         void testGetTrackDaysByMonthAndYear() throws Exception {
-                when(service.findAllByMonth(5, 2023)).thenReturn(List.of(trackDay));
+                when(service.findAllByMonth(5, 2023)).thenReturn(listTrackDays);
 
                 mockMvc.perform(get("/api/track-days/month/5/2023"))
                                 .andExpect(status().isOk())
-                                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(content().json(objectMapper.writeValueAsString(listTrackDays)));
         }
 
         @Test
@@ -88,7 +103,10 @@ public class TrackDayControllerTest {
                 Date date = new Date();
                 when(service.findByDay(date)).thenReturn(trackDay);
 
-                mockMvc.perform(get("/api/track-days/date/" + date.toInstant().toString()))
+                LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+
+                mockMvc.perform(get("/api/track-days/date/" + localDate.format(formatter)))
                                 .andExpect(status().isOk())
                                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
         }
@@ -105,17 +123,33 @@ public class TrackDayControllerTest {
 
         @Test
         void testCreateTrackDay() throws Exception {
-                when(service.save(any(TrackDayDto.class))).thenReturn(trackDay);
+                // Given
+                Calendar calender = Calendar.getInstance();
+                calender.set(2023, 1, 1);
+                TrackDay savedTrackDay = new TrackDay();
+                savedTrackDay.setId(1L);
+                savedTrackDay.setTemperature(32.1F);
+                savedTrackDay.setDay(calender.getTime());
+                TrackDayMapperImpl mapper = new TrackDayMapperImpl();
+                TrackDayDto createtrackDayDto = mapper.toDto(savedTrackDay);
 
+                // When
+                when(service.save(createtrackDayDto)).thenReturn(savedTrackDay);
+
+                // Then
                 mockMvc.perform(post("/api/track-days")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(trackDayDto)))
+                                .content(objectMapper.writeValueAsString(createtrackDayDto)))
                                 .andExpect(status().isCreated())
                                 .andExpect(header().exists("Location"));
         }
 
         @Test
         void testUpdateTrackDay() throws Exception {
+                // When
+                when(repository.findById(1L)).thenReturn(Optional.of(trackDay));
+
+                // Then
                 mockMvc.perform(put("/api/track-days/1")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(trackDayDto)))

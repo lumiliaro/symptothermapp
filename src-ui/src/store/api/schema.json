@@ -53,8 +53,8 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -63,8 +63,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -123,8 +123,8 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -133,8 +133,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -176,8 +176,8 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -186,8 +186,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -230,8 +230,8 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -240,8 +240,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -289,8 +289,8 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -299,8 +299,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -353,8 +353,8 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -363,8 +363,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -407,8 +407,8 @@
         "summary": "Get min and max temperature",
         "operationId": "getTrackDayMinMaxTemperature",
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -417,8 +417,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -469,8 +469,8 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -479,8 +479,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -520,8 +520,8 @@
         "summary": "Störungsoptionen abrufen",
         "operationId": "getDisturbanceOptions",
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -530,8 +530,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -574,8 +574,8 @@
         "summary": "Zervixbeschaffenheitsoptionen abrufen",
         "operationId": "getCervixTextureOptions",
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -584,8 +584,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -628,8 +628,8 @@
         "summary": "Zervixöffnungszustandsoptionen abrufen",
         "operationId": "getCervixOpeningStateOptions",
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -638,8 +638,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -682,8 +682,8 @@
         "summary": "Zervixhöhe-/Positionsoptionen abrufen",
         "operationId": "getCervixHeightPositionOptions",
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -692,8 +692,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -736,8 +736,8 @@
         "summary": "Zervixschleimoptionen abrufen",
         "operationId": "getCervicalMucusOptions",
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -746,8 +746,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -790,8 +790,8 @@
         "summary": "Blutungsoptionen abrufen",
         "operationId": "getBleedingOptions",
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -800,8 +800,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -843,8 +843,8 @@
         ],
         "operationId": "getServerInfo",
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -853,8 +853,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -893,8 +893,8 @@
         ],
         "operationId": "getAllCycli",
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -903,8 +903,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -957,8 +957,8 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -967,8 +967,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -1018,8 +1018,8 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Ressource nicht gefunden",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -1028,8 +1028,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "404": {
+            "description": "Ressource nicht gefunden",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -1250,6 +1250,12 @@
             "type": "integer",
             "format": "int64"
           },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -1273,12 +1279,6 @@
           "numberOfElements": {
             "type": "integer",
             "format": "int32"
-          },
-          "first": {
-            "type": "boolean"
-          },
-          "last": {
-            "type": "boolean"
           },
           "pageable": {
             "$ref": "#/components/schemas/PageableObject"

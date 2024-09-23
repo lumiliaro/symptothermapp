@@ -264,13 +264,13 @@ export type PageableObject = {
 export type PageTrackDay = {
   totalPages?: number;
   totalElements?: number;
+  first?: boolean;
+  last?: boolean;
   size?: number;
   content?: TrackDay[];
   number?: number;
   sort?: SortObject[];
   numberOfElements?: number;
-  first?: boolean;
-  last?: boolean;
   pageable?: PageableObject;
   empty?: boolean;
 };
