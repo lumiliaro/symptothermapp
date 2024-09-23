@@ -1,5 +1,5 @@
 # Backend-Build-Stage
-FROM gradle:8.10.0-jdk21-alpine AS backend-build
+FROM gradle:8.10.1-jdk21-alpine AS backend-build
 
 WORKDIR /app
 COPY ./src .
