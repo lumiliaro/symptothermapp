@@ -9,7 +9,7 @@ ENV SPRING_PROFILES_ACTIVE=prod
 RUN gradle clean build -x test --no-daemon
 
 # Frontend-Build-Stage
-FROM node:20-alpine AS frontend-build
+FROM node:22-alpine AS frontend-build
 
 WORKDIR /app
 COPY ./src-ui ./ui
