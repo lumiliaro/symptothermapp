@@ -37,7 +37,7 @@ export default function TrackDayEdit(props: { data: TrackDay }) {
     } = useFormNotification();
 
     const form = useForm<TrackDayDto>({
-        defaultValues: getFormValues(data),
+        defaultValues: getFormValues(data as TrackDayDto),
         mode: "onChange",
     });
 
@@ -67,7 +67,7 @@ export default function TrackDayEdit(props: { data: TrackDay }) {
 
     useEffect(() => {
         if (data) {
-            form.reset(getFormValues(data));
+            form.reset(getFormValues(data as TrackDayDto));
         }
     }, [data, form]);
 
