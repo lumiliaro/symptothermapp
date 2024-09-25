@@ -53,8 +53,8 @@
           }
         ],
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -63,8 +63,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -123,8 +123,8 @@
           "required": true
         },
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -133,8 +133,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -176,8 +176,8 @@
           }
         ],
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -186,8 +186,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -230,8 +230,8 @@
           }
         ],
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -240,8 +240,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -289,8 +289,8 @@
           "required": true
         },
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -299,8 +299,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -353,8 +353,8 @@
           }
         ],
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -363,8 +363,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -407,8 +407,8 @@
         "summary": "Get min and max temperature",
         "operationId": "getTrackDayMinMaxTemperature",
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -417,8 +417,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -469,8 +469,8 @@
           }
         ],
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -479,8 +479,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -520,8 +520,8 @@
         "summary": "Störungsoptionen abrufen",
         "operationId": "getDisturbanceOptions",
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -530,8 +530,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -574,8 +574,8 @@
         "summary": "Zervixbeschaffenheitsoptionen abrufen",
         "operationId": "getCervixTextureOptions",
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -584,8 +584,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -628,8 +628,8 @@
         "summary": "Zervixöffnungszustandsoptionen abrufen",
         "operationId": "getCervixOpeningStateOptions",
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -638,8 +638,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -682,8 +682,8 @@
         "summary": "Zervixhöhe-/Positionsoptionen abrufen",
         "operationId": "getCervixHeightPositionOptions",
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -692,8 +692,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -736,8 +736,8 @@
         "summary": "Zervixschleimoptionen abrufen",
         "operationId": "getCervicalMucusOptions",
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -746,8 +746,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -790,8 +790,8 @@
         "summary": "Blutungsoptionen abrufen",
         "operationId": "getBleedingOptions",
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -800,8 +800,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -843,8 +843,8 @@
         ],
         "operationId": "getServerInfo",
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -853,8 +853,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -893,8 +893,8 @@
         ],
         "operationId": "getAllCycli",
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -903,8 +903,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -957,8 +957,8 @@
           }
         ],
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -967,8 +967,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -1018,8 +1018,8 @@
           }
         ],
         "responses": {
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -1028,8 +1028,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -1097,6 +1097,7 @@
       "BleedingEnum": {
         "type": "string",
         "description": "Bleeding Enum",
+        "nullable": true,
         "enum": [
           "STRONG",
           "MEDIUM",
@@ -1107,6 +1108,7 @@
       "CervicalMucusEnum": {
         "type": "string",
         "description": "Cervical Mucus Enum",
+        "nullable": true,
         "enum": [
           "DRY",
           "NORMAL",
@@ -1118,6 +1120,7 @@
       "CervixHeightPositionEnum": {
         "type": "string",
         "description": "CervixHeightPosition Enum",
+        "nullable": true,
         "enum": [
           "HIGH",
           "LOW"
@@ -1126,6 +1129,7 @@
       "CervixOpeningStateEnum": {
         "type": "string",
         "description": "CervixOpeningState Enum",
+        "nullable": true,
         "enum": [
           "OPEN",
           "PARTIALLY_OPEN",
@@ -1135,6 +1139,7 @@
       "CervixTextureEnum": {
         "type": "string",
         "description": "CervixTexture Enum",
+        "nullable": true,
         "enum": [
           "HARD",
           "SOFT"
@@ -1173,7 +1178,8 @@
         "properties": {
           "temperature": {
             "type": "number",
-            "format": "float"
+            "format": "float",
+            "nullable": true
           },
           "day": {
             "type": "string",
@@ -1209,14 +1215,17 @@
           "otherDisturbanceNotes": {
             "maxLength": 1000,
             "minLength": 0,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "notes": {
             "maxLength": 1000,
             "minLength": 0,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
-        }
+        },
+        "description": "TrackDayDto"
       },
       "Pageable": {
         "type": "object",
@@ -1250,6 +1259,16 @@
             "type": "integer",
             "format": "int64"
           },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -1269,16 +1288,6 @@
             "items": {
               "$ref": "#/components/schemas/SortObject"
             }
-          },
-          "first": {
-            "type": "boolean"
-          },
-          "last": {
-            "type": "boolean"
-          },
-          "numberOfElements": {
-            "type": "integer",
-            "format": "int32"
           },
           "pageable": {
             "$ref": "#/components/schemas/PageableObject"
@@ -1301,16 +1310,16 @@
               "$ref": "#/components/schemas/SortObject"
             }
           },
-          "pageSize": {
-            "type": "integer",
-            "format": "int32"
+          "paged": {
+            "type": "boolean"
           },
           "pageNumber": {
             "type": "integer",
             "format": "int32"
           },
-          "paged": {
-            "type": "boolean"
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
           },
           "unpaged": {
             "type": "boolean"
@@ -1361,7 +1370,8 @@
           },
           "temperature": {
             "type": "number",
-            "format": "float"
+            "format": "float",
+            "nullable": true
           },
           "bleeding": {
             "$ref": "#/components/schemas/BleedingEnum"
@@ -1398,25 +1408,30 @@
           "notes": {
             "maxLength": 1000,
             "minLength": 0,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "dayIsoDate": {
             "type": "string"
           }
-        }
+        },
+        "description": "Ein Tag der Menstruationsverfolgung."
       },
       "TrackDayMinMaxTemperatureDto": {
         "type": "object",
         "properties": {
           "minTemperature": {
             "type": "number",
-            "format": "float"
+            "format": "float",
+            "nullable": true
           },
           "maxTemperature": {
             "type": "number",
-            "format": "float"
+            "format": "float",
+            "nullable": true
           }
-        }
+        },
+        "description": "TrackDayMinMaxTemperatureDto"
       },
       "OptionDto": {
         "required": [
@@ -1434,7 +1449,8 @@
           "disabled": {
             "type": "boolean"
           }
-        }
+        },
+        "description": "OptionDto"
       },
       "ServerInfoDto": {
         "type": "object",
@@ -1483,16 +1499,20 @@
           },
           "temperature": {
             "type": "number",
-            "format": "float"
+            "format": "float",
+            "nullable": true
           },
           "cervicalMucus": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "bleeding": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "cyclusDotType": {
             "type": "string",
+            "nullable": true,
             "enum": [
               "BLEEDING",
               "FERTILE",
@@ -1507,7 +1527,8 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "description": "CyclusStatisticDto"
       }
     }
   }

@@ -42,6 +42,7 @@ export default function SyDisturbanceMultiSelect(props: MultiSelectProps) {
     return (
         <MultiSelect
             {...field}
+            value={field.value ?? []}
             onChange={handleChange}
             label="Störungen"
             placeholder="Bitte auswählen"

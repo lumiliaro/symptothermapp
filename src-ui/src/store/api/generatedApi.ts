@@ -209,17 +209,17 @@ export type TrackDay = {
   createdAt?: string;
   updatedAt?: string;
   day: string;
-  temperature?: number;
-  bleeding?: BleedingEnum;
-  cervicalMucus?: CervicalMucusEnum;
-  cervixOpeningState?: CervixOpeningStateEnum;
-  cervixHeightPosition?: CervixHeightPositionEnum;
-  cervixTexture?: CervixTextureEnum;
+  temperature?: number | null;
+  bleeding?: BleedingEnum | null;
+  cervicalMucus?: CervicalMucusEnum | null;
+  cervixOpeningState?: CervixOpeningStateEnum | null;
+  cervixHeightPosition?: CervixHeightPositionEnum | null;
+  cervixTexture?: CervixTextureEnum | null;
   hadSex?: boolean;
   withContraceptives?: boolean;
   disturbances?: DisturbanceEnum[];
   otherDisturbanceNotes?: string;
-  notes?: string;
+  notes?: string | null;
   dayIsoDate?: string;
 };
 export type ErrorDto = {
@@ -233,18 +233,18 @@ export type ErrorDto = {
   status?: number;
 };
 export type TrackDayDto = {
-  temperature?: number;
+  temperature?: number | null;
   day: string;
-  bleeding?: BleedingEnum;
-  cervicalMucus?: CervicalMucusEnum;
-  cervixOpeningState?: CervixOpeningStateEnum;
-  cervixHeightPosition?: CervixHeightPositionEnum;
-  cervixTexture?: CervixTextureEnum;
+  bleeding?: BleedingEnum | null;
+  cervicalMucus?: CervicalMucusEnum | null;
+  cervixOpeningState?: CervixOpeningStateEnum | null;
+  cervixHeightPosition?: CervixHeightPositionEnum | null;
+  cervixTexture?: CervixTextureEnum | null;
   hadSex: boolean;
   withContraceptives: boolean;
   disturbances?: DisturbanceEnum[];
-  otherDisturbanceNotes?: string;
-  notes?: string;
+  otherDisturbanceNotes?: string | null;
+  notes?: string | null;
 };
 export type SortObject = {
   direction?: string;
@@ -256,21 +256,21 @@ export type SortObject = {
 export type PageableObject = {
   offset?: number;
   sort?: SortObject[];
-  pageSize?: number;
-  pageNumber?: number;
   paged?: boolean;
+  pageNumber?: number;
+  pageSize?: number;
   unpaged?: boolean;
 };
 export type PageTrackDay = {
   totalPages?: number;
   totalElements?: number;
+  first?: boolean;
+  last?: boolean;
+  numberOfElements?: number;
   size?: number;
   content?: TrackDay[];
   number?: number;
   sort?: SortObject[];
-  first?: boolean;
-  last?: boolean;
-  numberOfElements?: number;
   pageable?: PageableObject;
   empty?: boolean;
 };
@@ -280,8 +280,8 @@ export type Pageable = {
   sort?: string[];
 };
 export type TrackDayMinMaxTemperatureDto = {
-  minTemperature?: number;
-  maxTemperature?: number;
+  minTemperature?: number | null;
+  maxTemperature?: number | null;
 };
 export type OptionDto = {
   label: string;
@@ -300,10 +300,10 @@ export type Cyclus = {
 export type CyclusStatisticDto = {
   cyclusDay: string;
   date: string;
-  temperature?: number;
-  cervicalMucus?: string;
-  bleeding?: string;
-  cyclusDotType?: CyclusDotType;
+  temperature?: number | null;
+  cervicalMucus?: string | null;
+  bleeding?: string | null;
+  cyclusDotType?: CyclusDotType | null;
   createdAt?: string;
   updatedAt?: string;
 };

@@ -13,7 +13,7 @@ export default function SyTextarea(props: SyTextareaProps) {
     return (
         <Textarea
             {...field}
-            value={field.value || ""}
+            value={field.value}
             color="blue"
             size="md"
             resize="vertical"

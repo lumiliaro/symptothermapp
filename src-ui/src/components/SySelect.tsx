@@ -19,7 +19,7 @@ export default function SySelect(props: SyComboboxProps) {
         <Select
             {...props}
             {...field}
-            value={field.value || null}
+            value={field.value}
             placeholder="Bitte auswählen"
             size="md"
             color="blue"
