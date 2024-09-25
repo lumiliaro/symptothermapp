@@ -1,5 +1,6 @@
 import { Select, SelectProps } from "@mantine/core";
 import dayjs from "dayjs";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetAllCycliQuery } from "../store/api/generatedApi";
 import { setSelectedCyclusId } from "../store/Cyclus.Slice";
@@ -12,6 +13,12 @@ export default function SyCyclusStatisticSelect(props: SelectProps) {
     const cyclusId = useSelector(
         (state: RootState) => state.cyclus.selectedCyclusId
     );
+
+    useEffect(() => {
+        if (!cyclusId && cycli && cycli[0]?.id) {
+            dispatch(setSelectedCyclusId(cycli[0]?.id));
+        }
+    }, [cyclusId, cycli, dispatch]);
 
     if (!cycli) {
         return <SyInputSkeleton />;
