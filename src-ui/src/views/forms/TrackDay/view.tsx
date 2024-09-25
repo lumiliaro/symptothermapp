@@ -16,7 +16,7 @@ import SyTemperatureNumberInput from "../../../components/SyTemperatureNumberInp
 import SyTextarea from "../../../components/SyTextarea";
 import { DisturbanceEnum, TrackDay } from "../../../store/api/generatedApi";
 import { RootState } from "../../../store/store";
-import { isFormDirty } from "../../../utils/Form.utils";
+import { isFormClean } from "../../../utils/Form.utils";
 
 export default function TrackDayView(props: {
     formType: "create" | "edit";
@@ -82,7 +82,7 @@ export default function TrackDayView(props: {
                 <Group justify="flex-end">
                     <SyCreateSaveButton
                         formType={formType}
-                        disabled={isFormDirty(formState)}
+                        disabled={isFormClean(formState, formType)}
                     />
                 </Group>
                 <SimpleGrid cols={1}>
@@ -115,7 +115,7 @@ export default function TrackDayView(props: {
                     <Group justify="space-between">
                         <SyCancelButton
                             onReset={onReset}
-                            disabled={isFormDirty(formState)}
+                            disabled={isFormClean(formState)}
                         />
                         <SyDeleteButton
                             disabled={formType !== "edit"}
