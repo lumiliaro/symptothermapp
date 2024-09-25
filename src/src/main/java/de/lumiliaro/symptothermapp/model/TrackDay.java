@@ -10,6 +10,7 @@ import de.lumiliaro.symptothermapp.enums.CervixHeightPositionEnum;
 import de.lumiliaro.symptothermapp.enums.CervixOpeningStateEnum;
 import de.lumiliaro.symptothermapp.enums.CervixTextureEnum;
 import de.lumiliaro.symptothermapp.enums.DisturbanceEnum;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -26,6 +27,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@Schema(description = "Ein Tag der Menstruationsverfolgung.")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -41,25 +43,31 @@ public class TrackDay extends BaseEntity {
     @Temporal(TemporalType.DATE)
     private Date day;
 
+    @Schema(nullable = true)
     @Column(name = "temperature")
     private Float temperature;
 
+    @Schema(nullable = true)
     @Column(name = "bleeding")
     @Enumerated(EnumType.STRING)
     private BleedingEnum bleeding;
 
+    @Schema(nullable = true)
     @Column(name = "cervical_mucus")
     @Enumerated(EnumType.STRING)
     private CervicalMucusEnum cervicalMucus;
 
+    @Schema(nullable = true)
     @Enumerated(EnumType.STRING)
     @Column(name = "cervix_opening_state")
     private CervixOpeningStateEnum cervixOpeningState;
 
+    @Schema(nullable = true)
     @Enumerated(EnumType.STRING)
     @Column(name = "cervix_height_position")
     private CervixHeightPositionEnum cervixHeightPosition;
 
+    @Schema(nullable = true)
     @Enumerated(EnumType.STRING)
     @Column(name = "cervix_texture")
     private CervixTextureEnum cervixTexture;
@@ -79,6 +87,7 @@ public class TrackDay extends BaseEntity {
     @Size(max = 1000, message = "Die Sonstigen Störungen dürfen nicht länger als 1000 Zeichen lang sein.")
     private String otherDisturbanceNotes;
 
+    @Schema(nullable = true)
     @Column(name = "notes", length = 1000)
     @Size(max = 1000, message = "Die Notizen dürfen nicht länger als 1000 Zeichen lang sein.")
     private String notes;

@@ -12,6 +12,7 @@ import de.lumiliaro.symptothermapp.enums.CervixOpeningStateEnum;
 import de.lumiliaro.symptothermapp.enums.CervixTextureEnum;
 import de.lumiliaro.symptothermapp.enums.DisturbanceEnum;
 import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -20,10 +21,13 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+@Schema(description = "TrackDayDto")
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class TrackDayDto {
+
+    @Schema(nullable = true)
     private final Float temperature;
 
     @NotNull(message = "Das Datum muss gesetzt sein.")
@@ -31,22 +35,36 @@ public class TrackDayDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private final Date day;
 
-    private BleedingEnum bleeding = null;
-    private CervicalMucusEnum cervicalMucus = null;
-    private CervixOpeningStateEnum cervixOpeningState = null;
-    private CervixHeightPositionEnum cervixHeightPosition = null;
-    private CervixTextureEnum cervixTexture = null;
+    @Schema(nullable = true)
+    private BleedingEnum bleeding;
+
+    @Schema(nullable = true)
+    private CervicalMucusEnum cervicalMucus;
+
+    @Schema(nullable = true)
+    private CervixOpeningStateEnum cervixOpeningState;
+
+    @Schema(nullable = true)
+    private CervixHeightPositionEnum cervixHeightPosition;
+
+    @Schema(nullable = true)
+    private CervixTextureEnum cervixTexture;
+
     @NotNull
     private Boolean hadSex = false;
+
     @NotNull
     private Boolean withContraceptives = false;
-    private List<DisturbanceEnum> disturbances = null;
 
+    private List<DisturbanceEnum> disturbances;
+
+    @Schema(nullable = true)
     @Size(max = 1000, message = "Die Sonstigen Störungen dürfen nicht länger als 1000 Zeichen lang sein.")
-    private String otherDisturbanceNotes = null;
+    private String otherDisturbanceNotes;
 
+    @Schema(nullable = true)
     @Size(max = 1000, message = "Die Notizen dürfen nicht länger als 1000 Zeichen lang sein.")
-    private String notes = null;
+    private String notes;
 
     @Hidden
     @AssertTrue(message = "\"mit Verhütungsmittel\" darf nur aktiviert sein, wenn \"sex gehabt\" aktiviert ist.")
