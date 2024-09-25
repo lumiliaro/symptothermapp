@@ -162,7 +162,14 @@ export default function SyCyclusChart() {
                     }}
                     dot={(
                         props: DotProps & { payload: CyclusStatisticDto }
-                    ) => <SyCyclusChartDot {...props} />}
+                    ) => (
+                        <SyCyclusChartDot
+                            key={props.payload.date}
+                            cx={props.cx}
+                            cy={props.cy}
+                            payload={props.payload}
+                        />
+                    )}
                     isAnimationActive={false}
                 />
             </LineChart>

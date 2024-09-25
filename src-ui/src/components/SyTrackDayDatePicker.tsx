@@ -33,14 +33,21 @@ export default function SyTrackDayDatePicker() {
                 trackDayDate?.selectedYear
             );
         }
-    }, [trackDayDate, getTrackDaysByMonthAndYear]);
+    }, [
+        trackDayDate?.selectedMonth,
+        trackDayDate?.selectedYear,
+        getTrackDaysByMonthAndYear,
+    ]);
 
-    const selectedDateHandler = (date: Date | null) => {
-        const dateString = date
-            ? dayjs(date).format(DATE_FORMAT_BACKEND)
-            : null;
-        dispatch(setSelectedTrackDate(dateString));
-    };
+    const selectedDateHandler = useCallback(
+        (date: Date | null) => {
+            const dateString = date
+                ? dayjs(date).format(DATE_FORMAT_BACKEND)
+                : null;
+            dispatch(setSelectedTrackDate(dateString));
+        },
+        [dispatch]
+    );
 
     const getDayProps: DatePickerProps["getDayProps"] = useCallback(
         (date: Date) => {

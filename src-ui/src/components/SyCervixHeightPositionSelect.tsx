@@ -3,7 +3,10 @@ import { useGetCervixHeightPositionOptionsQuery } from "../store/api/generatedAp
 import SySelect from "./SySelect";
 
 export default function SyCervixHeightPositionSelect(props: SelectProps) {
-    const { data } = useGetCervixHeightPositionOptionsQuery();
+    const { data } = useGetCervixHeightPositionOptionsQuery(undefined, {
+        refetchOnFocus: false,
+    });
+
     return (
         <SySelect
             name="cervixHeightPosition"

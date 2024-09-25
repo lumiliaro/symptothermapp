@@ -1,8 +1,11 @@
 import { Slider, SliderProps } from "@mantine/core";
 import { useController } from "react-hook-form";
+import { TrackDayDto } from "../store/api/generatedApi";
 
 export default function SyTemperatureSlider(props: SliderProps) {
-    const { field } = useController({ name: "temperature" });
+    const { field } = useController<TrackDayDto, "temperature">({
+        name: "temperature",
+    });
 
     return (
         <Slider

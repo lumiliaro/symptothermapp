@@ -3,7 +3,10 @@ import { useGetCervicalMucusOptionsQuery } from "../store/api/generatedApi";
 import SySelect from "./SySelect";
 
 export default function SyCervicalMucusSelect(props: SelectProps) {
-    const { data } = useGetCervicalMucusOptionsQuery();
+    const { data } = useGetCervicalMucusOptionsQuery(undefined, {
+        refetchOnFocus: false,
+    });
+
     return (
         <SySelect
             name="cervicalMucus"

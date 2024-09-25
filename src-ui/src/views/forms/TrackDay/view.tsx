@@ -1,5 +1,5 @@
-import { Box, Checkbox, Group, SimpleGrid } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { Box, Checkbox, Fieldset, Group, SimpleGrid } from "@mantine/core";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useSelector } from "react-redux";
 import SyBleedingSelect from "../../../components/SyBleedingSelect";
@@ -16,13 +16,14 @@ import SyTemperatureNumberInput from "../../../components/SyTemperatureNumberInp
 import SyTextarea from "../../../components/SyTextarea";
 import { DisturbanceEnum, TrackDay } from "../../../store/api/generatedApi";
 import { RootState } from "../../../store/store";
+import { isFormDirty } from "../../../utils/Form.utils";
 
 export default function TrackDayView(props: {
     formType: "create" | "edit";
     onDelete?: () => void;
 }) {
     const { formType, onDelete } = props;
-    const { reset, watch, setValue } = useFormContext<TrackDay>();
+    const { reset, watch, setValue, formState } = useFormContext<TrackDay>();
     const [disturbances, temperature, bleeding] = watch([
         "disturbances",
         "temperature",
@@ -52,65 +53,77 @@ export default function TrackDayView(props: {
         }
     }, [isTemperatureInputDisabled, bleeding]);
 
+    const onChangeTemperatureDisabledCheckbox = useCallback(
+        (event?: ChangeEvent<HTMLInputElement>) => {
+            if (event?.currentTarget?.checked) {
+                setValue("temperature", undefined, { shouldDirty: true });
+            }
+            setIsTemperatureInputDisabled(
+                event?.currentTarget?.checked ?? false
+            );
+        },
+        [setValue, setIsTemperatureInputDisabled]
+    );
+
+    const isOtherDisturbanceNotesDisabled = useMemo(
+        () =>
+            !disturbances?.find(
+                (disturbance) => disturbance === DisturbanceEnum.Other
+            ),
+        [disturbances]
+    );
+
     return (
         <Box mt="lg">
-            <Group justify="flex-end">
-                <SyCreateSaveButton
-                    formType={formType}
-                    isSubmitDisabled={!selectedTrackDate}
-                />
-            </Group>
-            <SimpleGrid cols={1}>
-                <SyTemperatureNumberInput
-                    disabled={!selectedTrackDate || isTemperatureInputDisabled}
-                />
-                {/* <SyTemperatureSlider disabled={!selectedTrackDate} /> */}
+            <Fieldset
+                legend={formType === "create" ? "Erfassen" : "Bearbeiten"}
+                disabled={!selectedTrackDate}
+            >
                 <Group justify="flex-end">
-                    <Checkbox
-                        label="Temperatur deaktiviert"
-                        checked={isTemperatureInputDisabled}
-                        size="md"
-                        onChange={(event) => {
-                            if (event.currentTarget.checked) {
-                                setValue("temperature", undefined);
-                            }
-                            setIsTemperatureInputDisabled(
-                                event.currentTarget.checked
-                            );
-                        }}
+                    <SyCreateSaveButton
+                        formType={formType}
+                        disabled={isFormDirty(formState)}
                     />
                 </Group>
-                <SyBleedingSelect disabled={!selectedTrackDate} />
-                <SyCervicalMucusSelect disabled={!selectedTrackDate} />
-                {/* <Fieldset legend="Gebärmutterhals"> */}
-                <SyCervixOpeningStateSelect disabled={!selectedTrackDate} />
-                <SyCervixHeightPositionSelect disabled={!selectedTrackDate} />
-                <SyCervixTextureSelect disabled={!selectedTrackDate} />
-                {/* </Fieldset> */}
-                <SySexCheckboxes disabled={!selectedTrackDate} />
-                <SyDisturbanceMultiSelect disabled={!selectedTrackDate} />
-                {disturbances?.find(
-                    (disturbance) => disturbance === DisturbanceEnum.Other
-                ) && (
+                <SimpleGrid cols={1}>
+                    <SyTemperatureNumberInput
+                        disabled={isTemperatureInputDisabled}
+                    />
+                    {/* <SyTemperatureSlider  /> */}
+                    <Group justify="flex-end">
+                        <Checkbox
+                            label="Temperatur deaktiviert"
+                            checked={isTemperatureInputDisabled}
+                            size="md"
+                            onChange={onChangeTemperatureDisabledCheckbox}
+                        />
+                    </Group>
+                    <SyBleedingSelect />
+                    <SyCervicalMucusSelect />
+                    <SyCervixOpeningStateSelect />
+                    <SyCervixHeightPositionSelect />
+                    <SyCervixTextureSelect />
+
+                    <SySexCheckboxes />
+                    <SyDisturbanceMultiSelect />
                     <SyTextarea
                         label="Sonstige Störungen"
                         name="otherDisturbanceNotes"
-                        disabled={!selectedTrackDate}
+                        disabled={isOtherDisturbanceNotesDisabled}
                     />
-                )}
-                <SyTextarea
-                    label="Notizen"
-                    name="notes"
-                    disabled={!selectedTrackDate}
-                />
-                <Group justify="space-between">
-                    <SyCancelButton onReset={onReset} />
-                    <SyDeleteButton
-                        disabled={formType !== "edit"}
-                        onConfirm={onDelete || (() => {})}
-                    />
-                </Group>
-            </SimpleGrid>
+                    <SyTextarea label="Notizen" name="notes" />
+                    <Group justify="space-between">
+                        <SyCancelButton
+                            onReset={onReset}
+                            disabled={isFormDirty(formState)}
+                        />
+                        <SyDeleteButton
+                            disabled={formType !== "edit"}
+                            onConfirm={onDelete || (() => {})}
+                        />
+                    </Group>
+                </SimpleGrid>
+            </Fieldset>
         </Box>
     );
 }

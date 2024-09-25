@@ -25,6 +25,16 @@ export default function TrackDayCreate() {
         defaultValues: {
             day: selectedTrackDate,
             temperature: 36.2,
+            bleeding: undefined,
+            cervicalMucus: undefined,
+            cervixOpeningState: undefined,
+            cervixHeightPosition: undefined,
+            cervixTexture: undefined,
+            hadSex: false,
+            withContraceptives: false,
+            disturbances: [],
+            otherDisturbanceNotes: "",
+            notes: "",
         },
         mode: "onChange",
     });

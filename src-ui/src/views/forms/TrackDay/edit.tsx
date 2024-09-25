@@ -10,6 +10,22 @@ import {
 import handleFormErrors from "../../../utils/FormErrorHandler.utils";
 import TrackDayView from "./view";
 
+function getFormValues(data: TrackDayDto) {
+    return {
+        temperature: data.temperature,
+        day: data.day,
+        bleeding: data.bleeding,
+        cervicalMucus: data.cervicalMucus,
+        cervixOpeningState: data.cervixOpeningState,
+        cervixHeightPosition: data.cervixHeightPosition,
+        cervixTexture: data.cervixTexture,
+        hadSex: data.hadSex || false,
+        withContraceptives: data.withContraceptives || false,
+        disturbances: data.disturbances || [],
+        otherDisturbanceNotes: data.otherDisturbanceNotes || "",
+        notes: data.notes || "",
+    };
+}
 export default function TrackDayEdit(props: { data: TrackDay }) {
     const { data } = props;
     const [update] = useUpdateTrackDayMutation();
@@ -21,7 +37,7 @@ export default function TrackDayEdit(props: { data: TrackDay }) {
     } = useFormNotification();
 
     const form = useForm<TrackDayDto>({
-        defaultValues: data,
+        defaultValues: getFormValues(data),
         mode: "onChange",
     });
 
@@ -51,7 +67,7 @@ export default function TrackDayEdit(props: { data: TrackDay }) {
 
     useEffect(() => {
         if (data) {
-            form.reset(data);
+            form.reset(getFormValues(data));
         }
     }, [data, form]);
 

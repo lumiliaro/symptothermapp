@@ -1,27 +1,9 @@
 import { Box, Center, Tabs } from "@mantine/core";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import SyTrackDayDatePicker from "../components/SyTrackDayDatePicker";
-import { useLazyGetTrackDayByDateQuery } from "../store/api/lazyApi";
-import { RootState } from "../store/store";
 import CyclusView from "./forms/Cyclus/view";
-import TrackDayCreate from "./forms/TrackDay/create";
-import TrackDayEdit from "./forms/TrackDay/edit";
+import TrackDayMainView from "./forms/TrackDay/main";
 
 export default function MainView() {
-    const trackDayDate = useSelector((state: RootState) => state.trackDayDate);
-    const [findTrackDayByDate, trackDay] = useLazyGetTrackDayByDateQuery();
-
-    useEffect(() => {
-        if (trackDayDate?.selectedDateString) {
-            const fetchData = async (selectedDateString: string) => {
-                await findTrackDayByDate({ day: selectedDateString });
-            };
-
-            void fetchData(trackDayDate?.selectedDateString);
-        }
-    }, [trackDayDate?.selectedDateString, findTrackDayByDate]);
-
     return (
         <Tabs defaultValue="track" orientation="horizontal" keepMounted={false}>
             <Tabs.List>
@@ -34,11 +16,7 @@ export default function MainView() {
                         <Center>
                             <SyTrackDayDatePicker />
                         </Center>
-                        {trackDay.data ? (
-                            <TrackDayEdit data={trackDay?.data} />
-                        ) : (
-                            <TrackDayCreate />
-                        )}
+                        <TrackDayMainView />
                     </>
                 </Box>
             </Tabs.Panel>

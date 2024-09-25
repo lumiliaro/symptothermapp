@@ -9,12 +9,13 @@ import {
 import SyInputSkeleton from "./SyInputSkeleton";
 
 export default function SyDisturbanceMultiSelect(props: MultiSelectProps) {
-    const { field, fieldState } = useController({
+    const { field, fieldState } = useController<TrackDayDto, "disturbances">({
         name: "disturbances",
     });
-    const { setValue, watch } = useFormContext<TrackDayDto>();
-    const otherDisturbanceNotes = watch("otherDisturbanceNotes");
-    const { data } = useGetDisturbanceOptionsQuery();
+    const { setValue, getValues } = useFormContext<TrackDayDto>();
+    const { data } = useGetDisturbanceOptionsQuery(undefined, {
+        refetchOnFocus: false,
+    });
 
     const handleChange = useCallback(
         (value?: string[]) => {
@@ -23,7 +24,7 @@ export default function SyDisturbanceMultiSelect(props: MultiSelectProps) {
             );
 
             if (
-                otherDisturbanceNotes &&
+                getValues("otherDisturbanceNotes") &&
                 !hasNewValueDisturbanceOtherValueSelected
             ) {
                 setValue("otherDisturbanceNotes", undefined);
@@ -31,7 +32,7 @@ export default function SyDisturbanceMultiSelect(props: MultiSelectProps) {
 
             field.onChange(value);
         },
-        [field, setValue, otherDisturbanceNotes]
+        [field, setValue, getValues]
     );
 
     if (!data) {
@@ -41,7 +42,6 @@ export default function SyDisturbanceMultiSelect(props: MultiSelectProps) {
     return (
         <MultiSelect
             {...field}
-            value={field.value || []}
             onChange={handleChange}
             label="Störungen"
             placeholder="Bitte auswählen"

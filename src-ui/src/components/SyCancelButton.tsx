@@ -1,8 +1,12 @@
-import { Button } from "@mantine/core";
+import { Button, ButtonProps } from "@mantine/core";
 
-export default function SyCancelButton(props: { onReset: () => void }) {
+type SyCancelButtonProps = ButtonProps & {
+    onReset: () => void;
+};
+
+export default function SyCancelButton(props: SyCancelButtonProps) {
     return (
-        <Button type="button" color="gray" onClick={props.onReset}>
+        <Button type="button" color="gray" {...props} onClick={props.onReset}>
             Abbrechen
         </Button>
     );

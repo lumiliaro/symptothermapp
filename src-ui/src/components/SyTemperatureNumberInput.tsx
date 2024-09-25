@@ -1,12 +1,15 @@
 import { NumberInput, NumberInputProps } from "@mantine/core";
 import { useController } from "react-hook-form";
+import { TrackDayDto } from "../store/api/generatedApi";
 
 export type SyTemperatureNumberInputProps = NumberInputProps;
 
 export default function SyTemperatureNumberInput(
     props: SyTemperatureNumberInputProps
 ) {
-    const { field, fieldState } = useController({ name: "temperature" });
+    const { field, fieldState } = useController<TrackDayDto, "temperature">({
+        name: "temperature",
+    });
 
     return (
         <NumberInput

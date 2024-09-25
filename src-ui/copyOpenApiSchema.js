@@ -23,7 +23,7 @@ async function copySchema() {
 
         // Kopieren Sie die Datei
         await fs.copyFile(sourceFile, targetFile);
-        console.log("Schema-Datei erfolgreich kopiert.");
+        console.info("Schema-Datei erfolgreich kopiert.");
     } catch (err) {
         console.error("Fehler beim Kopieren der Schema-Datei:", err);
         process.exit(1);
