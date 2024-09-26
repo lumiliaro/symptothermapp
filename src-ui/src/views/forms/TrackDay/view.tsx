@@ -35,23 +35,28 @@ export default function TrackDayView(props: {
     const [isTemperatureInputDisabled, setIsTemperatureInputDisabled] =
         useState<boolean>(false);
 
-    const onReset = () => {
-        reset();
-    };
+    const setTemperatureDisabledAndTemperatureUndefined = useCallback(() => {
+        setIsTemperatureInputDisabled(true);
+        setValue("temperature", undefined);
+    }, [setValue, setIsTemperatureInputDisabled]);
 
     useEffect(() => {
-        if (temperature === undefined || temperature === null) {
-            setIsTemperatureInputDisabled(true);
+        if (!temperature) {
+            setTemperatureDisabledAndTemperatureUndefined();
         } else {
             setIsTemperatureInputDisabled(false);
         }
-    }, [temperature]);
+    }, [temperature, setTemperatureDisabledAndTemperatureUndefined]);
 
     useEffect(() => {
         if (!isTemperatureInputDisabled && bleeding) {
-            setIsTemperatureInputDisabled(true);
+            setTemperatureDisabledAndTemperatureUndefined();
         }
-    }, [isTemperatureInputDisabled, bleeding]);
+    }, [
+        bleeding,
+        isTemperatureInputDisabled,
+        setTemperatureDisabledAndTemperatureUndefined,
+    ]);
 
     const onChangeTemperatureDisabledCheckbox = useCallback(
         (event?: ChangeEvent<HTMLInputElement>) => {
@@ -72,6 +77,10 @@ export default function TrackDayView(props: {
             ),
         [disturbances]
     );
+
+    const onReset = useCallback(() => {
+        reset();
+    }, [reset]);
 
     return (
         <Box mt="lg">
