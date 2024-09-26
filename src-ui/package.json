@@ -14,11 +14,11 @@
         "release": "tsc -b && release-it"
     },
     "dependencies": {
-        "@mantine/core": "^7.12.1",
-        "@mantine/dates": "^7.12.1",
-        "@mantine/hooks": "^7.12.1",
-        "@mantine/modals": "^7.12.1",
-        "@mantine/notifications": "^7.12.1",
+        "@mantine/core": "^7.13.0",
+        "@mantine/dates": "^7.13.0",
+        "@mantine/hooks": "^7.13.0",
+        "@mantine/modals": "^7.13.0",
+        "@mantine/notifications": "^7.13.0",
         "@reduxjs/toolkit": "^2.2.7",
         "dayjs": "^1.11.12",
         "react": "^18.3.1",
@@ -31,7 +31,7 @@
     "devDependencies": {
         "@eslint/js": "^9.11.1",
         "@rtk-query/codegen-openapi": "^1.2.0",
-        "@types/node": "^22.7.0",
+        "@types/node": "^22.7.2",
         "@types/react": "^18.3.9",
         "@types/react-dom": "^18.3.0",
         "@vitejs/plugin-react-swc": "^3.5.0",
