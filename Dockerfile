@@ -1,13 +1,3 @@
-# Backend-Build-Stage
-FROM gradle:8.10.1-jdk21-alpine AS backend-build
-
-WORKDIR /app
-COPY ./src .
-
-WORKDIR /app
-ENV SPRING_PROFILES_ACTIVE=prod
-RUN gradle clean build -x test --no-daemon
-
 # Frontend-Build-Stage
 FROM node:20-alpine AS frontend-build
 
@@ -18,6 +8,16 @@ WORKDIR /app/ui
 RUN npm ci
 RUN npx @rtk-query/codegen-openapi openapi-config.ts
 RUN npm run build
+
+# Backend-Build-Stage
+FROM gradle:8.10.1-jdk21-alpine AS backend-build
+
+WORKDIR /app
+COPY ./src .
+
+WORKDIR /app
+ENV SPRING_PROFILES_ACTIVE=prod
+RUN gradle clean build -x test --no-daemon
 
 # Production-Stage
 FROM eclipse-temurin:21-jre-alpine

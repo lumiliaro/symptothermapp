@@ -14,7 +14,7 @@ const sourceFile = path.join(
     "openapi",
     "schema.json"
 );
-const targetDir = path.join(__dirname, "src", "store", "api");
+const targetDir = path.join(__dirname, "..", "src", "store", "api");
 const targetFile = path.join(targetDir, "schema.json");
 
 async function copySchema() {
