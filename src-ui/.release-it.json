@@ -8,6 +8,6 @@
         "release": true
     },
     "hooks": {
-        "after:bump": "node copyChangelogMarkdown.js"
+        "after:bump": "node copyChangelogMarkdown.js && git add ."
     }
 }
