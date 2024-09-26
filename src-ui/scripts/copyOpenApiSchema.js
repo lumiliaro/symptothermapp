@@ -8,6 +8,7 @@ const __dirname = path.dirname(__filename);
 const sourceFile = path.join(
     __dirname,
     "..",
+    "..",
     "src",
     "build",
     "openapi",
