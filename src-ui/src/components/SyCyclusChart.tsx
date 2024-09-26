@@ -62,16 +62,17 @@ export default function SyCyclusChart() {
         }
     }, [cyclusStatisticData, setAverageTemperature]);
 
-    if (!cyclusId) {
+    if (!cyclusId || !cyclusStatisticData) {
         return <></>;
     }
 
     return (
         <ScrollAreaAutosize mt="lg" offsetScrollbars={true}>
             <LineChart
-                width={2000}
+                width={cyclusStatisticData?.length * 70}
                 height={520}
                 data={cyclusStatisticData || []}
+                margin={{ right: 25 }}
             >
                 <CartesianGrid strokeDasharray="4 4" />
                 <XAxis
@@ -155,8 +156,8 @@ export default function SyCyclusChart() {
                     stroke="var(--mantine-color-indigo-6)"
                     activeDot={{
                         r: 8,
-                        onClick: (_event: any, payload: any) => {
-                            console.info(payload?.payload);
+                        onClick: (_event: any, _payload: any) => {
+                            // console.info(payload?.payload);
                             setIsOpen(true);
                         },
                     }}

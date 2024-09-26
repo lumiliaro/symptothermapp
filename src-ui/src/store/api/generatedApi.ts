@@ -258,8 +258,8 @@ export type PageableObject = {
   sort?: SortObject[];
   pageSize?: number;
   pageNumber?: number;
-  paged?: boolean;
   unpaged?: boolean;
+  paged?: boolean;
 };
 export type PageTrackDay = {
   totalPages?: number;
