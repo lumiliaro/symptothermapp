@@ -18,10 +18,7 @@ const targetFile = path.join(targetDir, "schema.json");
 
 async function copySchema() {
     try {
-        // Erstellen Sie das Zielverzeichnis, falls es nicht existiert
         await fs.mkdir(targetDir, { recursive: true });
-
-        // Kopieren Sie die Datei
         await fs.copyFile(sourceFile, targetFile);
         console.info("Schema-Datei erfolgreich kopiert.");
     } catch (err) {
