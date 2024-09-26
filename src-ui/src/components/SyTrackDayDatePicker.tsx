@@ -95,6 +95,9 @@ export default function SyTrackDayDatePicker() {
             value={convertBackendDateStringToDate(
                 trackDayDate.selectedDateString
             )}
+            date={convertBackendDateStringToDate(
+                trackDayDate.selectedDateString
+            )}
             onChange={selectedDateHandler}
             onMonthSelect={selectedDateHandler}
             onNextMonth={selectedDateHandler}
