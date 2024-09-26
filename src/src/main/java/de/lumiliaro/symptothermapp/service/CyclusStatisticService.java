@@ -70,11 +70,27 @@ public class CyclusStatisticService {
         }
     }
 
+    private int getMaxCyclusDays(List<TrackDay> trackDays) {
+        TrackDay firstTrackDay = trackDays.get(0);
+        TrackDay lastTrackDay = trackDays.get(trackDays.size() - 1);
+        firstTrackDay.getDay();
+        lastTrackDay.getDay();
+        int differenceInDays = (int) ((lastTrackDay.getDay().getTime() - firstTrackDay.getDay().getTime())
+                / (1000 * 60 * 60 * 24)) + 1;
+
+        if (differenceInDays < 1) {
+            return 1;
+        }
+
+        return differenceInDays;
+    }
+
     public List<CyclusStatisticDto> getCyclusData(Date cyclusStartDate, List<TrackDay> trackDays) {
         List<CyclusStatisticDto> response = new ArrayList<>();
         boolean isFertileSet = false;
+        int maxCyclusDays = getMaxCyclusDays(trackDays);
 
-        for (int day = 0; day < 30; day++) {
+        for (int day = 0; day < maxCyclusDays; day++) {
             Date date = DateUtils.addDays(cyclusStartDate, day);
 
             Optional<TrackDay> trackDayOpt = trackDays.stream().filter(

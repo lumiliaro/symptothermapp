@@ -1,5 +1,6 @@
 package de.lumiliaro.symptothermapp.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -123,7 +124,17 @@ public class TrackDayService {
     }
 
     public List<CyclusStatisticDto> getCyclusData(Date cyclusStartDate) {
-        List<TrackDay> trackDays = trackDayRepository.findTop30ByDayGreaterThanEqualOrderByDayAsc(cyclusStartDate);
+        List<TrackDay> trackDaysTop60 = trackDayRepository.findTop60ByDayGreaterThanEqualOrderByDayAsc(cyclusStartDate);
+        List<TrackDay> trackDays = new ArrayList<TrackDay>();
+        int index = 0;
+        for (TrackDay trackDay : trackDaysTop60) {
+            if (cyclusService.findByDate(trackDay.getDay()) != null && index != 0) {
+                break;
+            }
+            trackDays.add(trackDay);
+            index++;
+        }
+
         return cyclusStatisticService.getCyclusData(cyclusStartDate, trackDays);
     }
 

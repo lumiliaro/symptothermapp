@@ -413,7 +413,7 @@ class TrackDayServiceTest {
                 mock(CyclusStatisticDto.class),
                 mock(CyclusStatisticDto.class));
 
-        when(repository.findTop30ByDayGreaterThanEqualOrderByDayAsc(cyclusStartDate)).thenReturn(trackDays);
+        when(repository.findTop60ByDayGreaterThanEqualOrderByDayAsc(cyclusStartDate)).thenReturn(trackDays);
         when(cyclusStatisticService.getCyclusData(any(Date.class), anyList())).thenReturn(cyclusStatisticDtos);
 
         // When

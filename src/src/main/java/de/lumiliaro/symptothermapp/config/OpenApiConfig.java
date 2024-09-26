@@ -16,17 +16,20 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OpenApiConfig {
 
-    private final BuildProperties buildProperties;
+        private final BuildProperties buildProperties;
 
-    @Bean
-    public OpenAPI customOpenAPI() {
-        return new OpenAPI()
-                .info(new Info()
-                        .title("Symptothermapp Backend API")
-                        .version(buildProperties.getVersion())
-                        .description("Symptothermapp Backend API für das Frontend")
-                        .license(new License().name("MIT License").url("https://opensource.org/licenses/MIT")))
-                .servers(List.of(
-                        new Server().url("/").description("Default Server URL")));
-    }
+        @Bean
+        public OpenAPI customOpenAPI() {
+                String version = (buildProperties != null) ? buildProperties.getVersion() : "unknown";
+
+                return new OpenAPI()
+                                .info(new Info()
+                                                .title("Symptothermapp Backend API")
+                                                .version(version)
+                                                .description("Symptothermapp Backend API für das Frontend")
+                                                .license(new License().name("MIT License")
+                                                                .url("https://opensource.org/licenses/MIT")))
+                                .servers(List.of(
+                                                new Server().url("/").description("Default Server URL")));
+        }
 }

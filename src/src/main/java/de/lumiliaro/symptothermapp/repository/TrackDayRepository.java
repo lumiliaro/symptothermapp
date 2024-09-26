@@ -24,7 +24,7 @@ public interface TrackDayRepository
 
     TrackDay findByDayAndIdNot(Date day, Long id);
 
-    List<TrackDay> findTop30ByDayGreaterThanEqualOrderByDayAsc(Date date);
+    List<TrackDay> findTop60ByDayGreaterThanEqualOrderByDayAsc(Date date);
 
     @Query("SELECT MIN(t.temperature) FROM TrackDay t")
     Float findMinTemperature();
