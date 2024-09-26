@@ -10,7 +10,7 @@
         "lint": "eslint .",
         "preview": "vite preview",
         "devserver": "cd ../src && gradlew bootRun --args='--spring.profiles.active=dev'",
-        "gen-api": "cd ../src && gradlew generateOpenApiDocs && cd ../src-ui && node copyOpenApiSchema.js && npx @rtk-query/codegen-openapi openapi-config.ts",
+        "gen-api": "cd ../src && gradlew generateOpenApiDocs && cd ../src-ui && node ./scripts/copyOpenApiSchema.js && npx @rtk-query/codegen-openapi openapi-config.ts",
         "release": "tsc -b && release-it",
         "version": "auto-changelog -p && git add CHANGELOG.md"
     },
