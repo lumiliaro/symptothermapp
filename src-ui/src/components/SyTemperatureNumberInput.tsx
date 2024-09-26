@@ -15,7 +15,7 @@ export default function SyTemperatureNumberInput(
         <NumberInput
             {...field}
             onChange={(value) => {
-                field.onChange(value ? value : undefined);
+                field.onChange(value ? value : null);
             }}
             size="md"
             label="Temperatur"
@@ -28,7 +28,10 @@ export default function SyTemperatureNumberInput(
             stepHoldDelay={1000}
             stepHoldInterval={75}
             step={0.01}
-            value={field.value || undefined}
+            value={field.value || ""}
+            onEmptied={() => {
+                field.onChange(null);
+            }}
             {...props}
             error={fieldState.error?.message}
         />
