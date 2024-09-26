@@ -11,6 +11,7 @@ import de.lumiliaro.symptothermapp.enums.CervixOpeningStateEnum;
 import de.lumiliaro.symptothermapp.enums.CervixTextureEnum;
 import de.lumiliaro.symptothermapp.enums.DisturbanceEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,6 +19,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
@@ -43,8 +46,11 @@ public class TrackDay extends BaseEntity {
     @Temporal(TemporalType.DATE)
     private Date day;
 
-    @Schema(nullable = true)
+    @Schema(nullable = true, minimum = "33", maximum = "42")
     @Column(name = "temperature")
+    @Min(value = 33, message = "Die Temperatur muss mindestens 33 °C betragen.")
+    @Max(value = 42, message = "Die Temperatur muss höchstens 42 °C betragen.")
+    @Nullable
     private Float temperature;
 
     @Schema(nullable = true)

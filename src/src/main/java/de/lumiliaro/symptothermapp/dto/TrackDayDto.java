@@ -13,7 +13,10 @@ import de.lumiliaro.symptothermapp.enums.CervixTextureEnum;
 import de.lumiliaro.symptothermapp.enums.DisturbanceEnum;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
@@ -28,6 +31,9 @@ import lombok.Setter;
 public class TrackDayDto {
 
     @Schema(nullable = true)
+    @Min(value = 33, message = "Die Temperatur muss mindestens 33 °C betragen.")
+    @Max(value = 42, message = "Die Temperatur muss höchstens 42 °C betragen.")
+    @Nullable
     private final Float temperature;
 
     @NotNull(message = "Das Datum muss gesetzt sein.")
