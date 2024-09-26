@@ -11,7 +11,7 @@
         "preview": "vite preview",
         "devserver": "cd ../src && gradlew bootRun --args='--spring.profiles.active=dev'",
         "gen-api": "cd ../src && gradlew generateOpenApiDocs && cd ../src-ui && node copyOpenApiSchema.js && npx @rtk-query/codegen-openapi openapi-config.ts",
-        "release": "tsc -b && release-it && npm run version",
+        "release": "tsc -b && release-it",
         "version": "auto-changelog -p && node copyOpenApiSchema.js && git add CHANGELOG.md"
     },
     "dependencies": {

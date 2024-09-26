@@ -69,7 +69,7 @@ export default function SyCyclusChart() {
     return (
         <ScrollAreaAutosize mt="lg" offsetScrollbars={true}>
             <LineChart
-                width={cyclusStatisticData?.length * 70}
+                width={cyclusStatisticData?.length * 50 + 100}
                 height={520}
                 data={cyclusStatisticData || []}
                 margin={{ right: 25 }}
