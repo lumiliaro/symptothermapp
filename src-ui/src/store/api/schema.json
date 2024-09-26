@@ -7,7 +7,7 @@
       "name": "MIT License",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "version": "2.2.1"
+    "version": "2.3.1"
   },
   "servers": [
     {
@@ -63,8 +63,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -73,8 +73,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -133,8 +133,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -143,8 +143,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -186,8 +186,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -196,8 +196,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -240,8 +240,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -250,8 +250,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -299,8 +299,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -309,8 +309,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -363,8 +363,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -373,8 +373,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -417,8 +417,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -427,8 +427,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -479,8 +479,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -489,8 +489,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -530,8 +530,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -540,8 +540,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -584,8 +584,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -594,8 +594,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -638,8 +638,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -648,8 +648,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -692,8 +692,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -702,8 +702,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -746,8 +746,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -756,8 +756,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -800,8 +800,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -810,8 +810,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -853,8 +853,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -863,8 +863,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -903,8 +903,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -913,8 +913,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -967,8 +967,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -977,8 +977,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -1028,8 +1028,8 @@
               }
             }
           },
-          "500": {
-            "description": "Interner Serverfehler",
+          "409": {
+            "description": "Ressource existiert bereits",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -1038,8 +1038,8 @@
               }
             }
           },
-          "409": {
-            "description": "Ressource existiert bereits",
+          "500": {
+            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -1253,13 +1253,13 @@
       "PageTrackDay": {
         "type": "object",
         "properties": {
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
-          },
           "totalElements": {
             "type": "integer",
             "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
           },
           "size": {
             "type": "integer",
@@ -1312,18 +1312,18 @@
               "$ref": "#/components/schemas/SortObject"
             }
           },
-          "pageSize": {
-            "type": "integer",
-            "format": "int32"
-          },
           "pageNumber": {
             "type": "integer",
             "format": "int32"
           },
-          "unpaged": {
-            "type": "boolean"
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
           },
           "paged": {
+            "type": "boolean"
+          },
+          "unpaged": {
             "type": "boolean"
           }
         }

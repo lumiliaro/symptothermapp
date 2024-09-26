@@ -6,7 +6,9 @@ export default function ChangelogView() {
 
     useEffect(() => {
         const doFetch = async () => {
-            await fetch("CHANGELOG.md")
+            await fetch(
+                "https://raw.githubusercontent.com/lumiliaro/symptothermapp/refs/heads/master/src-ui/CHANGELOG.md"
+            )
                 .then((res) => res.text())
                 .then((text) => setContent(text));
         };
