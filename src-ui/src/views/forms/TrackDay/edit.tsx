@@ -7,7 +7,6 @@ import {
     useDeleteTrackDayMutation,
     useUpdateTrackDayMutation,
 } from "../../../store/api/generatedApi";
-import handleFormErrors from "../../../utils/FormErrorHandler.utils";
 import TrackDayView from "./view";
 
 function getFormValues(data: TrackDayDto) {
@@ -30,11 +29,7 @@ export default function TrackDayEdit(props: { data: TrackDay }) {
     const { data } = props;
     const [update] = useUpdateTrackDayMutation();
     const [deleteTrackDay] = useDeleteTrackDayMutation();
-    const {
-        openLoadingNotification,
-        updateNotificationToSuccess,
-        // updateNotificationToFailure,
-    } = useFormNotification();
+    const { callApiWithNotification } = useFormNotification();
 
     const form = useForm<TrackDayDto>({
         defaultValues: getFormValues(data as TrackDayDto),
@@ -43,25 +38,19 @@ export default function TrackDayEdit(props: { data: TrackDay }) {
 
     const onSubmit = async (trackDayDto: TrackDayDto) => {
         if (data.id) {
-            const notificationId = openLoadingNotification({
-                message: "Daten werden gespeichert...",
+            await callApiWithNotification({
+                apiCall: (notificationId: string) =>
+                    update({
+                        id: data.id as number,
+                        trackDayDto,
+                        // @ts-expect-error notificationId is not part of the api call but is needed to update the notification
+                        notificationId,
+                    }),
+                form,
+                initNotificationMessage: "Änderungen werden gespeichert...",
+                successNotificationMessage:
+                    "Änderungen wurden erfolgreich gespeichert.",
             });
-
-            await update({
-                id: data.id,
-                trackDayDto,
-                // @ts-expect-error notificationId is not part of the api call but is needed to update the notification
-                notificationId,
-            })
-                .unwrap()
-                .then(() => {
-                    updateNotificationToSuccess(notificationId, {
-                        message: "Daten wurden erfolgreich gespeichert!",
-                    });
-                })
-                .catch((error) => {
-                    handleFormErrors(form, error);
-                });
         }
     };
 
@@ -73,20 +62,15 @@ export default function TrackDayEdit(props: { data: TrackDay }) {
 
     const onDelete = async () => {
         if (data.id) {
-            const id = openLoadingNotification({
-                message: "Datensatz wird gelöscht...",
+            await callApiWithNotification({
+                apiCall: (notificationId: string) =>
+                    // @ts-expect-error notificationId is not part of the api call but is needed to update the notification
+                    deleteTrackDay({ id: data.id, notificationId }),
+                form,
+                initNotificationMessage: "Eintrag wird gelöscht...",
+                successNotificationMessage:
+                    "Eintrag wurde erfolgreich gelöscht.",
             });
-
-            await deleteTrackDay({ id: data.id })
-                .unwrap()
-                .then(() => {
-                    updateNotificationToSuccess(id, {
-                        message: "Datensatz wurden erfolgreich gelöscht!",
-                    });
-                })
-                .catch((error) => {
-                    handleFormErrors(form, error);
-                });
         }
     };
 

@@ -1,25 +1,16 @@
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import useFormNotification from "../../../hooks/useFormNotification";
 import {
     TrackDayDto,
     useCreateTrackDayMutation,
 } from "../../../store/api/generatedApi";
-import { RootState } from "../../../store/store";
-import handleFormErrors from "../../../utils/FormErrorHandler.utils";
 import TrackDayView from "./view";
 
-export default function TrackDayCreate() {
-    const selectedTrackDate = useSelector(
-        (state: RootState) => state.trackDayDate.selectedDateString
-    );
+export default function TrackDayCreate(props: { selectedTrackDate?: string }) {
+    const { selectedTrackDate } = props;
     const [store] = useCreateTrackDayMutation();
-    const {
-        openLoadingNotification,
-        updateNotificationToSuccess,
-        // updateNotificationToFailure,
-    } = useFormNotification();
+    const { callApiWithNotification } = useFormNotification();
 
     const form = useForm<TrackDayDto>({
         defaultValues: {
@@ -40,21 +31,15 @@ export default function TrackDayCreate() {
     });
 
     const onSubmit = async (trackDayDto: TrackDayDto) => {
-        const notificationId = openLoadingNotification({
-            message: "Daten werden erstellt...",
+        await callApiWithNotification({
+            apiCall: (notificationId: string) =>
+                // @ts-expect-error notificationId is not part of the api call but is needed to update the notification
+                store({ trackDayDto, notificationId }),
+            form,
+            initNotificationMessage: "Neuer Eintrag wird erstellt...",
+            successNotificationMessage:
+                "Neuer Eintrag wurde erfolgreich erstellt.",
         });
-
-        // @ts-expect-error notificationId is not part of the api call but is needed to update the notification
-        await store({ trackDayDto, notificationId })
-            .unwrap()
-            .then(() => {
-                updateNotificationToSuccess(notificationId, {
-                    message: "Daten wurden erstellt!",
-                });
-            })
-            .catch((error) => {
-                handleFormErrors(form, error);
-            });
     };
 
     const onReset = () => {

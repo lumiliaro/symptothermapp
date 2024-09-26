@@ -21,7 +21,7 @@ export const queryErrorLoggerMiddleware: Middleware =
                     title: errorData?.code || "Fehler bei der Anfrage",
                     message:
                         errorData?.message ||
-                        "Fehlermeldung konnte nicht ermittelt werden.",
+                        "Der Server ist nicht erreichbar. Bitte versuche es später nochmal.",
                     color: "red",
                 });
             } else {
@@ -29,7 +29,7 @@ export const queryErrorLoggerMiddleware: Middleware =
                     title: errorData?.code || "Fehler bei der Anfrage",
                     message:
                         errorData?.message ||
-                        "Fehlermeldung konnte nicht ermittelt werden.",
+                        "Der Server ist nicht erreichbar. Bitte versuche es später nochmal.",
                     color: "red",
                     autoClose: 4000,
                     withCloseButton: true,

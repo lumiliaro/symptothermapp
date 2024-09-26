@@ -28,7 +28,9 @@ export default function TrackDayMainView() {
             {trackDay.data ? (
                 <TrackDayEdit data={trackDay?.data} />
             ) : (
-                <TrackDayCreate />
+                <TrackDayCreate
+                    selectedTrackDate={trackDayDate?.selectedDateString}
+                />
             )}
         </>
     );
