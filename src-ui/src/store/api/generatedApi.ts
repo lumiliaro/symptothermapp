@@ -254,16 +254,17 @@ export type SortObject = {
   ignoreCase?: boolean;
 };
 export type PageableObject = {
-  offset?: number;
-  sort?: SortObject[];
+  paged?: boolean;
   pageNumber?: number;
   pageSize?: number;
-  paged?: boolean;
   unpaged?: boolean;
+  offset?: number;
+  sort?: SortObject[];
 };
 export type PageTrackDay = {
-  totalElements?: number;
   totalPages?: number;
+  totalElements?: number;
+  pageable?: PageableObject;
   size?: number;
   content?: TrackDay[];
   number?: number;
@@ -271,7 +272,6 @@ export type PageTrackDay = {
   first?: boolean;
   last?: boolean;
   numberOfElements?: number;
-  pageable?: PageableObject;
   empty?: boolean;
 };
 export type Pageable = {

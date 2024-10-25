@@ -77,7 +77,7 @@ export default function SyCyclusChart() {
                 <CartesianGrid strokeDasharray="4 4" />
                 <XAxis
                     xAxisId={0}
-                    dataKey="date"
+                    dataKey="cyclusDay"
                     type="category"
                     orientation="top"
                     interval={0}
