@@ -114,18 +114,8 @@ public class CyclusStatisticService {
                 }
 
                 TrackDay trackDay = trackDayOpt.get();
-                CyclusStatisticDto cyclusStatisticDto = new CyclusStatisticDto();
-                cyclusStatisticDto.setCyclusDay(String.valueOf(day + 1));
-                cyclusStatisticDto.setDate(dateFormatterResponse.format(trackDay.getDay()));
-                cyclusStatisticDto.setTemperature(trackDay.getTemperature());
-                cyclusStatisticDto.setCervicalMucus(trackDay.getCervicalMucus());
-                cyclusStatisticDto.setBleeding(trackDay.getBleeding());
-                cyclusStatisticDto.setCreatedAt(trackDay.getCreatedAt());
-                cyclusStatisticDto.setUpdatedAt(trackDay.getUpdatedAt());
-                if (isFertileSet) {
-                    // if fertile is set, set all days after to infertile
-                    cyclusStatisticDto.setCyclusDotType(CyclusDotTypeEnum.INFERTILE);
-                }
+                CyclusStatisticDto cyclusStatisticDto = new CyclusStatisticDto(trackDay, day, dateFormatterResponse,
+                        isFertileSet);
                 response.add(cyclusStatisticDto);
             } else {
                 CyclusStatisticDto cyclusStatisticDto = new CyclusStatisticDto();

@@ -254,17 +254,16 @@ export type SortObject = {
   ignoreCase?: boolean;
 };
 export type PageableObject = {
-  paged?: boolean;
-  pageNumber?: number;
-  pageSize?: number;
-  unpaged?: boolean;
   offset?: number;
   sort?: SortObject[];
+  pageNumber?: number;
+  pageSize?: number;
+  paged?: boolean;
+  unpaged?: boolean;
 };
 export type PageTrackDay = {
-  totalPages?: number;
   totalElements?: number;
-  pageable?: PageableObject;
+  totalPages?: number;
   size?: number;
   content?: TrackDay[];
   number?: number;
@@ -272,6 +271,7 @@ export type PageTrackDay = {
   first?: boolean;
   last?: boolean;
   numberOfElements?: number;
+  pageable?: PageableObject;
   empty?: boolean;
 };
 export type Pageable = {
@@ -298,11 +298,19 @@ export type Cyclus = {
   date: string;
 };
 export type CyclusStatisticDto = {
+  temperature?: number | null;
   cyclusDay: string;
   date: string;
-  temperature?: number | null;
-  cervicalMucus?: string | null;
   bleeding?: string | null;
+  cervicalMucus?: string | null;
+  cervixOpeningState?: string | null;
+  cervixHeightPosition?: string | null;
+  cervixTexture?: string | null;
+  hadSex: boolean;
+  withContraceptives: boolean;
+  disturbances?: (string | null)[] | null;
+  otherDisturbanceNotes?: string | null;
+  notes?: string | null;
   cyclusDotType?: CyclusDotType | null;
   createdAt?: string;
   updatedAt?: string;
