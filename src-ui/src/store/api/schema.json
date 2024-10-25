@@ -53,6 +53,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -65,16 +75,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -123,6 +123,16 @@
           "required": true
         },
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -135,16 +145,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -176,6 +176,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -188,16 +198,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -230,6 +230,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -242,16 +252,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -289,6 +289,16 @@
           "required": true
         },
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -301,16 +311,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -353,6 +353,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -365,16 +375,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -407,6 +407,16 @@
         "summary": "Get min and max temperature",
         "operationId": "getTrackDayMinMaxTemperature",
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -419,16 +429,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -469,6 +469,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -481,16 +491,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -520,6 +520,16 @@
         "summary": "Störungsoptionen abrufen",
         "operationId": "getDisturbanceOptions",
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -532,16 +542,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -574,6 +574,16 @@
         "summary": "Zervixbeschaffenheitsoptionen abrufen",
         "operationId": "getCervixTextureOptions",
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -586,16 +596,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -628,6 +628,16 @@
         "summary": "Zervixöffnungszustandsoptionen abrufen",
         "operationId": "getCervixOpeningStateOptions",
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -640,16 +650,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -682,6 +682,16 @@
         "summary": "Zervixhöhe-/Positionsoptionen abrufen",
         "operationId": "getCervixHeightPositionOptions",
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -694,16 +704,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -736,6 +736,16 @@
         "summary": "Zervixschleimoptionen abrufen",
         "operationId": "getCervicalMucusOptions",
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -748,16 +758,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -790,6 +790,16 @@
         "summary": "Blutungsoptionen abrufen",
         "operationId": "getBleedingOptions",
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -802,16 +812,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -843,6 +843,16 @@
         ],
         "operationId": "getServerInfo",
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -855,16 +865,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -893,6 +893,16 @@
         ],
         "operationId": "getAllCycli",
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -905,16 +915,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -957,6 +957,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -969,16 +979,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -1018,6 +1018,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Interner Serverfehler",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Ressource nicht gefunden",
             "content": {
@@ -1030,16 +1040,6 @@
           },
           "409": {
             "description": "Ressource existiert bereits",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Interner Serverfehler",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -1253,13 +1253,16 @@
       "PageTrackDay": {
         "type": "object",
         "properties": {
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
           "totalElements": {
             "type": "integer",
             "format": "int64"
           },
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
+          "pageable": {
+            "$ref": "#/components/schemas/PageableObject"
           },
           "size": {
             "type": "integer",
@@ -1291,9 +1294,6 @@
             "type": "integer",
             "format": "int32"
           },
-          "pageable": {
-            "$ref": "#/components/schemas/PageableObject"
-          },
           "empty": {
             "type": "boolean"
           }
@@ -1302,15 +1302,8 @@
       "PageableObject": {
         "type": "object",
         "properties": {
-          "offset": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "sort": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SortObject"
-            }
+          "paged": {
+            "type": "boolean"
           },
           "pageNumber": {
             "type": "integer",
@@ -1320,11 +1313,18 @@
             "type": "integer",
             "format": "int32"
           },
-          "paged": {
-            "type": "boolean"
-          },
           "unpaged": {
             "type": "boolean"
+          },
+          "offset": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SortObject"
+            }
           }
         }
       },
