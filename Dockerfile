@@ -1,5 +1,5 @@
 # Frontend-Build-Stage
-FROM node:20-alpine AS frontend-build
+FROM node:23-alpine AS frontend-build
 
 WORKDIR /app
 COPY ./src-ui ./ui
@@ -10,7 +10,7 @@ RUN npx @rtk-query/codegen-openapi openapi-config.ts
 RUN npm run build
 
 # Backend-Build-Stage
-FROM gradle:8.10.1-jdk21-alpine AS backend-build
+FROM gradle:8.10.2-jdk21-alpine AS backend-build
 
 WORKDIR /app
 COPY ./src .
