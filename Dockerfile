@@ -10,7 +10,7 @@ RUN npx @rtk-query/codegen-openapi openapi-config.ts
 RUN npm run build
 
 # Backend-Build-Stage
-FROM gradle:8.12.1-jdk21-alpine AS backend-build
+FROM gradle:8.13-jdk21-alpine AS backend-build
 
 WORKDIR /app
 COPY ./src .
